@@ -61,7 +61,7 @@ class Application {
       .connect(MONGO_URL, {} as any)
       .then(async () => {
         console.log(`✅[Server]: Database is connected`);
-        await Seeders.run();
+        await Seeders.runSeeders();
       })
       .catch((error) => {
         console.log(`❌[Server] Database connection error: ${error}`);

@@ -25,5 +25,6 @@ export default class AuthRoutes {
       passport.authenticate("jwt", { session: false }),
       asyncWrapper(AuthController.me)
     );
+    this.router.get("/user-types", asyncWrapper(AuthController.getUserTypes));
   }
 }

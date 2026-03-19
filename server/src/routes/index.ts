@@ -10,7 +10,9 @@ import { authMiddleware } from "../middlewares/auth.middleware";
 export default class Routes {
   constructor(app: Application) {
     app.use("/api/v1/auth", new AuthRoutes().router);
-    app.use("/api/v1/jobs", authMiddleware, new JobsRoutes().router);
+    // 公开路由 - 不需要认证
+    app.use("/api/v1/jobs", new JobsRoutes().router);
+    // 需要认证的路由
     app.use("/api/v1/users", authMiddleware, new UsersRoutes().router);
     app.use("/api/v1/job", authMiddleware, new JobApplicationsRoutes().router);
 

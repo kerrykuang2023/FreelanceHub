@@ -1,7 +1,9 @@
 import { IRegisterPayload } from "@/interfaces/models";
+import { useAuth } from "@/providers";
 import useAuthStore from "@/stores/auth.store";
 import { useFormik } from "formik";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 const FORM_INITIAL_VALUES = {
@@ -13,6 +15,8 @@ const FORM_INITIAL_VALUES = {
 };
 
 const useRegisterForm = () => {
+  const navigate = useNavigate();
+  const { login: setLogin } = useAuth();
   const {
     registerSuccessMessage,
     registerErrorMessage,
@@ -61,8 +65,14 @@ const useRegisterForm = () => {
           email: values.email,
           password: values.password,
         };
-        await register(payload);
+        const result = await register(payload);
         form.resetForm();
+
+        // Auto login after successful registration
+        if (result && result.token && result.user) {
+          setLogin(result.token, result.user);
+          navigate("/");
+        }
       } catch (error) {
         console.error(error);
       } finally {

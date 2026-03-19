@@ -15,6 +15,12 @@ const JobPostActivitySchema = new mongoose.Schema(
     apply_date: {
       type: Date,
       required: true,
+      default: Date.now,
+    },
+    status: {
+      type: String,
+      enum: ["pending", "reviewed", "accepted", "rejected"],
+      default: "pending",
     },
   },
   {

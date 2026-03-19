@@ -18,7 +18,9 @@ import Logo from "@/components/core-ui/Logo";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, user } = useAuth();
+  
+  const isHR = user?.user_type_name === "hr_recruiter";
 
   const navigation = useMemo(() => {
     if (isAuthenticated) {
@@ -161,10 +163,10 @@ const Header = () => {
               </Transition>
             </Menu>
             <a
-              href="#"
+              href={isHR ? "/post-job" : "/"}
               className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Post a Job
+              {isHR ? "Post a Job" : "Find Jobs"}
             </a>
           </div>
         ) : (

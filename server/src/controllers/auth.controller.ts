@@ -125,4 +125,14 @@ export default class AuthController {
       throw error;
     }
   }
+
+  /**
+   * This method is used to get all user types
+   * @param req Request
+   * @param res Response
+   */
+  public static async getUserTypes(req: Request, res: Response) {
+    const userTypes = await UserType.find({});
+    res.status(StatusCodes.OK).json(userTypes);
+  }
 }
