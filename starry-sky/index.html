@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>炫酷星空 - Starry Sky</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 星空画布 -->
+    <canvas id="starCanvas"></canvas>
+    
+    <!-- SAP Logo -->
+    <div class="logo-container">
+        <img src="sap-logo.svg" alt="SAP" class="sap-logo">
+    </div>
+    
+    <!-- 标题文字 -->
+    <div class="content">
+        <h1 class="title">星空之旅</h1>
+        <p class="subtitle">移动鼠标探索宇宙，点击创造星辰</p>
+    </div>
+    
+    <!-- 控制面板 -->
+    <div class="controls">
+        <button id="toggleAnimation" class="btn">暂停动画</button>
+        <button id="addMeteor" class="btn">召唤流星</button>
+        <button id="clearEffects" class="btn">清除效果</button>
+    </div>
+    
+    <!-- 统计信息 -->
+    <div class="stats">
+        <span>星星数量: <span id="starCount">0</span></span>
+        <span>FPS: <span id="fps">60</span></span>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

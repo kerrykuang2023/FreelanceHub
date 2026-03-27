@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build outputs
+dist/
+build/
+*.log
+npm-debug.log*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Test outputs
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Screenshots
+screenshots/*.png
+
+# Debug files
+debug-test.js
+test-api.js
+test-login.js
+test-create-job.js
+create-test-accounts.js
+
+# Docker
+.docker/
+
+# MongoDB data (local)
+data/
+
+# Misc
+*.tgz
+.cache/

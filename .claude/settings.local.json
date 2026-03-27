@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git clone:*)",
+      "Bash(cp:*)",
+      "WebFetch(domain:mp.weixin.qq.com)"
+    ]
+  }
+}

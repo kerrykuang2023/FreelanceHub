@@ -1,0 +1,98 @@
+{
+  "testRun": {
+    "startTime": "2026-03-23T13:02:51.838Z",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "flowSteps": [
+    {
+      "step": 1,
+      "action": "开始登录",
+      "description": "用户: 自由顾问 (freelancer@test.com)",
+      "success": true,
+      "timestamp": "2026-03-23T13:02:26.182Z"
+    },
+    {
+      "step": 2,
+      "action": "填写输入框: 邮箱",
+      "description": "成功填写值: freelancer@test.com",
+      "success": true,
+      "timestamp": "2026-03-23T13:02:29.190Z"
+    },
+    {
+      "step": 3,
+      "action": "填写输入框: 密码",
+      "description": "成功填写值: Test1234!",
+      "success": true,
+      "timestamp": "2026-03-23T13:02:29.437Z"
+    },
+    {
+      "step": 4,
+      "action": "点击按钮: 登录按钮",
+      "description": "成功点击按钮，选择器: [data-testid=\"login-submit-btn\"], button[type=\"submit\"]",
+      "success": true,
+      "timestamp": "2026-03-23T13:02:30.602Z"
+    },
+    {
+      "step": 5,
+      "action": "登录成功",
+      "description": "已跳转到: http://localhost:5137/",
+      "success": true,
+      "timestamp": "2026-03-23T13:02:33.618Z"
+    },
+    {
+      "step": 6,
+      "action": "权限测试",
+      "description": "顾问尝试访问HR工作台",
+      "success": true,
+      "timestamp": "2026-03-23T13:02:33.719Z"
+    },
+    {
+      "step": 7,
+      "action": "权限正确",
+      "description": "顾问被阻止访问HR工作台",
+      "success": true,
+      "timestamp": "2026-03-23T13:02:36.121Z"
+    },
+    {
+      "step": 8,
+      "action": "权限测试",
+      "description": "顾问尝试访问管理员工作台",
+      "success": true,
+      "timestamp": "2026-03-23T13:02:36.121Z"
+    },
+    {
+      "step": 9,
+      "action": "权限正确",
+      "description": "顾问被阻止访问管理员页面",
+      "success": true,
+      "timestamp": "2026-03-23T13:02:38.438Z"
+    },
+    {
+      "step": 10,
+      "action": "开始登出",
+      "description": "准备退出当前用户",
+      "success": true,
+      "timestamp": "2026-03-23T13:02:38.439Z"
+    },
+    {
+      "step": 11,
+      "action": "开始登录",
+      "description": "用户: HR招聘人员 (hr@test.com)",
+      "success": true,
+      "timestamp": "2026-03-23T13:02:39.131Z"
+    },
+    {
+      "step": 12,
+      "action": "登录失败",
+      "description": "邮箱输入框不可见",
+      "success": false,
+      "timestamp": "2026-03-23T13:02:50.904Z"
+    }
+  ],
+  "summary": {
+    "totalSteps": 12,
+    "successSteps": 11,
+    "failedSteps": 1
+  }
+}

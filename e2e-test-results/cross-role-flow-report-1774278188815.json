@@ -1,0 +1,111 @@
+{
+  "testRun": {
+    "startTime": "2026-03-23T15:03:08.815Z",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "issues": [
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "description": "发票列表页缺少创建发票按钮",
+      "expectedBehavior": "应有创建发票按钮",
+      "actualBehavior": "未找到创建按钮",
+      "steps": [
+        "顾问登录",
+        "访问发票列表页面"
+      ],
+      "page": "http://localhost:5137/invoices",
+      "userRole": "Freelancer",
+      "id": "ISS-001",
+      "timestamp": "2026-03-23T15:02:30.424Z"
+    },
+    {
+      "category": "UI",
+      "severity": "MEDIUM",
+      "description": "发票列表页缺少审核按钮",
+      "expectedBehavior": "应有审核按钮",
+      "actualBehavior": "未找到审核按钮",
+      "steps": [
+        "HR登录",
+        "访问发票列表页面"
+      ],
+      "page": "http://localhost:5137/company/invoices",
+      "userRole": "HR",
+      "id": "ISS-002",
+      "timestamp": "2026-03-23T15:02:35.599Z"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "description": "页面JavaScript错误: Failed to fetch dynamically imported module: http://localhost:5137/src/pages/PaymentsPage/PaymentsPage.tsx?t=1774275592971",
+      "expectedBehavior": "页面无JavaScript错误",
+      "actualBehavior": "Failed to fetch dynamically imported module: http://localhost:5137/src/pages/PaymentsPage/PaymentsPage.tsx?t=1774275592971",
+      "steps": [
+        "页面加载"
+      ],
+      "page": "http://localhost:5137/payments",
+      "id": "ISS-003",
+      "timestamp": "2026-03-23T15:02:35.797Z"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "description": "页面JavaScript错误: Failed to fetch dynamically imported module: http://localhost:5137/src/pages/PaymentsPage/PaymentsPage.tsx?t=1774275592971",
+      "expectedBehavior": "页面无JavaScript错误",
+      "actualBehavior": "Failed to fetch dynamically imported module: http://localhost:5137/src/pages/PaymentsPage/PaymentsPage.tsx?t=1774275592971",
+      "steps": [
+        "页面加载"
+      ],
+      "page": "http://localhost:5137/payments",
+      "id": "ISS-004",
+      "timestamp": "2026-03-23T15:02:35.800Z"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "description": "页面JavaScript错误: Failed to fetch dynamically imported module: http://localhost:5137/src/pages/PaymentsPage/PaymentsPage.tsx?t=1774275592971",
+      "expectedBehavior": "页面无JavaScript错误",
+      "actualBehavior": "Failed to fetch dynamically imported module: http://localhost:5137/src/pages/PaymentsPage/PaymentsPage.tsx?t=1774275592971",
+      "steps": [
+        "页面加载"
+      ],
+      "page": "http://localhost:5137/payments",
+      "id": "ISS-005",
+      "timestamp": "2026-03-23T15:02:35.802Z"
+    },
+    {
+      "category": "UI",
+      "severity": "MEDIUM",
+      "description": "付款页面缺少付款确认按钮",
+      "expectedBehavior": "应有付款确认按钮",
+      "actualBehavior": "未找到付款按钮",
+      "steps": [
+        "HR登录",
+        "访问付款页面"
+      ],
+      "page": "http://localhost:5137/payments",
+      "userRole": "HR",
+      "id": "ISS-006",
+      "timestamp": "2026-03-23T15:02:37.438Z"
+    },
+    {
+      "category": "API",
+      "severity": "CRITICAL",
+      "description": "登录过程发生异常: Error: locator.fill: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('input[type=\"email\"], input[name=\"email\"]').first()\u001b[22m\n",
+      "expectedBehavior": "登录流程正常完成",
+      "actualBehavior": "发生异常: Error: locator.fill: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('input[type=\"email\"], input[name=\"email\"]').first()\u001b[22m\n",
+      "steps": [
+        "访问登录页面",
+        "填写表单",
+        "提交登录"
+      ],
+      "userRole": "Job Seeker",
+      "id": "ISS-007",
+      "timestamp": "2026-03-23T15:03:07.610Z"
+    }
+  ],
+  "testProjects": [],
+  "testWorkLogs": [],
+  "testInvoices": []
+}

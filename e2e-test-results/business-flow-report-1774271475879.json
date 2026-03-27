@@ -1,0 +1,98 @@
+{
+  "testRun": {
+    "startTime": "2026-03-23T13:11:15.879Z",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "flowSteps": [
+    {
+      "step": 1,
+      "action": "开始登录",
+      "description": "用户: HR招聘人员 (hr@test.com)",
+      "success": true,
+      "timestamp": "2026-03-23T13:10:45.478Z"
+    },
+    {
+      "step": 2,
+      "action": "填写输入框: 邮箱",
+      "description": "成功填写值: hr@test.com",
+      "success": true,
+      "timestamp": "2026-03-23T13:10:48.652Z"
+    },
+    {
+      "step": 3,
+      "action": "填写输入框: 密码",
+      "description": "成功填写值: Test1234!",
+      "success": true,
+      "timestamp": "2026-03-23T13:10:49.627Z"
+    },
+    {
+      "step": 4,
+      "action": "点击按钮: 登录按钮",
+      "description": "成功点击按钮，选择器: [data-testid=\"login-submit-btn\"]",
+      "success": true,
+      "timestamp": "2026-03-23T13:10:51.352Z"
+    },
+    {
+      "step": 5,
+      "action": "登录成功",
+      "description": "已跳转到: http://localhost:5137/",
+      "success": true,
+      "timestamp": "2026-03-23T13:10:54.363Z"
+    },
+    {
+      "step": 6,
+      "action": "导航到评价页面",
+      "description": "准备评价顾问",
+      "success": true,
+      "timestamp": "2026-03-23T13:10:54.460Z"
+    },
+    {
+      "step": 7,
+      "action": "点击按钮: 创建评价按钮",
+      "description": "成功点击按钮，选择器: button:has-text(\"评价\"), button:has-text(\"写评价\")",
+      "success": true,
+      "timestamp": "2026-03-23T13:10:57.888Z"
+    },
+    {
+      "step": 8,
+      "action": "点击按钮: 提交评价按钮",
+      "description": "点击失败: TimeoutError: locator.waitFor: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[type=\"submit\"]').first() to be visible\u001b[22m\n",
+      "success": false,
+      "timestamp": "2026-03-23T13:11:07.024Z"
+    },
+    {
+      "step": 9,
+      "action": "提交评价",
+      "description": "HR评价已提交",
+      "success": true,
+      "timestamp": "2026-03-23T13:11:09.118Z"
+    },
+    {
+      "step": 10,
+      "action": "开始登出",
+      "description": "准备退出当前用户",
+      "success": true,
+      "timestamp": "2026-03-23T13:11:09.119Z"
+    },
+    {
+      "step": 11,
+      "action": "开始登录",
+      "description": "用户: 自由顾问 (freelancer@test.com)",
+      "success": true,
+      "timestamp": "2026-03-23T13:11:09.818Z"
+    },
+    {
+      "step": 12,
+      "action": "登录失败",
+      "description": "邮箱输入框不可见: Error: locator.waitFor: Target page, context or browser has been closed",
+      "success": false,
+      "timestamp": "2026-03-23T13:11:15.649Z"
+    }
+  ],
+  "summary": {
+    "totalSteps": 12,
+    "successSteps": 10,
+    "failedSteps": 2
+  }
+}

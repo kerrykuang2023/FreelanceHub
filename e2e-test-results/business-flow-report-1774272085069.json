@@ -1,0 +1,70 @@
+{
+  "testRun": {
+    "startTime": "2026-03-23T13:21:25.069Z",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "flowSteps": [
+    {
+      "step": 1,
+      "action": "开始登录",
+      "description": "用户: 自由顾问 (freelancer@test.com)",
+      "success": true,
+      "timestamp": "2026-03-23T13:19:20.058Z"
+    },
+    {
+      "step": 2,
+      "action": "填写输入框: 邮箱",
+      "description": "成功填写值: freelancer@test.com",
+      "success": true,
+      "timestamp": "2026-03-23T13:19:23.091Z"
+    },
+    {
+      "step": 3,
+      "action": "填写输入框: 密码",
+      "description": "成功填写值: Test1234!",
+      "success": true,
+      "timestamp": "2026-03-23T13:19:24.091Z"
+    },
+    {
+      "step": 4,
+      "action": "点击按钮: 登录按钮",
+      "description": "成功点击按钮，选择器: [data-testid=\"login-submit-btn\"]",
+      "success": true,
+      "timestamp": "2026-03-23T13:19:25.661Z"
+    },
+    {
+      "step": 5,
+      "action": "登录成功",
+      "description": "已跳转到: http://localhost:5137/",
+      "success": true,
+      "timestamp": "2026-03-23T13:19:28.668Z"
+    },
+    {
+      "step": 6,
+      "action": "导航到发票管理页面",
+      "description": "准备查看发票记录",
+      "success": true,
+      "timestamp": "2026-03-23T13:19:28.764Z"
+    },
+    {
+      "step": 7,
+      "action": "点击按钮: 创建发票按钮",
+      "description": "成功点击按钮，选择器: a[href=\"/invoices/new\"], button:has-text(\"创建发票\")",
+      "success": true,
+      "timestamp": "2026-03-23T13:19:32.183Z"
+    },
+    {
+      "step": 8,
+      "action": "选择下拉框: 公司选择",
+      "description": "选择失败: Error: locator.selectOption: Test timeout of 120000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('select[name=\"company_id\"], select[id*=\"company\"]').first()\u001b[22m\n\u001b[2m    - locator resolved to <select name=\"company_id\" class=\"w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500\">…</select>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    207 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m        - did not find some options\u001b[22m\n\u001b[2m      - retrying select option action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n",
+      "success": false,
+      "timestamp": "2026-03-23T13:21:19.892Z"
+    }
+  ],
+  "summary": {
+    "totalSteps": 8,
+    "successSteps": 7,
+    "failedSteps": 1
+  }
+}

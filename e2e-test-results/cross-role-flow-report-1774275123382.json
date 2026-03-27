@@ -1,0 +1,42 @@
+{
+  "testRun": {
+    "startTime": "2026-03-23T14:12:03.383Z",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "issues": [
+    {
+      "category": "UI",
+      "severity": "LOW",
+      "description": "举报页面缺少提交举报入口",
+      "expectedBehavior": "应有举报按钮",
+      "actualBehavior": "未找到举报按钮",
+      "steps": [
+        "用户登录",
+        "访问举报页面"
+      ],
+      "page": "http://localhost:5137/reports",
+      "userRole": "Freelancer",
+      "id": "ISS-001",
+      "timestamp": "2026-03-23T14:11:26.109Z"
+    },
+    {
+      "category": "API",
+      "severity": "CRITICAL",
+      "description": "登录过程发生异常: Error: locator.fill: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('input[type=\"email\"], input[name=\"email\"]').first()\u001b[22m\n",
+      "expectedBehavior": "登录流程正常完成",
+      "actualBehavior": "发生异常: Error: locator.fill: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('input[type=\"email\"], input[name=\"email\"]').first()\u001b[22m\n",
+      "steps": [
+        "访问登录页面",
+        "填写表单",
+        "提交登录"
+      ],
+      "userRole": "Job Seeker",
+      "id": "ISS-002",
+      "timestamp": "2026-03-23T14:12:01.707Z"
+    }
+  ],
+  "testProjects": [],
+  "testWorkLogs": [],
+  "testInvoices": []
+}

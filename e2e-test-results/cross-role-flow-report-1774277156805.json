@@ -1,0 +1,11 @@
+{
+  "testRun": {
+    "startTime": "2026-03-23T14:45:56.805Z",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "issues": [],
+  "testProjects": [],
+  "testWorkLogs": [],
+  "testInvoices": []
+}
