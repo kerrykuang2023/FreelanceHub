@@ -38,19 +38,45 @@ const RegisterForm = () => {
           <select
             id="user_type_name"
             name="user_type_name"
-            className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            data-testid="role-select"
+            className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             disabled={form.isSubmitting}
             value={form.values.user_type_name}
             onChange={(e) =>
               form.setFieldValue("user_type_name", e.target.value)
             }
           >
-            <option value="job_seeker">Job Seeker</option>
-            <option value="hr_recruiter">HR Recruiter</option>
+            <option value="job_seeker">Freelancer / 求职者</option>
+            <option value="hr_recruiter">Company User / HR招聘官</option>
           </select>
           {form.errors.user_type_name && (
             <FieldError error={form.errors.user_type_name} />
           )}
+        </div>
+
+        <div>
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium leading-6 text-gray-900"
+          >
+            Full Name
+            <span className="text-red-500">*</span>
+          </label>
+          <div className="mt-2">
+            <input
+              id="name"
+              name="name"
+              type="text"
+              data-testid="name-input"
+              autoComplete="name"
+              required
+              className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              value={form.values.name || ""}
+              disabled={form.isSubmitting}
+              onChange={form.handleChange}
+            />
+            {form.errors.name && <FieldError error={form.errors.name} />}
+          </div>
         </div>
 
         <div>
@@ -66,6 +92,7 @@ const RegisterForm = () => {
               id="email"
               name="email"
               type="email"
+              data-testid="email-input"
               autoComplete="email"
               required
               className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -88,7 +115,9 @@ const RegisterForm = () => {
           <div className="relative mt-2 rounded-md shadow-sm">
             <input
               id="password"
+              name="password"
               type="password"
+              data-testid="password-input"
               className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               value={form.values.password}
               onChange={form.handleChange}
@@ -111,7 +140,9 @@ const RegisterForm = () => {
           <div className="relative mt-2 rounded-md shadow-sm">
             <input
               id="confirmPassword"
+              name="confirmPassword"
               type="password"
+              data-testid="confirm-password-input"
               className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               value={form.values.confirmPassword}
               disabled={form.isSubmitting}

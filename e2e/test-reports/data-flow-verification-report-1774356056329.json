@@ -1,0 +1,58 @@
+{
+  "testTime": "2026-03-24T12:40:56.326Z",
+  "testData": {
+    "projectTitle": "数据流转验证项目_1774356017870",
+    "projectDescription": "这是一个用于验证完整数据流转的测试项目",
+    "workHours": 8,
+    "workDescription": "完成了核心功能开发和单元测试",
+    "invoiceAmount": 8000
+  },
+  "verificationResults": [
+    {
+      "step": "FLOW-7.1: HR登录",
+      "expected": "登录成功",
+      "actual": "登录失败",
+      "passed": false,
+      "timestamp": "2026-03-24T12:40:51.962Z"
+    },
+    {
+      "step": "FLOW-7.2: HR发票列表显示",
+      "expected": "显示至少1条发票",
+      "actual": "显示0条发票",
+      "passed": false,
+      "screenshot": "screenshots/data-flow-flow7-hr-invoices-list-1774356053185.png",
+      "timestamp": "2026-03-24T12:40:53.329Z"
+    },
+    {
+      "step": "FLOW-7.3: 顾问发票在HR视角可见",
+      "expected": "发票可见",
+      "actual": "发票不可见 - 数据流转问题",
+      "passed": false,
+      "timestamp": "2026-03-24T12:40:53.330Z"
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "passRate": "0.0%"
+  },
+  "dataFlowIssues": [
+    {
+      "step": "FLOW-7.1: HR登录",
+      "expected": "登录成功",
+      "actual": "登录失败"
+    },
+    {
+      "step": "FLOW-7.2: HR发票列表显示",
+      "expected": "显示至少1条发票",
+      "actual": "显示0条发票",
+      "screenshot": "screenshots/data-flow-flow7-hr-invoices-list-1774356053185.png"
+    },
+    {
+      "step": "FLOW-7.3: 顾问发票在HR视角可见",
+      "expected": "发票可见",
+      "actual": "发票不可见 - 数据流转问题"
+    }
+  ]
+}

@@ -1,7 +1,3 @@
-// AuthService.ts
-
-// This service is responsible for handling authentication requests.
-
 import HttpService from "@/core/http.service";
 import { IModels } from "@/interfaces";
 
@@ -12,35 +8,36 @@ export default class AuthService {
     this.http = new HttpService();
   }
 
-  // Login user
   public async login(payload: IModels.ILoginPayload, options?: any) {
-    return this.http
-      .service()
-      .post<IModels.ILoginResponse, IModels.ILoginPayload>(
-        "auth/login",
-        payload,
-        options
-      );
+    return this.http.post<IModels.ILoginResponse, IModels.ILoginPayload>(
+      "auth/login",
+      payload
+    );
   }
 
-  // Register user
   public async register(payload: IModels.IRegisterPayload, options?: any) {
-    return this.http
-      .service()
-      .post<IModels.IRegisterResponse, IModels.IRegisterPayload>(
-        "auth/signup",
-        payload,
-        options
-      );
+    return this.http.post<IModels.IRegisterResponse, IModels.IRegisterPayload>(
+      "auth/signup",
+      payload
+    );
   }
 
-  // Get current user
   public async getCurrentUser() {
-    return this.http.service().get<IModels.IUserAccount>("auth/me", {});
+    return this.http.get<IModels.IUserAccount>("auth/me", {});
   }
 
-  // Logout user
   public async logout() {
-    // TODO: Implement logout
+  }
+
+  public async switchRole(roleType: string) {
+    return this.http.post("auth/roles/switch", { role_type: roleType });
+  }
+
+  public async getMyRoles() {
+    return this.http.get("auth/roles", {});
+  }
+
+  public async applyForRole(data: { role_type: string; role_specific_data?: any }) {
+    return this.http.post("auth/roles/apply", data);
   }
 }

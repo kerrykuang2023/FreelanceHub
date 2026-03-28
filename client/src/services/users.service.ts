@@ -9,16 +9,14 @@ export default class UsersService {
   }
 
   public async getUserPersonal() {
-    return this.http.service().get<IModels.IUserPersonalResponse>("users/user");
+    return this.http.get<IModels.IUserPersonalResponse>("users/user");
   }
 
   public async getUser(id: string) {
-    return this.http.service().get<IModels.IUserPersonalResponse>(`users/${id}`);
+    return this.http.get<IModels.IUserPersonalResponse>(`users/${id}`);
   }
 
   public async updateUser(id: string, payload: IModels.IUpdateUserPayload) {
-    return this.http
-      .service()
-      .put<IModels.IUserPersonalResponse, IModels.IUpdateUserPayload>(`users/${id}`, payload);
+    return this.http.put<IModels.IUserPersonalResponse, IModels.IUpdateUserPayload>(`users/${id}`, payload);
   }
 }

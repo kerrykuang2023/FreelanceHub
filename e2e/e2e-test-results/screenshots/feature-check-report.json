@@ -1,0 +1,94 @@
+[
+  {
+    "featureId": "AUTH-001",
+    "featureName": "用户注册",
+    "expectedElements": [
+      "input[type=\"email\"]",
+      "input[type=\"password\"]",
+      "input[name*=\"name\" i]",
+      "button[type=\"submit\"]",
+      "select[name*=\"role\" i], select[name*=\"type\" i]"
+    ],
+    "foundElements": [
+      "input[type=\"email\"]",
+      "input[type=\"password\"]",
+      "input[name*=\"name\" i]",
+      "button[type=\"submit\"]",
+      "select[name*=\"role\" i], select[name*=\"type\" i]"
+    ],
+    "missingElements": [],
+    "status": "pass",
+    "screenshot": "e2e-test-results\\screenshots\\freelancer\\auth-001-register.png",
+    "notes": "All elements found"
+  },
+  {
+    "featureId": "AUTH-002",
+    "featureName": "用户登录",
+    "expectedElements": [
+      "input[type=\"email\"]",
+      "input[type=\"password\"]",
+      "button[type=\"submit\"]",
+      "a:has-text(\"忘记密码\"), a:has-text(\"forgot\")"
+    ],
+    "foundElements": [
+      "input[type=\"email\"]",
+      "input[type=\"password\"]",
+      "button[type=\"submit\"]",
+      "a:has-text(\"忘记密码\"), a:has-text(\"forgot\")"
+    ],
+    "missingElements": [],
+    "status": "pass",
+    "screenshot": "e2e-test-results\\screenshots\\freelancer\\auth-002-login.png",
+    "notes": "All elements found"
+  },
+  {
+    "featureId": "AUTH-003",
+    "featureName": "密码找回",
+    "expectedElements": [
+      "input[type=\"email\"]",
+      "button[type=\"submit\"]"
+    ],
+    "foundElements": [
+      "input[type=\"email\"]",
+      "button[type=\"submit\"]"
+    ],
+    "missingElements": [],
+    "status": "pass",
+    "screenshot": "e2e-test-results\\screenshots\\freelancer\\auth-003-forgot-password.png",
+    "notes": "All elements found"
+  },
+  {
+    "featureId": "PROFILE-001",
+    "featureName": "个人档案-基本信息",
+    "expectedElements": [
+      "[class*=\"profile\"]",
+      "button:has-text(\"编辑\"), button:has-text(\"修改\")",
+      "input[name*=\"name\" i], [class*=\"user-name\"]"
+    ],
+    "foundElements": [],
+    "missingElements": [
+      "[class*=\"profile\"]",
+      "button:has-text(\"编辑\"), button:has-text(\"修改\")",
+      "input[name*=\"name\" i], [class*=\"user-name\"]"
+    ],
+    "status": "fail",
+    "screenshot": "e2e-test-results\\screenshots\\freelancer\\profile-001-basic.png",
+    "notes": "No expected elements found"
+  },
+  {
+    "featureId": "PROFILE-002",
+    "featureName": "技能标签管理",
+    "expectedElements": [
+      "button:has-text(\"添加技能\"), button:has-text(\"添加\"), button:has-text(\"新增\")",
+      "[class*=\"skill\"], [data-testid=\"skill-list\"]"
+    ],
+    "foundElements": [],
+    "missingElements": [
+      "button:has-text(\"添加技能\"), button:has-text(\"添加\"), button:has-text(\"新增\")",
+      "[class*=\"skill\"], [data-testid=\"skill-list\"]"
+    ],
+    "status": "fail",
+    "screenshot": "e2e-test-results\\screenshots\\freelancer\\profile-002-skills.png",
+    "notes": "No expected elements found"
+  }
+]

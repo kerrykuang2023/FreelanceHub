@@ -4,20 +4,12 @@ import UserAccount from "../models/user/user-account.model";
 import SeekerProfile from "../models/job-seeker-profile/seeker_profile.model";
 import { ApiError } from "../errors/ApiError";
 import mongoose from "mongoose";
-
-interface IUser {
-  _id: mongoose.Types.ObjectId;
-  email: string;
-}
-
-interface IAuthRequest extends Request {
-  user?: IUser;
-}
+import { IAuthRequest } from "../types/user.interface";
 
 export default class UserController {
   public static async getUserPersonal(req: IAuthRequest, res: Response, next: NextFunction) {
     try {
-      const user = req.user as IUser;
+      const user = req.user as any;
 
       const userAccount = await UserAccount.findById(user._id)
         .populate("user_type_id")
@@ -71,7 +63,7 @@ export default class UserController {
 
   public static async updateUser(req: IAuthRequest, res: Response, next: NextFunction) {
     try {
-      const user = req.user as IUser;
+      const user = req.user as any;
       const { id } = req.params;
       const updateData = req.body;
 

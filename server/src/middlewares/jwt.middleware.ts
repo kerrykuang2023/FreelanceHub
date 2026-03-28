@@ -10,6 +10,7 @@ module.exports = (passport: any) => {
   passport.use(
     new JwtStrategy(options, async (jwt_payload, done) => {
       UserAccount.findById(jwt_payload.id)
+        .populate("user_type_id")
         .then((user) => {
           if (user) {
             return done(null, user);

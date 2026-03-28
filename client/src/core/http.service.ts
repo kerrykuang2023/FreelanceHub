@@ -1,10 +1,10 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from "axios";
-
 import { HttpMethod } from "@/enums";
-import { IService } from "@/interfaces";
 import StorageService from "./storage.service";
 
-export default class HttpService {
+const TOKEN_KEY = "access_token";
+
+class HttpService {
   private http: AxiosInstance;
   private baseURL: string = import.meta.env.VITE_API_URL as string;
 
@@ -12,140 +12,101 @@ export default class HttpService {
     this.http = axios.create({
       baseURL: this.baseURL,
       withCredentials: false,
+      timeout: 30000,
       headers: this.setupHeaders(),
     });
+    
+    this.setupInterceptors();
   }
 
-  // Get authorization token from cookies
-  private get getAuthorization() {
-    const accessToken = StorageService.getItem("access_token") || "";
+  private setupInterceptors() {
+    this.http.interceptors.request.use(
+      (config) => {
+        const token = StorageService.getItem(TOKEN_KEY);
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error) => Promise.reject(error)
+    );
+
+    this.http.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response?.status === 401) {
+          StorageService.removeItem(TOKEN_KEY);
+          StorageService.removeItem("user_data");
+          if (!window.location.pathname.includes('/login')) {
+            window.location.href = "/login";
+          }
+        }
+        return Promise.reject(error);
+      }
+    );
+  }
+
+  private getAuthorization() {
+    const accessToken = StorageService.getItem(TOKEN_KEY) || "";
     return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
   }
 
-  // Initialize service configuration
-  public service() {
-    this.injectRequestInterceptor();
-
-    return this;
-  }
-
-  // Setup headers
   private setupHeaders(hasAttachment = false) {
     return {
-      "Content-Type": hasAttachment
-        ? "multipart/form-data"
-        : "application/json",
-      ...this.getAuthorization,
+      "Content-Type": hasAttachment ? "multipart/form-data" : "application/json",
+      ...this.getAuthorization(),
     };
   }
 
-  // Handle HTTP requests
   private async request<T>(
     method: HttpMethod,
     url: string,
     options: AxiosRequestConfig
-  ): Promise<T> {
+  ): Promise<AxiosResponse<T>> {
     try {
       const response: AxiosResponse<T> = await this.http.request<T>({
         method,
         url,
         ...options,
       });
-
-      return response.data;
+      return response;
     } catch (error) {
-      return this.normalizeError(error);
+      throw error;
     }
   }
 
-  // Perform GET request
-  public async get<T>(
-    url: string,
-    params?: IService.IParams,
-    hasAttachment = false
-  ): Promise<T> {
-    return this.request<T>(HttpMethod.GET, url, {
+  public async get<T>(url: string, params?: any): Promise<T> {
+    const response = await this.request<T>(HttpMethod.GET, url, {
       params,
-      headers: this.setupHeaders(hasAttachment),
-      signal: params?.signal,
+      headers: this.setupHeaders(),
     });
+    return response.data;
   }
 
-  // Perform POST request
-  public async post<T, P>(
-    url: string,
-    payload?: P,
-    params?: IService.IParams,
-    hasAttachment = false
-  ): Promise<T> {
-    return this.request<T>(HttpMethod.POST, url, {
+  public async post<T, P>(url: string, payload?: P, config?: AxiosRequestConfig): Promise<T> {
+    const response = await this.request<T>(HttpMethod.POST, url, {
       data: payload,
-      params,
-      headers: this.setupHeaders(hasAttachment),
-      signal: params?.signal,
+      headers: config?.headers || this.setupHeaders(),
+      ...config,
     });
+    return response.data;
   }
 
-  // Perform PUT request
-  public async put<T, P>(
-    url: string,
-    payload: P,
-    params?: IService.IParams,
-    hasAttachment = false
-  ): Promise<T> {
-    return this.request<T>(HttpMethod.PUT, url, {
+  public async put<T, P>(url: string, payload: P, config?: AxiosRequestConfig): Promise<T> {
+    const response = await this.request<T>(HttpMethod.PUT, url, {
       data: payload,
-      params,
-      headers: this.setupHeaders(hasAttachment),
-      signal: params?.signal,
+      headers: config?.headers || this.setupHeaders(),
+      ...config,
     });
+    return response.data;
   }
 
-  // Perform DELETE request
-  public async delete<T>(
-    url: string,
-    params?: IService.IParams,
-    hasAttachment = false
-  ): Promise<T> {
-    return this.request<T>(HttpMethod.DELETE, url, {
-      params,
-      headers: this.setupHeaders(hasAttachment),
-      signal: params?.signal,
+  public async delete<T>(url: string): Promise<T> {
+    const response = await this.request<T>(HttpMethod.DELETE, url, {
+      headers: this.setupHeaders(),
     });
-  }
-
-  // Inject request interceptors for request and response
-  private injectRequestInterceptor() {
-    // Request interceptor
-    this.http.interceptors.request.use(
-      (config) => {
-        // Perform an action before sending the request
-        // TODO: implement an NProgress loader
-        return config;
-      },
-      (error) => {
-        return Promise.reject(error);
-      }
-    );
-
-    // Response interceptor
-    this.http.interceptors.response.use(
-      (response) => {
-        // Do something with response data
-        return response;
-      },
-      (error) => {
-        // Implement a global error handler
-        return Promise.reject(error);
-      }
-    );
-  }
-
-  // Normalize errors
-  private normalizeError(error: any): Promise<never> {
-    if (axios.isAxiosError(error) && error.response) {
-      return Promise.reject(error);
-    }
-    return Promise.reject(error);
+    return response.data;
   }
 }
+
+export default HttpService;

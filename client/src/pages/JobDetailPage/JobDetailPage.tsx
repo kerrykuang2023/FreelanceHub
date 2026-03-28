@@ -11,6 +11,8 @@ import {
   CheckCircleIcon,
   ClockIcon,
   EnvelopeIcon,
+  PencilSquareIcon,
+  ArrowRightIcon,
 } from "@heroicons/react/24/outline";
 import PortalLayout from "@/components/layouts/portal/PortalLayout";
 import JobsService from "@/services/jobs.service";
@@ -18,11 +20,12 @@ import ApplicationsService from "@/services/applications.service";
 import { IJob } from "@/interfaces";
 import Divider from "@/components/core-ui/Divider";
 import { useAuth } from "@/providers";
+import PageHeader from "@/components/core-ui/PageHeader";
 
 const JobDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, activeRole, roles } = useAuth();
   const [job, setJob] = useState<IJob | null>(null);
   const [loading, setLoading] = useState(true);
   const [applying, setApplying] = useState(false);
@@ -33,19 +36,32 @@ const JobDetailPage = () => {
   const [message, setMessage] = useState("");
   const [sendingMessage, setSendingMessage] = useState(false);
   
-  const isJobSeeker = user?.user_type_name === "job_seeker";
+  const currentRoleType = activeRole?.role_type || user?.user_type_name || 'job_seeker';
+  const isJobSeeker = currentRoleType === 'job_seeker';
+  const isHR = currentRoleType === 'hr_recruiter';
+  const isAdmin = currentRoleType === 'admin';
+  const isCompanyUser = user?.user_type_name === "company_user";
 
   useEffect(() => {
     if (id) {
       fetchJob();
+      checkIfSaved();
     }
   }, [id]);
+
+  const checkIfSaved = () => {
+    const savedJobs = localStorage.getItem('saved_jobs');
+    if (savedJobs) {
+      const jobs = JSON.parse(savedJobs);
+      setSaved(jobs.some((j: IJob) => j._id === id));
+    }
+  };
 
   const fetchJob = async () => {
     try {
       setLoading(true);
-      const response = await new JobsService().getJob(id!);
-      const jobData = (response as any).job || response.job;
+      const response = await jobsService.getJobById(id!);
+      const jobData = (response as any).job || response;
       setJob(jobData);
     } catch (err) {
       console.error("Failed to fetch job:", err);
@@ -90,7 +106,20 @@ const JobDetailPage = () => {
   };
 
   const handleSave = () => {
-    setSaved(!saved);
+    const savedJobs = localStorage.getItem('saved_jobs');
+    let jobs: IJob[] = savedJobs ? JSON.parse(savedJobs) : [];
+    
+    if (saved && job) {
+      // Remove from saved jobs
+      jobs = jobs.filter((j) => j._id !== job._id);
+      setSaved(false);
+    } else if (job) {
+      // Add to saved jobs
+      jobs.push(job);
+      setSaved(true);
+    }
+    
+    localStorage.setItem('saved_jobs', JSON.stringify(jobs));
   };
 
   const handleShare = () => {
@@ -132,7 +161,17 @@ const JobDetailPage = () => {
 
   return (
     <PortalLayout title="Job Details">
-      <div className="flex-1 max-w-4xl mx-auto w-full">
+      <div className="flex-1 max-w-4xl mx-auto w-full" data-testid="job-detail-page">
+        <PageHeader
+          title={job.job_title || "职位详情"}
+          description={job.company_id?.company_name || "查看职位详情"}
+          breadcrumbs={[
+            { label: "首页", href: "/" },
+            { label: "职位列表", href: "/" },
+            { label: "职位详情" },
+          ]}
+        />
+        
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <div className="px-6 py-8 sm:p-10">
             <div className="flex gap-x-6 justify-between items-start">
@@ -141,10 +180,10 @@ const JobDetailPage = () => {
                   <BriefcaseIcon className="h-10 w-10 text-indigo-600" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-gray-900">
-                    {job.job_description?.substring(0, 60) || "Job Position"}
-                    {job.job_description && job.job_description.length > 60 ? "..." : ""}
-                  </h1>
+                  <h2 className="text-2xl font-bold text-gray-900" data-testid="job-title">
+                    {job.job_title || job.job_description?.substring(0, 60) || "Job Position"}
+                    {!job.job_title && job.job_description && job.job_description.length > 60 ? "..." : ""}
+                  </h2>
                   <div className="flex items-center gap-x-2 mt-2">
                     <BuildingOfficeIcon className="h-5 w-5 text-gray-400" />
                     <span className="text-lg text-gray-600">
@@ -341,21 +380,43 @@ const JobDetailPage = () => {
                 {isJobSeeker ? (
                   <>
                     <button
-                      onClick={handleApply}
-                      disabled={!job.is_active || applying}
-                      className={`flex-1 rounded-lg px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors ${
-                        job.is_active && !applying
+                      onClick={() => navigate(`/jobs/${job._id}/apply`)}
+                      disabled={!job.is_active}
+                      className={`flex-1 rounded-lg px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors flex items-center justify-center gap-2 ${
+                        job.is_active
                           ? "bg-indigo-600 hover:bg-indigo-500"
                           : "bg-gray-300 cursor-not-allowed"
                       }`}
                     >
-                      {applying ? "Submitting..." : applied ? "Applied ✓" : job.is_active ? "Apply Now" : "Position Closed"}
+                      Apply with Details
+                      <ArrowRightIcon className="w-5 h-5" />
                     </button>
                     <button
-                      onClick={() => setShowMessageModal(true)}
-                      className="rounded-lg px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors bg-blue-600 hover:bg-blue-500"
+                      onClick={handleApply}
+                      disabled={!job.is_active || applying}
+                      className={`rounded-lg px-6 py-3 text-base font-semibold shadow-sm transition-colors ${
+                        job.is_active && !applying
+                          ? "bg-blue-600 hover:bg-blue-500 text-white"
+                          : "bg-gray-100 text-gray-500 cursor-not-allowed"
+                      }`}
                     >
-                      Send Message
+                      {applying ? "Submitting..." : "Quick Apply"}
+                    </button>
+                  </>
+                ) : isCompanyUser ? (
+                  <>
+                    <button
+                      onClick={() => navigate(`/jobs/${job._id}/edit`)}
+                      className="flex-1 rounded-lg px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors bg-indigo-600 hover:bg-indigo-500 flex items-center justify-center gap-2"
+                    >
+                      <PencilSquareIcon className="w-5 h-5" />
+                      Edit Project
+                    </button>
+                    <button
+                      onClick={() => navigate("/my-jobs")}
+                      className="rounded-lg px-6 py-3 text-base font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
+                    >
+                      Back to My Jobs
                     </button>
                   </>
                 ) : (

@@ -8,6 +8,7 @@ import * as Yup from "yup";
 
 const FORM_INITIAL_VALUES = {
   user_type_name: "job_seeker",
+  name: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -36,7 +37,11 @@ const useRegisterForm = () => {
   const validationSchema = Yup.object({
     user_type_name: Yup.string()
       .required("User type is required")
-      .oneOf(["job_seeker", "hr_recruiter"]),
+      .oneOf(["job_seeker", "hr_recruiter"], "Please select a valid user type"),
+    name: Yup.string()
+      .required("Name is required")
+      .min(2, "Name must be at least 2 characters")
+      .max(50, "Name must be at most 50 characters"),
     email: Yup.string()
       .required("Email is required")
       .email("Invalid email address"),
@@ -62,6 +67,7 @@ const useRegisterForm = () => {
         setSubmitting(true);
         const payload: IRegisterPayload = {
           user_type_name: values.user_type_name,
+          name: values.name,
           email: values.email,
           password: values.password,
         };

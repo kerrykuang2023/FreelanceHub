@@ -4,28 +4,33 @@ const JobLocationSchema = new mongoose.Schema(
   {
     street_address: {
       type: String,
-      required: true,
-      length: 200,
+      required: false,
+      maxlength: 200,
+      default: "",
     },
     city: {
       type: String,
-      required: true,
-      length: 50,
+      required: false,
+      maxlength: 50,
+      default: "",
     },
     state: {
       type: String,
-      required: true,
-      length: 50,
+      required: false,
+      maxlength: 50,
+      default: "",
     },
     country: {
       type: String,
-      required: true,
-      length: 50,
+      required: false,
+      maxlength: 50,
+      default: "",
     },
     zip_code: {
       type: String,
-      required: true,
-      length: 10,
+      required: false,
+      maxlength: 10,
+      default: "",
     },
   },
   {

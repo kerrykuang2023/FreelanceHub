@@ -2,7 +2,6 @@ import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 
-// This is the schema for the user_account collection
 const UserAccountSchema = new mongoose.Schema(
   {
     user_type_id: {
@@ -14,15 +13,33 @@ const UserAccountSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      length: 255,
-      index: {
-        unique: true,
-      },
+      trim: true,
+      lowercase: true,
+      maxlength: 255,
     },
     password: {
       type: String,
       required: true,
-      length: 100,
+      maxlength: 100,
+      select: false,
+    },
+    user_name: {
+      type: String,
+      required: false,
+      trim: true,
+      maxlength: 100,
+    },
+    first_name: {
+      type: String,
+      required: false,
+      trim: true,
+      maxlength: 100,
+    },
+    last_name: {
+      type: String,
+      required: false,
+      trim: true,
+      maxlength: 100,
     },
     date_of_birth: {
       type: Date,
@@ -31,26 +48,24 @@ const UserAccountSchema = new mongoose.Schema(
     gender: {
       type: String,
       required: false,
-      length: 10,
+      enum: ["male", "female", "other", "prefer_not_to_say"],
     },
     is_active: {
       type: Boolean,
-      required: false,
+      default: true,
     },
     contact_number: {
       type: String,
       required: false,
-      length: 15,
+      maxlength: 20,
     },
     sms_notification_active: {
       type: Boolean,
-      required: false,
       default: false,
     },
     email_notification_active: {
       type: Boolean,
-      required: false,
-      default: false,
+      default: true,
     },
     user_image: {
       type: String,
@@ -59,6 +74,20 @@ const UserAccountSchema = new mongoose.Schema(
     registration_date: {
       type: Date,
       required: true,
+      default: Date.now,
+    },
+    last_login_date: {
+      type: Date,
+      required: false,
+    },
+    favorite_jobs: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "JobPost",
+    }],
+    company_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Company",
+      required: false,
     },
   },
   {
@@ -67,16 +96,17 @@ const UserAccountSchema = new mongoose.Schema(
   }
 );
 
-// Set the registration date on save
+UserAccountSchema.index({ email: 1 }, { unique: true });
+UserAccountSchema.index({ user_type_id: 1 });
+UserAccountSchema.index({ created_at: -1 });
+
 UserAccountSchema.pre("save", function (next) {
-  let user = this;
-  if (!user.registration_date) {
-    user.registration_date = new Date();
+  if (!this.registration_date) {
+    this.registration_date = new Date();
   }
   next();
 });
 
-// Password hashing
 UserAccountSchema.pre("save", function (next) {
   const user = this;
 
@@ -94,14 +124,11 @@ UserAccountSchema.pre("save", function (next) {
   });
 });
 
-// Password comparison
 UserAccountSchema.methods.comparePassword = function (password: string) {
   return bcrypt.compareSync(password, this.password);
 };
 
-// Generate JWT token
 UserAccountSchema.methods.generateJWT = function () {
-  // Set the expiration date to 60 days
   const today = new Date();
   const expirationDate = new Date(today);
   expirationDate.setDate(today.getDate() + 60);
@@ -109,12 +136,20 @@ UserAccountSchema.methods.generateJWT = function () {
   const payload = {
     id: this._id,
     email: this.email,
+    user_name: this.user_name,
   };
 
-  const jwtSecret = process.env.JWT_SECRET || "jwt_secret";
+  const jwtSecret = process.env.JWT_SECRET || "jwt_secret_key_2026";
   return jwt.sign(payload, jwtSecret, {
     expiresIn: parseInt((expirationDate.getTime() / 1000).toString(), 10),
   });
+};
+
+UserAccountSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  delete obj.__v;
+  return obj;
 };
 
 const UserAccount = mongoose.model("UserAccount", UserAccountSchema);

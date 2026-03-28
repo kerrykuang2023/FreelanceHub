@@ -1,5 +1,5 @@
 import { IModels } from "..";
-import { ILoginResponse } from "../models";
+import { ILoginResponse, IRegisterResponse } from "../models";
 
 export interface IAuthStore {
   termsConditionsModalOpen: boolean;
@@ -15,6 +15,6 @@ export interface IAuthStore {
 
   registerSuccessMessage?: string;
   registerErrorMessage?: string;
-  register: (payload: IModels.IRegisterPayload, options?: any) => Promise<void>;
+  register: (payload: IModels.IRegisterPayload, options?: any) => Promise<IRegisterResponse>;
   clearRegisterMessages: () => void;
 }

@@ -33,12 +33,16 @@ const HomePage = () => {
   const fetchJobs = async () => {
     try {
       console.log("Fetching jobs...");
-      const service = new JobsService();
-      console.log("JobsService created, calling getJobs...");
-      const response = await service.getJobs({ limit: 20 });
+      const response = await JobsService.getJobs({ limit: 20 });
       console.log("Response received:", response);
-      // axios returns data directly, not wrapped in .data
-      const jobs = (response as any).jobs || response.jobs || [];
+
+      let jobs = [];
+      if (Array.isArray(response)) {
+        jobs = response;
+      } else if (response && typeof response === 'object') {
+        jobs = (response as any).jobs || (response as any).data?.jobs || [];
+      }
+
       console.log("Jobs extracted:", jobs);
       setJobs(jobs);
       if (jobs.length > 0) {
@@ -46,7 +50,6 @@ const HomePage = () => {
       }
     } catch (error) {
       console.error("Failed to fetch jobs:", error);
-      console.error("Error response:", error.response?.data);
     } finally {
       setLoading(false);
     }

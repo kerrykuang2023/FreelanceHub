@@ -1,3 +1,181 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --spacing-card: 24px;
+  --spacing-section: 32px;
+  --padding-container: 24px;
+  --max-width-content: 1440px;
+  
+  --color-title: #111827;
+  --color-text-primary: #374151;
+  --color-text-secondary: #6B7280;
+  --color-text-hint: #9CA3AF;
+  
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-card-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  --shadow-dropdown: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow: 300ms ease;
+}
+
+html {
+  overflow-x: hidden;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+body {
+  overflow-x: hidden;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  color: var(--color-text-primary);
+  background-color: #F9FAFB;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@layer base {
+  h1 {
+    @apply text-2xl font-bold text-gray-900;
+    line-height: 1.4;
+  }
+  
+  h2 {
+    @apply text-xl font-semibold text-gray-900;
+    line-height: 1.4;
+  }
+  
+  h3 {
+    @apply text-lg font-semibold text-gray-900;
+    line-height: 1.5;
+  }
+  
+  h4 {
+    @apply text-base font-medium text-gray-900;
+    line-height: 1.5;
+  }
+  
+  p {
+    @apply text-sm text-gray-600;
+    line-height: 1.6;
+  }
+}
+
+@layer components {
+  .page-container {
+    max-width: var(--max-width-content);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--padding-container);
+    padding-right: var(--padding-container);
+  }
+  
+  .card {
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: var(--spacing-card);
+    transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+  }
+  
+  .card:hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+  
+  .btn-primary {
+    @apply inline-flex items-center px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-200;
+  }
+  
+  .btn-secondary {
+    @apply inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-all duration-200;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200;
+  }
+  
+  .kpi-value {
+    @apply text-3xl font-bold text-gray-900;
+  }
+  
+  .kpi-label {
+    @apply text-sm text-gray-500;
+  }
+  
+  .status-badge-draft {
+    @apply px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-600;
+  }
+  
+  .status-badge-submitted {
+    @apply px-2 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-700;
+  }
+  
+  .status-badge-confirmed {
+    @apply px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700;
+  }
+  
+  .status-badge-rejected {
+    @apply px-2 py-1 text-xs font-medium rounded-full bg-red-100 text-red-700;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --spacing-card: 16px;
+    --spacing-section: 24px;
+    --padding-container: 16px;
+  }
+  
+  .mobile-no-scroll {
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

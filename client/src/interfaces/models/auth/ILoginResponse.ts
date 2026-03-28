@@ -1,4 +1,13 @@
 export interface ILoginResponse {
-  user: any;
-  token: string;
+  success?: boolean;
+  data?: {
+    user: any;
+    token: string;
+    roles?: any[];
+    active_role?: any;
+  };
+  user?: any;
+  token?: string;
+  roles?: any[];
+  active_role?: any;
 }

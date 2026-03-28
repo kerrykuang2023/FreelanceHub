@@ -1,0 +1,233 @@
+{
+  "testTime": "2026-03-24T12:45:44.304Z",
+  "testData": {
+    "projectTitle": "数据流转验证项目_1774356300820",
+    "projectDescription": "这是一个用于验证完整数据流转的测试项目",
+    "workHours": 8,
+    "workDescription": "完成了核心功能开发和单元测试",
+    "invoiceAmount": 8000
+  },
+  "verificationResults": [
+    {
+      "step": "FLOW-1.1: HR登录",
+      "expected": "登录成功并跳转到首页",
+      "actual": "登录成功",
+      "passed": true,
+      "timestamp": "2026-03-24T12:45:05.931Z"
+    },
+    {
+      "step": "FLOW-1.2: 项目发布页面加载",
+      "expected": "表单页面正常显示",
+      "actual": "表单页面正常",
+      "passed": true,
+      "screenshot": "screenshots/data-flow-flow1-post-job-page-1774356306704.png",
+      "timestamp": "2026-03-24T12:45:06.870Z"
+    },
+    {
+      "step": "FLOW-1.3: 填写项目信息",
+      "expected": "项目信息填写完成",
+      "actual": "项目信息已填写",
+      "passed": true,
+      "screenshot": "screenshots/data-flow-flow1-form-filled-1774356307533.png",
+      "timestamp": "2026-03-24T12:45:07.671Z"
+    },
+    {
+      "step": "FLOW-1.4: 项目提交后跳转",
+      "expected": "跳转到我的项目页面",
+      "actual": "当前URL: http://localhost:5137/post-job",
+      "passed": false,
+      "screenshot": "screenshots/data-flow-flow1-after-submit-1774356310726.png",
+      "timestamp": "2026-03-24T12:45:10.846Z"
+    },
+    {
+      "step": "FLOW-1.5: 新项目在HR列表中显示",
+      "expected": "项目出现在列表中",
+      "actual": "项目未显示",
+      "passed": false,
+      "screenshot": "screenshots/data-flow-flow1-my-jobs-list-1774356311633.png",
+      "timestamp": "2026-03-24T12:45:11.716Z"
+    },
+    {
+      "step": "FLOW-2.1: 顾问登录",
+      "expected": "登录成功",
+      "actual": "登录成功",
+      "passed": true,
+      "timestamp": "2026-03-24T12:45:16.497Z"
+    },
+    {
+      "step": "FLOW-2.2: 项目列表显示",
+      "expected": "显示至少1个项目",
+      "actual": "显示0个项目",
+      "passed": false,
+      "screenshot": "screenshots/data-flow-flow2-jobs-list-1774356317122.png",
+      "timestamp": "2026-03-24T12:45:17.183Z"
+    },
+    {
+      "step": "FLOW-2.3: HR发布的项目在顾问视角可见",
+      "expected": "项目可见",
+      "actual": "项目不可见 - 数据流转问题",
+      "passed": false,
+      "screenshot": "screenshots/data-flow-flow2-project-visible-1774356317186.png",
+      "timestamp": "2026-03-24T12:45:17.243Z"
+    },
+    {
+      "step": "FLOW-3.1: HR登录",
+      "expected": "登录成功",
+      "actual": "登录成功",
+      "passed": true,
+      "timestamp": "2026-03-24T12:45:21.930Z"
+    },
+    {
+      "step": "FLOW-3.2: 申请列表显示",
+      "expected": "显示至少1条申请",
+      "actual": "显示0条申请",
+      "passed": false,
+      "screenshot": "screenshots/data-flow-flow3-applications-list-1774356322550.png",
+      "timestamp": "2026-03-24T12:45:22.613Z"
+    },
+    {
+      "step": "FLOW-3.3: 顾问申请在HR视角可见",
+      "expected": "申请可见",
+      "actual": "申请不可见 - 数据流转问题",
+      "passed": false,
+      "timestamp": "2026-03-24T12:45:22.613Z"
+    },
+    {
+      "step": "FLOW-4.1: 顾问登录",
+      "expected": "登录成功",
+      "actual": "登录成功",
+      "passed": true,
+      "timestamp": "2026-03-24T12:45:27.174Z"
+    },
+    {
+      "step": "FLOW-4.3: 工时表单项目选择器",
+      "expected": "项目选择器可见",
+      "actual": "项目选择器不可见",
+      "passed": false,
+      "screenshot": "screenshots/data-flow-flow4-worklog-form-1774356327844.png",
+      "timestamp": "2026-03-24T12:45:27.926Z"
+    },
+    {
+      "step": "FLOW-5.1: HR登录",
+      "expected": "登录成功",
+      "actual": "登录成功",
+      "passed": true,
+      "timestamp": "2026-03-24T12:45:32.431Z"
+    },
+    {
+      "step": "FLOW-5.2: HR工时列表显示",
+      "expected": "显示至少1条工时",
+      "actual": "显示0条工时",
+      "passed": false,
+      "screenshot": "screenshots/data-flow-flow5-hr-worklogs-list-1774356333049.png",
+      "timestamp": "2026-03-24T12:45:33.096Z"
+    },
+    {
+      "step": "FLOW-5.3: 顾问工时在HR视角可见",
+      "expected": "工时可见",
+      "actual": "工时不可见 - 数据流转问题",
+      "passed": false,
+      "timestamp": "2026-03-24T12:45:33.097Z"
+    },
+    {
+      "step": "FLOW-6.1: 顾问登录",
+      "expected": "登录成功",
+      "actual": "登录成功",
+      "passed": true,
+      "timestamp": "2026-03-24T12:45:37.733Z"
+    },
+    {
+      "step": "FLOW-7.1: HR登录",
+      "expected": "登录成功",
+      "actual": "登录成功",
+      "passed": true,
+      "timestamp": "2026-03-24T12:45:43.138Z"
+    },
+    {
+      "step": "FLOW-7.2: HR发票列表显示",
+      "expected": "显示至少1条发票",
+      "actual": "显示0条发票",
+      "passed": false,
+      "screenshot": "screenshots/data-flow-flow7-hr-invoices-list-1774356343843.png",
+      "timestamp": "2026-03-24T12:45:43.904Z"
+    },
+    {
+      "step": "FLOW-7.3: 顾问发票在HR视角可见",
+      "expected": "发票可见",
+      "actual": "发票不可见 - 数据流转问题",
+      "passed": false,
+      "timestamp": "2026-03-24T12:45:43.904Z"
+    }
+  ],
+  "summary": {
+    "total": 20,
+    "passed": 9,
+    "failed": 11,
+    "passRate": "45.0%"
+  },
+  "dataFlowIssues": [
+    {
+      "step": "FLOW-1.4: 项目提交后跳转",
+      "expected": "跳转到我的项目页面",
+      "actual": "当前URL: http://localhost:5137/post-job",
+      "screenshot": "screenshots/data-flow-flow1-after-submit-1774356310726.png"
+    },
+    {
+      "step": "FLOW-1.5: 新项目在HR列表中显示",
+      "expected": "项目出现在列表中",
+      "actual": "项目未显示",
+      "screenshot": "screenshots/data-flow-flow1-my-jobs-list-1774356311633.png"
+    },
+    {
+      "step": "FLOW-2.2: 项目列表显示",
+      "expected": "显示至少1个项目",
+      "actual": "显示0个项目",
+      "screenshot": "screenshots/data-flow-flow2-jobs-list-1774356317122.png"
+    },
+    {
+      "step": "FLOW-2.3: HR发布的项目在顾问视角可见",
+      "expected": "项目可见",
+      "actual": "项目不可见 - 数据流转问题",
+      "screenshot": "screenshots/data-flow-flow2-project-visible-1774356317186.png"
+    },
+    {
+      "step": "FLOW-3.2: 申请列表显示",
+      "expected": "显示至少1条申请",
+      "actual": "显示0条申请",
+      "screenshot": "screenshots/data-flow-flow3-applications-list-1774356322550.png"
+    },
+    {
+      "step": "FLOW-3.3: 顾问申请在HR视角可见",
+      "expected": "申请可见",
+      "actual": "申请不可见 - 数据流转问题"
+    },
+    {
+      "step": "FLOW-4.3: 工时表单项目选择器",
+      "expected": "项目选择器可见",
+      "actual": "项目选择器不可见",
+      "screenshot": "screenshots/data-flow-flow4-worklog-form-1774356327844.png"
+    },
+    {
+      "step": "FLOW-5.2: HR工时列表显示",
+      "expected": "显示至少1条工时",
+      "actual": "显示0条工时",
+      "screenshot": "screenshots/data-flow-flow5-hr-worklogs-list-1774356333049.png"
+    },
+    {
+      "step": "FLOW-5.3: 顾问工时在HR视角可见",
+      "expected": "工时可见",
+      "actual": "工时不可见 - 数据流转问题"
+    },
+    {
+      "step": "FLOW-7.2: HR发票列表显示",
+      "expected": "显示至少1条发票",
+      "actual": "显示0条发票",
+      "screenshot": "screenshots/data-flow-flow7-hr-invoices-list-1774356343843.png"
+    },
+    {
+      "step": "FLOW-7.3: 顾问发票在HR视角可见",
+      "expected": "发票可见",
+      "actual": "发票不可见 - 数据流转问题"
+    }
+  ]
+}

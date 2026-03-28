@@ -13,4 +13,9 @@ export class RegisterUserAccountRequest {
   @MinLength(8, { message: "Password must be at least 8 characters" })
   @MaxLength(20, { message: "Password must be at most 20 characters" })
   password!: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(50, { message: "User name must be at most 50 characters" })
+  user_name?: string;
 }

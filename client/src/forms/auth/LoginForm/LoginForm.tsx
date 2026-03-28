@@ -27,6 +27,7 @@ const LoginForm = () => {
               id="email"
               name="email"
               type="email"
+              data-testid="email-input"
               autoComplete="email"
               required
               className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -51,6 +52,7 @@ const LoginForm = () => {
               id="password"
               name="password"
               type="password"
+              data-testid="password-input"
               autoComplete="current-password"
               required
               className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -70,6 +72,7 @@ const LoginForm = () => {
               id="remember-me"
               name="remember-me"
               type="checkbox"
+              data-testid="remember-me-checkbox"
               className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
             />
             <label
@@ -93,6 +96,7 @@ const LoginForm = () => {
         <div>
           <button
             type="submit"
+            data-testid="login-submit-btn"
             className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             disabled={form.isSubmitting}
           >

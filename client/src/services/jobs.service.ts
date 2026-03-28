@@ -1,59 +1,57 @@
 import HttpService from "@/core/http.service";
-import { IModels } from "@/interfaces";
 
-export default class JobsService {
-  private http: HttpService;
+const httpService = new HttpService();
 
-  constructor() {
-    this.http = new HttpService();
+class JobsService {
+  private baseUrl = "/jobs";
+
+  async getJobs(params?: any) {
+    return httpService.get(this.baseUrl, { params });
   }
 
-  public async getJobTypes() {
-    return this.http.service().get<{ job_types: { _id: string; job_type: string }[] }>("jobs/types");
+  async getJobById(id: string) {
+    return httpService.get(`${this.baseUrl}/${id}`);
   }
 
-  public async getJobs(params?: {
-    page?: number;
-    limit?: number;
-    search?: string;
-    job_type?: string;
-    location?: string;
-    is_active?: boolean;
-  }) {
-    const queryParams = new URLSearchParams();
-    if (params?.page) queryParams.append("page", params.page.toString());
-    if (params?.limit) queryParams.append("limit", params.limit.toString());
-    if (params?.search) queryParams.append("search", params.search);
-    if (params?.job_type) queryParams.append("job_type", params.job_type);
-    if (params?.location) queryParams.append("location", params.location);
-    if (params?.is_active !== undefined)
-      queryParams.append("is_active", params.is_active.toString());
-
-    const queryString = queryParams.toString();
-    const url = queryString ? `jobs?${queryString}` : "jobs";
-    
-    return this.http
-      .service()
-      .get<IModels.IJobsResponse>(url);
+  async createJob(data: any) {
+    return httpService.post(this.baseUrl, data);
   }
 
-  public async getJob(id: string) {
-    return this.http.service().get<IModels.IJobResponse>(`jobs/${id}`);
+  async updateJob(id: string, data: any) {
+    return httpService.put(`${this.baseUrl}/${id}`, data);
   }
 
-  public async createJob(payload: IModels.ICreateJobPayload) {
-    return this.http
-      .service()
-      .post<IModels.IJobResponse, IModels.ICreateJobPayload>("jobs", payload);
+  async deleteJob(id: string) {
+    return httpService.delete(`${this.baseUrl}/${id}`);
   }
 
-  public async updateJob(id: string, payload: IModels.IUpdateJobPayload) {
-    return this.http
-      .service()
-      .put<IModels.IJobResponse, IModels.IUpdateJobPayload>(`jobs/${id}`, payload);
+  async getMyPostedJobs(params?: any) {
+    return httpService.get(`${this.baseUrl}/my-posted-jobs`, { params });
   }
 
-  public async deleteJob(id: string) {
-    return this.http.service().delete<IModels.IDeleteJobResponse>(`jobs/${id}`);
+  async getMyProjects(params?: any) {
+    return httpService.get(`${this.baseUrl}/my-projects`, { params });
+  }
+
+  async getMyApplications(params?: any) {
+    return httpService.get(`/job-applications/my-applications`, { params });
+  }
+
+  async getApplicationsForMyJobs(params?: any) {
+    return httpService.get(`/job-applications/received`, { params });
+  }
+
+  async applyForJob(jobId: string, data: any) {
+    return httpService.post(`${this.baseUrl}/${jobId}/apply`, data);
+  }
+
+  async saveJob(jobId: string) {
+    return httpService.post(`${this.baseUrl}/${jobId}/save`, {});
+  }
+
+  async getJobTypes() {
+    return httpService.get(`${this.baseUrl}/types`);
   }
 }
+
+export default new JobsService();

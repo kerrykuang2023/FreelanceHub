@@ -1,4 +1,4 @@
-FROM node:18.18.0
+FROM node:20
 RUN npm install -g nodemon
 WORKDIR /app
 COPY . .

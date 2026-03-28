@@ -10,30 +10,271 @@ import {
   Cog8ToothIcon,
   ArrowLeftStartOnRectangleIcon,
   BookmarkIcon,
+  ServerStackIcon,
+  ChevronDownIcon,
+  DocumentTextIcon,
+  ClipboardDocumentListIcon,
+  UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { useAuth } from "@/providers";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "@/components/core-ui/Logo";
+import RoleSwitcher from "@/components/user/RoleSwitcher";
+
+interface NavItem {
+  name: string;
+  href?: string;
+  icon?: any;
+  children?: NavItem[];
+  roles?: string[];
+}
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { isAuthenticated, logout, user } = useAuth();
-  
-  const isHR = user?.user_type_name === "hr_recruiter";
+  const { isAuthenticated, logout, user, roles, activeRole, switchRole } = useAuth();
+  const location = useLocation();
 
-  const navigation = useMemo(() => {
-    if (isAuthenticated) {
+  const currentRoleType = activeRole?.role_type || user?.user_type_name || 'job_seeker';
+  const isAdmin = currentRoleType === 'admin';
+  const isHR = currentRoleType === 'hr_recruiter';
+  const isJobSeeker = currentRoleType === 'job_seeker';
+  
+  console.log('[Header] currentRoleType:', currentRoleType, 'activeRole:', activeRole, 'user?.user_type_name:', user?.user_type_name);
+
+  const allNavItems: NavItem[] = useMemo(() => {
+    const items: NavItem[] = [
+      { 
+        name: "首页", 
+        href: "/", 
+        icon: HomeIcon,
+        roles: ['job_seeker', 'hr_recruiter', 'admin']
+      },
+      { 
+        name: "我的项目", 
+        href: "/my-projects", 
+        icon: BriefcaseIcon,
+        roles: ['job_seeker', 'hr_recruiter']
+      },
+      { 
+        name: "浏览项目", 
+        href: "/jobs", 
+        icon: BriefcaseIcon,
+        roles: ['job_seeker']
+      },
+      { 
+        name: "我的申请", 
+        href: "/applications", 
+        icon: DocumentTextIcon,
+        roles: ['job_seeker']
+      },
+      { 
+        name: "收藏职位", 
+        href: "/saved-jobs", 
+        icon: BookmarkIcon,
+        roles: ['job_seeker']
+      },
+      { 
+        name: "发布职位", 
+        href: "/post-job", 
+        icon: BriefcaseIcon,
+        roles: ['hr_recruiter']
+      },
+      { 
+        name: "申请管理", 
+        href: "/company/applications", 
+        icon: UserGroupIcon,
+        roles: ['hr_recruiter']
+      },
+      { 
+        name: "工时管理", 
+        href: "/work-logs", 
+        icon: ClipboardDocumentListIcon,
+        roles: ['job_seeker', 'hr_recruiter']
+      },
+      { 
+        name: "发票管理", 
+        href: "/invoices", 
+        icon: DocumentTextIcon,
+        roles: ['job_seeker', 'hr_recruiter']
+      },
+      { 
+        name: "消息", 
+        href: "/messages", 
+        icon: ChatBubbleLeftRightIcon,
+        roles: ['job_seeker', 'hr_recruiter']
+      },
+    ];
+
+    return items;
+  }, []);
+
+  const adminNav: NavItem[] = useMemo(() => {
+    if (!isAdmin) return [];
+    
+    return [
+      { name: "Dashboard", href: "/admin/dashboard" },
+      { name: "用户管理", href: "/admin/users" },
+      { name: "角色审批", href: "/admin/role-approvals" },
+      { name: "企业审核", href: "/admin/companies" },
+      { name: "工时管理", href: "/admin/worklogs" },
+      { name: "发票管理", href: "/admin/invoices" },
+      { name: "项目管理", href: "/admin/projects" },
+      { name: "举报管理", href: "/admin/reports" },
+    ];
+  }, [isAdmin]);
+
+  const configNav: NavItem[] = useMemo(() => {
+    if (!isAdmin) return [];
+    
+    return [
+      { name: "技能分类", href: "/admin/config/skill-categories" },
+      { name: "工时类型", href: "/admin/config/work-types" },
+      { name: "税率配置", href: "/admin/config/tax-rates" },
+      { name: "货币配置", href: "/admin/config/currencies" },
+      { name: "语言要求", href: "/admin/config/languages" },
+      { name: "工作性质", href: "/admin/config/job-natures" },
+      { name: "工作形式", href: "/admin/config/work-formats" },
+      { name: "Rate类型", href: "/admin/config/rate-types" },
+      { name: "发票类型", href: "/admin/config/invoice-types" },
+      { name: "付款方式", href: "/admin/config/payment-methods" },
+    ];
+  }, [isAdmin]);
+
+  const navigation: NavItem[] = useMemo(() => {
+    if (!isAuthenticated) return [];
+
+    const filteredNav = allNavItems.filter(item => 
+      !item.roles || item.roles.includes(currentRoleType)
+    );
+
+    if (isAdmin) {
       return [
-        { name: "Home", href: "/", icon: HomeIcon },
-        { name: "My Jobs", href: "/my-jobs", icon: BriefcaseIcon },
-        { name: "Saved Jobs", href: "/saved-jobs", icon: BookmarkIcon },
-        { name: "Messages", href: "/messages", icon: ChatBubbleLeftRightIcon },
+        ...filteredNav,
+        {
+          name: "系统管理",
+          href: "/admin/dashboard",
+          icon: ServerStackIcon,
+          children: [
+            ...adminNav,
+            { name: "系统配置", href: "/admin/configuration" },
+            {
+              name: "配置项管理",
+              children: configNav,
+            },
+          ],
+        },
       ];
     }
 
-    return [];
-  }, [isAuthenticated]);
+    return filteredNav;
+  }, [isAuthenticated, currentRoleType, allNavItems, isAdmin, adminNav, configNav]);
+
+  const isActiveHref = (href?: string) => {
+    if (!href) return false;
+    return location.pathname === href || location.pathname.startsWith(href + "/");
+  };
+
+  const renderNavItem = (item: NavItem, level: number = 0) => {
+    if (item.children) {
+      return (
+        <div key={item.name} className="relative group">
+          <button
+            className={`flex items-center gap-x-1 px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
+              isActiveHref(item.href)
+                ? "text-indigo-600 bg-indigo-50"
+                : level === 0
+                ? "text-gray-900 hover:text-indigo-600 hover:bg-gray-50"
+                : "text-gray-700 hover:text-indigo-600 hover:bg-gray-50"
+            }`}
+          >
+            {item.icon && <item.icon className="h-5 w-5" />}
+            <span>{item.name}</span>
+            <ChevronDownIcon className="h-4 w-4" />
+          </button>
+          <div className="absolute left-0 mt-1 w-48 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-1 z-50 hidden group-hover:block">
+            {item.children.map((child) => (
+              <div key={child.name} className="relative group/sub">
+                {child.children ? (
+                  <>
+                    <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:text-indigo-600 hover:bg-gray-50 flex items-center justify-between">
+                      {child.icon && <child.icon className="h-4 w-4 mr-2" />}
+                      {child.name}
+                      <ChevronDownIcon className="h-3 w-3 rotate-90" />
+                    </button>
+                    <div className="absolute left-full top-0 ml-1 w-48 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-1 hidden group-hover/sub:block">
+                      {child.children.map((subChild) => (
+                        <Link
+                          key={subChild.name}
+                          to={subChild.href || "#"}
+                          className={`block px-4 py-2 text-sm ${
+                            isActiveHref(subChild.href)
+                              ? "text-indigo-600 bg-indigo-50"
+                              : "text-gray-700 hover:text-indigo-600 hover:bg-gray-50"
+                          }`}
+                        >
+                          {subChild.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <Link
+                    to={child.href || "#"}
+                    className={`block px-4 py-2 text-sm ${
+                      isActiveHref(child.href)
+                        ? "text-indigo-600 bg-indigo-50"
+                        : "text-gray-700 hover:text-indigo-600 hover:bg-gray-50"
+                    }`}
+                  >
+                    {child.icon && <child.icon className="h-4 w-4 mr-2 inline" />}
+                    {child.name}
+                  </Link>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <Link
+        key={item.name}
+        to={item.href || "#"}
+        className={`flex items-center gap-x-2 px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
+          isActiveHref(item.href)
+            ? "text-indigo-600 bg-indigo-50"
+            : "text-gray-900 hover:text-indigo-600 hover:bg-gray-50"
+        }`}
+      >
+        {item.icon && <item.icon className="h-5 w-5" />}
+        {item.name}
+      </Link>
+    );
+  };
+
+  const getRoleBadgeColor = () => {
+    switch (currentRoleType) {
+      case 'admin':
+        return 'bg-purple-100 text-purple-800';
+      case 'hr_recruiter':
+        return 'bg-green-100 text-green-800';
+      default:
+        return 'bg-blue-100 text-blue-800';
+    }
+  };
+
+  const getRoleLabel = () => {
+    switch (currentRoleType) {
+      case 'admin':
+        return '管理员';
+      case 'hr_recruiter':
+        return 'HR招聘官';
+      default:
+        return '求职者';
+    }
+  };
 
   return (
     <header className="shrink-0 border-b border-gray-200 bg-white sticky top-0 z-10">
@@ -54,40 +295,51 @@ const Header = () => {
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <div className="hidden lg:flex lg:gap-x-12">
+        <div className="hidden lg:flex lg:gap-x-1">
           {navigation.map((item) => (
-            <Link
-              key={item.name}
-              to={item.href}
-              className={`text-sm font-semibold leading-6 text-gray-900 flex items-center gap-x-2 ${
-                window.location.pathname === item.href
-                  ? "text-indigo-600"
-                  : "hover:text-indigo-600"
-              }`}
-            >
-              {item.icon && <item.icon className="h-6 w-6" />}
-              {item.name}
-            </Link>
+            <div key={item.name} className="relative group">
+              {renderNavItem(item)}
+            </div>
           ))}
         </div>
         {isAuthenticated ? (
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end flex items-center gap-x-8">
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end flex items-center gap-x-4">
             <button
               type="button"
-              className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-300"
+              className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
             >
               <span className="sr-only">View notifications</span>
               <BellIcon className="h-6 w-6" aria-hidden="true" />
             </button>
 
+            {roles && roles.length > 1 && (
+              <RoleSwitcher
+                roles={roles}
+                activeRole={activeRole}
+                onSwitchRole={switchRole}
+              />
+            )}
+
+            {roles && roles.length === 1 && (
+              <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${getRoleBadgeColor()}`}>
+                {getRoleLabel()}
+              </span>
+            )}
+
             <Menu as="div" className="relative inline-block text-left">
               <div>
-                <Menu.Button>
-                  <img
-                    className="h-8 w-8 rounded-full bg-gray-800"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                  />
+                <Menu.Button className="flex items-center">
+                  {user?.user_image ? (
+                    <img
+                      className="h-8 w-8 rounded-full bg-gray-800 object-cover"
+                      src={user.user_image}
+                      alt=""
+                    />
+                  ) : (
+                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-bold">
+                      {user?.first_name?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || 'U'}
+                    </div>
+                  )}
                 </Menu.Button>
               </div>
               <Transition
@@ -100,10 +352,11 @@ const Header = () => {
                 leaveTo="transform opacity-0 scale-95"
               >
                 <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
-                  <div className="px-1 py-1 ">
+                  <div className="px-1 py-1">
                     <Menu.Item>
                       {({ active }) => (
-                        <button
+                        <Link
+                          to="/profile"
                           className={`${
                             active
                               ? "bg-indigo-500 text-white"
@@ -115,13 +368,14 @@ const Header = () => {
                           ) : (
                             <UserIcon className="h-5 w-5 mr-2 text-gray-400" />
                           )}
-                          Your Profile
-                        </button>
+                          个人档案
+                        </Link>
                       )}
                     </Menu.Item>
                     <Menu.Item>
                       {({ active }) => (
-                        <button
+                        <Link
+                          to="/settings"
                           className={`${
                             active
                               ? "bg-indigo-500 text-white"
@@ -133,8 +387,8 @@ const Header = () => {
                           ) : (
                             <Cog8ToothIcon className="h-5 w-5 mr-2 text-gray-400" />
                           )}
-                          Settings
-                        </button>
+                          设置
+                        </Link>
                       )}
                     </Menu.Item>
                   </div>
@@ -154,7 +408,7 @@ const Header = () => {
                           ) : (
                             <ArrowLeftStartOnRectangleIcon className="h-5 w-5 mr-2 text-gray-400" />
                           )}
-                          Sign out
+                          退出登录
                         </button>
                       )}
                     </Menu.Item>
@@ -162,12 +416,12 @@ const Header = () => {
                 </Menu.Items>
               </Transition>
             </Menu>
-            <a
-              href={isHR ? "/post-job" : "/"}
+            <Link
+              to={isHR ? "/post-job" : "/jobs"}
               className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              {isHR ? "Post a Job" : "Find Jobs"}
-            </a>
+              {isHR ? "发布职位" : "找工作"}
+            </Link>
           </div>
         ) : (
           <div className="hidden lg:flex lg:flex-1 lg:justify-end flex items-center gap-x-8">
@@ -175,13 +429,13 @@ const Header = () => {
               to="/login"
               className="text-sm font-semibold leading-6 text-gray-900"
             >
-              Log in
+              登录
             </Link>
             <Link
               to="/register"
               className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Sign up
+              注册
             </Link>
           </div>
         )}
@@ -208,21 +462,101 @@ const Header = () => {
               <XMarkIcon className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
-          <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 ${
-                      window.location.pathname === item.href
-                        ? "text-indigo-600"
-                        : ""
+          
+          {isAuthenticated && roles && roles.length > 1 && (
+            <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+              <p className="text-xs text-gray-500 mb-2">切换角色</p>
+              <div className="flex flex-wrap gap-2">
+                {roles.filter(r => r.status === 'approved').map((role) => (
+                  <button
+                    key={role.id}
+                    onClick={async () => {
+                      if (!role.is_active) {
+                        await switchRole(role.role_type);
+                        setMobileMenuOpen(false);
+                      }
+                    }}
+                    disabled={role.is_active}
+                    className={`px-3 py-1.5 text-xs font-medium rounded-full ${
+                      role.is_active
+                        ? 'bg-indigo-100 text-indigo-800 ring-2 ring-indigo-500'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
-                    {item.name}
-                  </Link>
+                    {role.role_type === 'admin' ? '管理员' : 
+                     role.role_type === 'hr_recruiter' ? 'HR招聘官' : '求职者'}
+                    {role.is_active && ' (当前)'}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="mt-6 flow-root">
+            <div className="-my-6 divide-y divide-gray-500/10">
+              <div className="space-y-2 py-6">
+                {navigation.map((item) => (
+                  <div key={item.name}>
+                    {item.children ? (
+                      <div>
+                        <h3 className="px-3 py-2 text-sm font-semibold text-gray-900">
+                          {item.name}
+                        </h3>
+                        <div className="mt-1 space-y-1">
+                          {item.children.map((child) => (
+                            <div key={child.name}>
+                              {child.children ? (
+                                <div className="pl-4">
+                                  <h4 className="px-3 py-1 text-xs font-medium text-gray-500">
+                                    {child.name}
+                                  </h4>
+                                  {child.children.map((subChild) => (
+                                    <Link
+                                      key={subChild.name}
+                                      to={subChild.href || "#"}
+                                      onClick={() => setMobileMenuOpen(false)}
+                                      className={`block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${
+                                        isActiveHref(subChild.href)
+                                          ? "text-indigo-600 bg-indigo-50"
+                                          : "text-gray-900 hover:bg-gray-50"
+                                      }`}
+                                    >
+                                      {subChild.name}
+                                    </Link>
+                                  ))}
+                                </div>
+                              ) : (
+                                <Link
+                                  to={child.href || "#"}
+                                  onClick={() => setMobileMenuOpen(false)}
+                                  className={`block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${
+                                    isActiveHref(child.href)
+                                      ? "text-indigo-600 bg-indigo-50"
+                                      : "text-gray-900 hover:bg-gray-50"
+                                  }`}
+                                >
+                                  {child.name}
+                                </Link>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <Link
+                        to={item.href || "#"}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`flex items-center gap-x-2 rounded-lg px-3 py-2 text-base font-semibold leading-7 ${
+                          isActiveHref(item.href)
+                            ? "text-indigo-600 bg-indigo-50"
+                            : "text-gray-900 hover:bg-gray-50"
+                        }`}
+                      >
+                        {item.icon && <item.icon className="h-5 w-5" />}
+                        {item.name}
+                      </Link>
+                    )}
+                  </div>
                 ))}
               </div>
               <div className="py-6">
@@ -231,14 +565,16 @@ const Header = () => {
                     <Link
                       to="/login"
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      onClick={() => setMobileMenuOpen(false)}
                     >
-                      Log in
+                      登录
                     </Link>
                     <Link
                       to="/register"
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      onClick={() => setMobileMenuOpen(false)}
                     >
-                      Sign up
+                      注册
                     </Link>
                   </>
                 ) : (
@@ -246,22 +582,19 @@ const Header = () => {
                     <Link
                       to="/profile"
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      onClick={() => setMobileMenuOpen(false)}
                     >
-                      Profile
+                      个人档案
                     </Link>
-                    <Link
-                      to="/register"
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    <button
+                      onClick={() => {
+                        logout();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 w-full text-left"
                     >
-                      Settings
-                    </Link>
-                    <Link
-                      to="/"
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                      onClick={logout}
-                    >
-                      Sign out
-                    </Link>
+                      退出登录
+                    </button>
                   </>
                 )}
               </div>

@@ -3,11 +3,12 @@ import path from "path";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
 import Routes from "./routes";
 import Seeders from "./seeders";
 import { errorMiddleware } from "./middlewares/error.middleware";
 import passport from "passport";
+import { connectDatabase } from "./config/database.config";
+
 class Application {
   public server;
 
@@ -15,7 +16,6 @@ class Application {
     this.server = express();
 
     this.environment();
-    this.database();
     this.middlewares();
     this.passport();
     this.routes();
@@ -27,9 +27,15 @@ class Application {
   }
 
   private middlewares() {
-    this.server.use(cors());
-    this.server.use(express.json());
-    this.server.use(express.urlencoded({ extended: true }));
+    const corsOptions = {
+      origin: process.env.CORS_ORIGIN || "http://localhost:5137",
+      credentials: true,
+      methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+    };
+    this.server.use(cors(corsOptions));
+    this.server.use(express.json({ limit: "10mb" }));
+    this.server.use(express.urlencoded({ extended: true, limit: "10mb" }));
   }
 
   private routes() {
@@ -38,34 +44,25 @@ class Application {
   }
 
   private initDirectories() {
-    // Public directory
-    if (!fs.existsSync(path.join(__dirname, "../public"))) {
-      fs.mkdirSync(path.join(__dirname, "../public"));
-    }
+    const directories = [
+      path.join(__dirname, "../public"),
+      path.join(__dirname, "../public/resumes"),
+      path.join(__dirname, "../public/uploads"),
+      path.join(__dirname, "../public/avatars"),
+      path.join(__dirname, "../public/invoices"),
+      path.join(__dirname, "../public/contracts"),
+    ];
 
-    // Resume directory
-    if (!fs.existsSync(path.join(__dirname, "../public/resumes"))) {
-      fs.mkdirSync(path.join(__dirname, "../public/resumes"));
-    }
-
-    // Uploads directory
-    if (!fs.existsSync(path.join(__dirname, "../public/uploads"))) {
-      fs.mkdirSync(path.join(__dirname, "../public/uploads"));
-    }
+    directories.forEach((dir) => {
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+    });
   }
 
-  private database() {
-    const MONGO_URL: string = process.env.MONGO_URL || "";
-
-    mongoose
-      .connect(MONGO_URL, {} as any)
-      .then(async () => {
-        console.log(`✅[Server]: Database is connected`);
-        await Seeders.runSeeders();
-      })
-      .catch((error) => {
-        console.log(`❌[Server] Database connection error: ${error}`);
-      });
+  public async initializeDatabase() {
+    await connectDatabase();
+    await Seeders.runSeeders();
   }
 
   private passport() {

@@ -6,21 +6,18 @@ export default class RequestValidator {
   static validate = <T extends object>(classInstance: ClassConstructor<T>) => {
     return async (req: Request, res: Response, next: NextFunction) => {
       const convertedObject = plainToInstance(classInstance, req.body);
-      await validate(convertedObject).then((errors: any) => {
-        if (errors.length > 0) {
-          let rawErrors: string[] = [];
-          for (const error of errors) {
-            rawErrors = rawErrors.concat(
-              ...rawErrors,
-              Object.values(error.constraints ?? [])
-            );
+      const errors = await validate(convertedObject);
+      if (errors.length > 0) {
+        const rawErrors: string[] = [];
+        for (const error of errors) {
+          if (error.constraints) {
+            rawErrors.push(...Object.values(error.constraints));
           }
-
-          const message = "Request validation error";
-          console.log(`❌ [RequestValidator.Error]`, rawErrors);
-          res.status(400).json({ message, errors: rawErrors });
         }
-      });
+        const message = "Request validation error";
+        console.log(`❌ [RequestValidator.Error]`, rawErrors);
+        return res.status(400).json({ message, errors: rawErrors });
+      }
       next();
     };
   };

@@ -1,0 +1,39 @@
+{
+  "testTime": "2026-03-24T11:04:41.310Z",
+  "scenarios": [
+    {
+      "id": "SC-001",
+      "name": "项目发布与申请流程",
+      "status": "completed"
+    },
+    {
+      "id": "SC-002",
+      "name": "工时填报与审核流程",
+      "status": "completed"
+    },
+    {
+      "id": "SC-003",
+      "name": "发票创建与付款流程",
+      "status": "completed"
+    },
+    {
+      "id": "SC-004",
+      "name": "评价与举报流程",
+      "status": "completed"
+    },
+    {
+      "id": "SC-005",
+      "name": "管理员数据管理流程",
+      "status": "completed"
+    }
+  ],
+  "issues": [],
+  "summary": {
+    "totalScenarios": 5,
+    "passedScenarios": 5,
+    "totalIssues": 0,
+    "p0Issues": 0,
+    "p1Issues": 0,
+    "p2Issues": 0
+  }
+}

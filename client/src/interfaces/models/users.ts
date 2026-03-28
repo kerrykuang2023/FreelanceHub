@@ -1,3 +1,5 @@
+import { IJob } from "./jobs";
+
 export interface IApplication {
   _id: string;
   user_account_id: {

@@ -41,10 +41,24 @@ const useLoginForm = () => {
           email: values.email,
           password: values.password,
         };
-        const { token, user } = await login(payload);
-        setLogin(token, user);
-        form.resetForm();
-        navigate("/");
+        const response = await login(payload);
+        const token = response?.data?.token || response?.token;
+        const user = response?.data?.user || response?.user;
+        const roles = response?.data?.roles || response?.roles || [];
+        const activeRole = response?.data?.active_role || response?.active_role || null;
+        
+        if (token && user) {
+          const userWithRoles = {
+            ...user,
+            roles: roles,
+            active_role: activeRole,
+          };
+          await setLogin(token, userWithRoles);
+          form.resetForm();
+          setTimeout(() => {
+            navigate("/");
+          }, 150);
+        }
       } catch (error) {
         console.error(error);
       } finally {

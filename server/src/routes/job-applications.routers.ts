@@ -1,6 +1,7 @@
 import { Router } from "express";
 import JobApplicationsController from "../controllers/job-applications.controller";
 import { asyncWrapper } from "../helpers/async-wrapper";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 export default class JobApplicationsRoutes {
   public router: Router;
@@ -11,21 +12,45 @@ export default class JobApplicationsRoutes {
   }
 
   private routes() {
-    this.router.post(
-      "/:id/apply",
-      asyncWrapper(JobApplicationsController.applyForJob)
+    this.router.get(
+      "/my-applications",
+      authMiddleware,
+      asyncWrapper(JobApplicationsController.getUserApplications)
     );
     this.router.get(
-      "/:id/applications",
+      "/received",
+      authMiddleware,
+      asyncWrapper(JobApplicationsController.getApplicationsForMyJobs)
+    );
+    this.router.post(
+      "/jobs/:id/apply",
+      authMiddleware,
+      asyncWrapper(JobApplicationsController.applyForJob)
+    );
+    this.router.post(
+      "/projects/:id/apply",
+      authMiddleware,
+      asyncWrapper(JobApplicationsController.applyForProject)
+    );
+    this.router.get(
+      "/jobs/:id/applications",
+      authMiddleware,
       asyncWrapper(JobApplicationsController.getJobApplications)
     );
     this.router.get(
-      "/applications",
-      asyncWrapper(JobApplicationsController.getUserApplications)
+      "/:id",
+      authMiddleware,
+      asyncWrapper(JobApplicationsController.getApplicationById)
     );
-    this.router.put(
-      "/applications/:id",
+    this.router.patch(
+      "/:id/status",
+      authMiddleware,
       asyncWrapper(JobApplicationsController.updateJobApplication)
+    );
+    this.router.post(
+      "/:id/withdraw",
+      authMiddleware,
+      asyncWrapper(JobApplicationsController.withdrawApplication)
     );
   }
 }

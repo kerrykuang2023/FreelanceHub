@@ -8,10 +8,16 @@ export default class ApplicationsService {
     this.http = new HttpService();
   }
 
-  public async applyForJob(jobId: string) {
-    return this.http
-      .service()
-      .post<IModels.IApplicationResponse, void>(`job/${jobId}/apply`, {});
+  public async applyForJob(jobId: string, data?: {
+    cover_letter?: string;
+    proposed_rate?: number;
+    rate_type?: string;
+    availability_date?: string;
+    estimated_duration?: string;
+    relevant_experience?: string;
+    skills_match?: string[];
+  }) {
+    return this.http.post<IModels.IApplicationResponse, void>(`job-applications/jobs/${jobId}/apply`, data || {});
   }
 
   public async getJobApplications(jobId: string, params?: { page?: number; limit?: number }) {
@@ -19,24 +25,39 @@ export default class ApplicationsService {
     if (params?.page) queryParams.append("page", params.page.toString());
     if (params?.limit) queryParams.append("limit", params.limit.toString());
 
-    return this.http
-      .service()
-      .get<IModels.IApplicationsResponse>(`job/${jobId}/applications?${queryParams.toString()}`);
+    return this.http.get<IModels.IApplicationsResponse>(`job-applications/jobs/${jobId}/applications?${queryParams.toString()}`);
   }
 
-  public async getUserApplications(params?: { page?: number; limit?: number }) {
+  public async getUserApplications(params?: { page?: number; limit?: number; status?: string }) {
     const queryParams = new URLSearchParams();
     if (params?.page) queryParams.append("page", params.page.toString());
     if (params?.limit) queryParams.append("limit", params.limit.toString());
+    if (params?.status) queryParams.append("status", params.status);
 
-    return this.http
-      .service()
-      .get<IModels.IApplicationsResponse>(`job/applications?${queryParams.toString()}`);
+    return this.http.get<IModels.IApplicationsResponse>(`job-applications/my-applications?${queryParams.toString()}`);
   }
 
-  public async updateApplicationStatus(applicationId: string, status: string) {
-    return this.http
-      .service()
-      .put<IModels.IApplicationResponse, { status: string }>(`job/applications/${applicationId}`, { status });
+  public async getCompanyApplications(params?: { page?: number; limit?: number; status?: string }) {
+    const queryParams = new URLSearchParams();
+    if (params?.page) queryParams.append("page", params.page.toString());
+    if (params?.limit) queryParams.append("limit", params.limit.toString());
+    if (params?.status) queryParams.append("status", params.status);
+
+    return this.http.get<IModels.IApplicationsResponse>(`job-applications/received?${queryParams.toString()}`);
+  }
+
+  public async updateApplicationStatus(applicationId: string, status: string, notes?: string) {
+    return this.http.put<IModels.IApplicationResponse, { status: string; notes?: string }>(
+      `job-applications/${applicationId}/status`,
+      { status, notes }
+    );
+  }
+
+  public async withdrawApplication(applicationId: string) {
+    return this.http.post(`job-applications/${applicationId}/withdraw`, {});
+  }
+
+  public async getApplicationById(applicationId: string) {
+    return this.http.get(`job-applications/${applicationId}`);
   }
 }

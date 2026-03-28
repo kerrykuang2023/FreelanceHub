@@ -37,7 +37,7 @@ const useAuthStore = create<IStores.IAuthStore>((set) => ({
     } catch (error: any) {
       console.error(error);
       set({ isLogging: false });
-      set({ loginError: error.response.data.message });
+      set({ loginError: error.response?.data?.message || error.message });
       throw error;
     }
   },
@@ -50,10 +50,13 @@ const useAuthStore = create<IStores.IAuthStore>((set) => ({
       const authService = new AuthService();
       const response = await authService.register(payload, options);
       set({ registerSuccessMessage: response.message });
+      return response;
     } catch (error: any) {
       console.error(error);
-      if (error.response) {
-        set({ registerErrorMessage: error.response.data.message });
+      if (error.response?.data) {
+        set({ registerErrorMessage: error.response.data.message || JSON.stringify(error.response.data) });
+      } else {
+        set({ registerErrorMessage: error.message });
       }
       throw error;
     }

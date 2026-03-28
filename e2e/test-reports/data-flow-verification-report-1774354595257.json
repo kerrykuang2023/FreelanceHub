@@ -1,0 +1,172 @@
+{
+  "testTime": "2026-03-24T12:16:35.255Z",
+  "testData": {
+    "projectTitle": "数据流转验证项目_1774354427418",
+    "projectDescription": "这是一个用于验证完整数据流转的测试项目",
+    "workHours": 8,
+    "workDescription": "完成了核心功能开发和单元测试",
+    "invoiceAmount": 8000
+  },
+  "verificationResults": [
+    {
+      "step": "FLOW-3.1: HR登录",
+      "expected": "登录成功",
+      "actual": "登录失败",
+      "passed": false,
+      "timestamp": "2026-03-24T12:14:19.240Z"
+    },
+    {
+      "step": "FLOW-3.2: 申请列表显示",
+      "expected": "显示至少1条申请",
+      "actual": "显示0条申请",
+      "passed": false,
+      "screenshot": "screenshots/data-flow-flow3-applications-list-1774354459886.png",
+      "timestamp": "2026-03-24T12:14:20.049Z"
+    },
+    {
+      "step": "FLOW-3.3: 顾问申请在HR视角可见",
+      "expected": "申请可见",
+      "actual": "申请不可见 - 数据流转问题",
+      "passed": false,
+      "timestamp": "2026-03-24T12:14:20.050Z"
+    },
+    {
+      "step": "FLOW-4.1: 顾问登录",
+      "expected": "登录成功",
+      "actual": "登录失败",
+      "passed": false,
+      "timestamp": "2026-03-24T12:14:52.698Z"
+    },
+    {
+      "step": "FLOW-4.3: 工时表单项目选择器",
+      "expected": "项目选择器可见",
+      "actual": "项目选择器不可见",
+      "passed": false,
+      "screenshot": "screenshots/data-flow-flow4-worklog-form-1774354493337.png",
+      "timestamp": "2026-03-24T12:14:53.495Z"
+    },
+    {
+      "step": "FLOW-5.1: HR登录",
+      "expected": "登录成功",
+      "actual": "登录失败",
+      "passed": false,
+      "timestamp": "2026-03-24T12:15:26.162Z"
+    },
+    {
+      "step": "FLOW-5.2: HR工时列表显示",
+      "expected": "显示至少1条工时",
+      "actual": "显示0条工时",
+      "passed": false,
+      "screenshot": "screenshots/data-flow-flow5-hr-worklogs-list-1774354526816.png",
+      "timestamp": "2026-03-24T12:15:26.960Z"
+    },
+    {
+      "step": "FLOW-5.3: 顾问工时在HR视角可见",
+      "expected": "工时可见",
+      "actual": "工时不可见 - 数据流转问题",
+      "passed": false,
+      "timestamp": "2026-03-24T12:15:26.960Z"
+    },
+    {
+      "step": "FLOW-6.1: 顾问登录",
+      "expected": "登录成功",
+      "actual": "登录失败",
+      "passed": false,
+      "timestamp": "2026-03-24T12:15:59.667Z"
+    },
+    {
+      "step": "FLOW-7.1: HR登录",
+      "expected": "登录成功",
+      "actual": "登录失败",
+      "passed": false,
+      "timestamp": "2026-03-24T12:16:33.051Z"
+    },
+    {
+      "step": "FLOW-7.2: HR发票列表显示",
+      "expected": "显示至少1条发票",
+      "actual": "显示0条发票",
+      "passed": false,
+      "screenshot": "screenshots/data-flow-flow7-hr-invoices-list-1774354593696.png",
+      "timestamp": "2026-03-24T12:16:33.838Z"
+    },
+    {
+      "step": "FLOW-7.3: 顾问发票在HR视角可见",
+      "expected": "发票可见",
+      "actual": "发票不可见 - 数据流转问题",
+      "passed": false,
+      "timestamp": "2026-03-24T12:16:33.839Z"
+    }
+  ],
+  "summary": {
+    "total": 12,
+    "passed": 0,
+    "failed": 12,
+    "passRate": "0.0%"
+  },
+  "dataFlowIssues": [
+    {
+      "step": "FLOW-3.1: HR登录",
+      "expected": "登录成功",
+      "actual": "登录失败"
+    },
+    {
+      "step": "FLOW-3.2: 申请列表显示",
+      "expected": "显示至少1条申请",
+      "actual": "显示0条申请",
+      "screenshot": "screenshots/data-flow-flow3-applications-list-1774354459886.png"
+    },
+    {
+      "step": "FLOW-3.3: 顾问申请在HR视角可见",
+      "expected": "申请可见",
+      "actual": "申请不可见 - 数据流转问题"
+    },
+    {
+      "step": "FLOW-4.1: 顾问登录",
+      "expected": "登录成功",
+      "actual": "登录失败"
+    },
+    {
+      "step": "FLOW-4.3: 工时表单项目选择器",
+      "expected": "项目选择器可见",
+      "actual": "项目选择器不可见",
+      "screenshot": "screenshots/data-flow-flow4-worklog-form-1774354493337.png"
+    },
+    {
+      "step": "FLOW-5.1: HR登录",
+      "expected": "登录成功",
+      "actual": "登录失败"
+    },
+    {
+      "step": "FLOW-5.2: HR工时列表显示",
+      "expected": "显示至少1条工时",
+      "actual": "显示0条工时",
+      "screenshot": "screenshots/data-flow-flow5-hr-worklogs-list-1774354526816.png"
+    },
+    {
+      "step": "FLOW-5.3: 顾问工时在HR视角可见",
+      "expected": "工时可见",
+      "actual": "工时不可见 - 数据流转问题"
+    },
+    {
+      "step": "FLOW-6.1: 顾问登录",
+      "expected": "登录成功",
+      "actual": "登录失败"
+    },
+    {
+      "step": "FLOW-7.1: HR登录",
+      "expected": "登录成功",
+      "actual": "登录失败"
+    },
+    {
+      "step": "FLOW-7.2: HR发票列表显示",
+      "expected": "显示至少1条发票",
+      "actual": "显示0条发票",
+      "screenshot": "screenshots/data-flow-flow7-hr-invoices-list-1774354593696.png"
+    },
+    {
+      "step": "FLOW-7.3: 顾问发票在HR视角可见",
+      "expected": "发票可见",
+      "actual": "发票不可见 - 数据流转问题"
+    }
+  ]
+}
