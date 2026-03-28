@@ -1,131 +1,217 @@
 <div align="center">
-  <h1 align="center">Job Portal</h1>
+  <h1 align="center">Job Portal - SAP顾问自由职业平台</h1>
 </div>
 <h4>
-    Job Portal is an free and open source platform, designed to help job seekers find suitable employment opportunities and employers post job listings efficiently.
-    build with React, Node, Express, MongoDB and TailwindCSS.
+    Job Portal 是一个现代化的招聘平台，连接自由顾问（Freelancer）、HR招聘者和企业管理员。
+    使用 React, Node, Express, MongoDB 和 TailwindCSS 构建。
 </h4>
 
 <div align="center">
-  <a href="https://www.jobportal.io"></a>
+  <a href="https://github.com/kerrykuang2023/JobPortal">GitHub 仓库</a>
 </div>
 
-## Features
+## 🌟 核心功能
 
-- People can register as job seekers, build their profiles, and look for jobs matching their skill sets.
-- Users can upload their existing resumes. If they do not have one, they should be able to fill out a form and have a resume built for them.
-- People can apply directly to posted jobs.
-- Companies can register, post jobs, and search job seeker profiles.
-- Multiple representatives from a company should be able to register and post jobs.
-- Company representatives can view a list of job applicants and can contact them, initiative an interview, or perform some other action related to their post.
-- Registered users should be able to search for jobs and filter the results based on location, required skills, salary, experience level, etc
+### 👤 自由顾问 (Freelancer) 工作台
+- ✅ **工作台仪表板** - 显示本周工时、进行中项目、待收款、待审核申请
+- ✅ **项目管理** - 查看进行中的项目、项目详情、工时记录
+- ✅ **职位浏览** - 浏览和搜索职位、申请职位
+- ✅ **申请管理** - 查看申请状态、申请历史
+- ✅ **工时管理** - 提交工时记录、查看工时统计
 
-## Screenshots
+### 👔 HR招聘者 (HR Recruiter) 工作台
+- ✅ **工作台仪表板** - 显示有效职位、待审工时、收到的申请、本月支出
+- ✅ **职位发布** - 发布新职位、管理已发布职位
+- ✅ **申请审核** - 查看求职者申请、审核申请状态
+- ✅ **工时审核** - 审核顾问提交的工时记录
 
-#### Sign In
+### 🔧 系统管理员 (Admin) 工作台
+- ✅ **工作台仪表板** - 显示总用户数、自由顾问、注册企业、待处理发票等
+- ✅ **用户管理** - 管理用户账户、角色权限
+- ✅ **企业管理** - 审核企业注册、管理企业信息
+- ✅ **数据统计** - 项目需求、工时记录、发票总数等统计
 
-<img width="1512" alt="image" src="https://github.com/drbarzaga/JobPortal/assets/12173976/676ddd8e-f9bb-4fc1-810f-fcde07817348">
+### 🔐 认证与权限
+- ✅ **用户认证** - 登录/注册/登出
+- ✅ **角色权限** - 基于角色的访问控制 (RBAC)
+- ✅ **动态菜单** - 根据用户角色显示不同菜单
 
-#### Sign Up
+## 📸 系统截图
 
-<img width="1512" alt="image" src="https://github.com/drbarzaga/JobPortal/assets/12173976/818dc01f-7915-42da-914c-2b011bcbfa60">
+### Freelancer 工作台
+![Freelancer Dashboard](docs/screenshots/e2e-freelancer-dashboard.png)
 
-#### Forgot Password
+### HR 工作台
+![HR Dashboard](docs/screenshots/e2e-hr-dashboard.png)
 
-<img width="1512" alt="image" src="https://github.com/drbarzaga/JobPortal/assets/12173976/362e5330-e25b-4591-a1f1-20c87a7d4836">
+### Admin 工作台
+![Admin Dashboard](docs/screenshots/e2e-admin-dashboard.png)
 
-#### Home Page as Guest
+### HR 发布职位
+![HR Post Job](docs/screenshots/e2e-hr-post-job.png)
 
-<img width="1512" alt="image" src="https://github.com/drbarzaga/JobPortal/assets/12173976/42526467-2b0a-4138-b0aa-f546d4735004">
+### HR 查看申请
+![HR Applications](docs/screenshots/e2e-hr-applications.png)
 
-## Tech Stack
+### Freelancer 浏览职位
+![Freelancer Jobs](docs/screenshots/e2e-freelancer-jobs.png)
 
-- [React](https://react.dev/) - Frontend UI Library
-- [Vite](https://vitejs.dev/) - Frontend Tooling
-- [Express](https://expressjs.com) - Backend Framework
-- [Typescript](https://www.typescriptlang.org/) – Language
-- [Tailwind](https://tailwindcss.com/) – CSS
-- [MongoDB](https://www.mongodb.com/) - Database
-- [Mogoose](https://mongoosejs.com/) - Database ODM
-- [Axios](https://axios-http.com/) - Promise based Http Client
-- [Formik](https://formik.org/) - Form handler
-- [Zustand](https://zustand-demo.pmnd.rs/) - State Management
+## 🛠️ 技术栈
 
-## Getting Started
+### 前端
+- [React 18](https://react.dev/) - UI 框架
+- [TypeScript](https://www.typescriptlang.org/) - 类型安全
+- [Vite](https://vitejs.dev/) - 前端构建工具
+- [Tailwind CSS](https://tailwindcss.com/) - 样式框架
+- [React Router v6](https://reactrouter.com/) - 路由管理
+- [Axios](https://axios-http.com/) - HTTP 客户端
 
-### Prerequisites
+### 后端
+- [Node.js](https://nodejs.org/) - 运行时
+- [Express](https://expressjs.com) - Web 框架
+- [MongoDB](https://www.mongodb.com/) - 数据库
+- [Mongoose](https://mongoosejs.com/) - Database ODM
+- [JWT](https://jwt.io/) - 身份认证
 
-Here's what you need to be able to run Job Portal:
+### 开发工具
+- [Docker & Docker Compose](https://www.docker.com/) - 容器化
+- [Playwright](https://playwright.dev/) - E2E 测试
 
-- Node.js (version>=18.18.0)
-- Docker
+## 🚀 快速开始
 
-### 1. Clone Repository
+### 环境要求
+- Node.js 18+
+- MongoDB 4.4+
+- Docker (可选)
 
-```shell
-git clone git@github.com:drbarzaga/job-portal.git
-cd job-portal
-```
-
-### 2. Environment
-
-#### Client Environment
-
-You need to create a `.env` file inside the `client` folder, and define the following env variables there:
-
-```shell
-VITE_API_URL=http://localhost:5555/api/v1
-```
-
-#### Server Environment
-
-You need to create a `.env` file inside the `server` folder, and define the following env variables there:
-
-```shell
-PORT=5555  #API -> http://localhost:5555
-NODE_ENV=development
-JWT_SECRET=yourJwtSecret
-MONGO_URL=mongodb://localhost:27017/job-portal #With docker use this mongodb://job-portal-mongo:27017/job-portal
-```
-
-### 2. Running in docker (Recommended)
-
-```shell
-docker-compose up
-```
-
-### 3. Running locally
-
-Using npm
+### 使用 Docker（推荐）
 
 ```bash
+# 启动所有服务
+docker-compose up -d
+
+# 访问应用
+# 前端：http://localhost:5137
+# 后端 API: http://localhost:5555/api/v1
+```
+
+### 手动启动
+
+#### 后端
+```bash
+cd server
 npm install
-npm run install:all
 npm run dev
 ```
 
-Using yarn
-
+#### 前端
 ```bash
-yarn install
-yarn run install:all
-yarn run dev
+cd client
+npm install
+npm run dev
 ```
 
-> If you're going to run the application locally, make sure you have MongoDB installed on your computer and add the `MONGO_URL` environment variable to the server's `.env` file.
+## 📝 测试账号
 
-### 4. Open App in your browser
+| 角色 | 邮箱 | 密码 |
+|------|------|------|
+| 自由顾问 | freelancer@test.com | Test123456! |
+| HR招聘者 | hr@test.com | Test123456! |
+| 系统管理员 | admin@test.com | Test123456! |
+| 超级管理员 | admin@jobportal.com | Admin@123 |
 
-Visit [http://localhost:5137](http://localhost:5137) in your browser.
+## 🧪 测试
 
-## Contributing
+### E2E 测试
+```bash
+# 运行跨角色全链路测试
+npx playwright test e2e-tests/cross-role-e2e.spec.ts --headed
 
-Job Portal is an open-source project and we welcome contributions from the community.
+# 运行工作台数据验证测试
+npx playwright test e2e-tests/dashboard-data.spec.ts --headed
+```
 
-If you'd like to contribute, please fork the repository and make changes as you'd like. Pull requests are warmly welcome.
+### 测试结果
+- ✅ E2E-01: Freelancer 工作台完整流程 - 通过
+- ✅ E2E-02: HR 工作台完整流程 - 通过
+- ✅ E2E-03: Admin 工作台完整流程 - 通过
+- ✅ E2E-04: API 数据验证 - 通过
+- ✅ E2E-05: 跨角色完整业务流程 - 通过
+- ✅ E2E-06: 页面导航和权限验证 - 通过
 
-### Our Contributors ✨
+**总计: 6/6 通过 (100%)**
 
-<a href="https://github.com/drbarzaga/job-portal/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=drbarzaga/job-portal" />
-</a>
+## 📁 项目结构
+
+```
+JobPortal/
+├── client/                    # 前端代码
+│   └── src/
+│       ├── components/        # 组件
+│       │   ├── core-ui/       # 核心UI组件
+│       │   ├── layouts/       # 布局组件
+│       │   └── navigation/    # 导航组件
+│       ├── pages/             # 页面
+│       ├── services/          # API服务
+│       ├── providers/         # Context Provider
+│       ├── hooks/             # 自定义Hooks
+│       └── constants/         # 常量配置
+├── server/                    # 后端代码
+│   └── src/
+│       ├── controllers/       # 控制器
+│       ├── models/            # 数据模型
+│       ├── routes/            # 路由
+│       ├── middlewares/       # 中间件
+│       └── seeders/           # 数据填充
+├── docs/                      # 文档
+│   └── screenshots/           # 系统截图
+├── docker-compose.yml
+└── README.md
+```
+
+## 🔧 配置
+
+### 环境变量
+```bash
+# 后端配置
+MONGO_URL=mongodb://localhost:27017/jobportal
+JWT_SECRET=your-secret-key
+PORT=5555
+
+# 前端配置
+VITE_API_URL=http://localhost:5555/api/v1
+```
+
+## 🔄 最近更新
+
+### 2026-03-28
+- 🐛 修复 StorageService JSON 解析错误导致的页面白屏问题
+- 🐛 修复 AuthProvider 数据解析错误导致的角色判断失败
+- ✨ 添加跨角色全链路 E2E 测试
+- ✨ 优化工作台数据加载逻辑
+- ✨ 添加调试日志便于问题排查
+
+## 🤝 贡献
+
+欢迎贡献代码！请遵循以下步骤：
+
+1. Fork 本项目
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启 Pull Request
+
+## 📄 许可证
+
+MIT License
+
+## 📞 联系方式
+
+- GitHub: https://github.com/kerrykuang2023/JobPortal
+- 如有问题或建议，请提交 Issue
+
+---
+
+**开发时间**: 2026-03-19  
+**最后更新**: 2026-03-28  
+**版本**: 1.1.0
