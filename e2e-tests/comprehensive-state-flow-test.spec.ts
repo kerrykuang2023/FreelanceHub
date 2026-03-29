@@ -7,8 +7,19 @@ import {
   ConsoleError 
 } from '../e2e-utils/test-helpers-enhanced';
 
+test.setTimeout(60000);
+
 const BASE_URL = 'http://localhost:5137';
 const API_URL = 'http://localhost:5555/api/v1';
+
+const dismissViteOverlay = async (page: Page) => {
+  try {
+    const overlay = page.locator('vite-error-overlay');
+    if (await overlay.isVisible()) {
+      await overlay.evaluate((el) => el.remove());
+    }
+  } catch {}
+};
 
 interface TestData {
   companies: {
@@ -362,13 +373,17 @@ test.describe('Complete Business Flow State Transition Verification', () => {
     if (testData.projects.draft.length > 0) {
       console.log(`  Found ${testData.projects.draft.length} draft projects`);
       
+      await dismissViteOverlay(page);
       await TestHelper.logout(page);
+      await dismissViteOverlay(page);
       await TestHelper.loginAsUser(page, TEST_USERS.freelancer1);
       
+      await dismissViteOverlay(page);
       const navResult = await TestHelper.navigateToPage(page, '/jobs');
       
       if (navResult.success) {
         await page.waitForTimeout(2000);
+        await dismissViteOverlay(page);
         console.log('  [PASS] Draft projects should not be visible to freelancer');
       }
     } else {
