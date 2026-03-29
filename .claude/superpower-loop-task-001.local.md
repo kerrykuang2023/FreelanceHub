@@ -1,64 +1,48 @@
-# Superpower Loop Task #001
+# Superpower Loop Task #001 - HR入驻功能开发
 
 ## Status: in-progress
-
-## Task Overview
-
-基于PRD梳理和角色菜单设计，完成以下核心任务：
-1. 验证现有功能实现完整性
-2. 修复E2E测试发现的问题
-3. 完善角色菜单权限逻辑
-4. 清理冗余文档
 
 ## Task Matrix
 
 | ID | Task | Priority | Status | Dependencies | Skills |
 |----|------|----------|--------|--------------|--------|
-| T1 | 验证服务启动状态 | P0 | ⏳ | - | - |
-| T2 | 运行E2E测试获取当前状态 | P0 | ⏳ | T1 | playwright |
-| T3 | 修复P0问题 | P0 | ⏳ | T2 | red-agent, green-agent |
-| T4 | 修复P1问题 | P1 | ⏳ | T3 | red-agent, green-agent |
-| T5 | 完善角色菜单权限 | P1 | ⏳ | T4 | frontend-design |
-| T6 | 清理冗余文档 | P2 | ⏳ | T5 | - |
-| T7 | 最终测试验证 | P0 | ⏳ | T6 | playwright |
-
-## Known Issues (from PRD-Feature-Checklist.md)
-
-### P0 Issues (Critical)
-| Issue ID | Description | Status |
-|----------|-------------|--------|
-| ISSUE-P0-001 | 项目列表为空，顾问无法浏览项目 | 待修复 |
-| ISSUE-P0-002 | 项目创建后未正确跳转/提示 | 待修复 |
-| ISSUE-P0-003 | 工时表单缺少项目选择器 | 待修复 |
-
-### P1 Issues (High)
-| Issue ID | Description | Status |
-|----------|-------------|--------|
-| ISSUE-P1-001 | 技能小类按钮未加载 | 待修复 |
-| ISSUE-P1-002 | 未找到工时确认/驳回按钮 | 待修复 |
-| ISSUE-P1-003 | 未找到发票审批按钮 | 待修复 |
-| ISSUE-P1-004 | 未找到付款确认按钮 | 待修复 |
-
-### P2 Issues (Medium)
-| Issue ID | Description | Status |
-|----------|-------------|--------|
-| ISSUE-P2-001 | 申请列表为空 | 待修复 |
-| ISSUE-P2-002 | 未找到举报验证按钮 | 待修复 |
-| ISSUE-P2-003 | 报表统计图表缺失 | 待修复 |
+| T1 | HR入驻引导页面 | P0 | 🔄 | - | frontend-design |
+| T2 | 公司搜索与选择 | P0 | ⏳ | T1 | frontend-design, api-design |
+| T3 | 创建新公司功能 | P0 | ⏳ | T2 | frontend-design, api-design |
+| T4 | HR个人资料页面 | P0 | ⏳ | T3 | frontend-design |
+| T5 | 公司管理页面 | P0 | ⏳ | T4 | frontend-design |
+| T6 | 图片上传功能 | P0 | ⏳ | T5 | api-design |
+| T7 | E2E测试验证 | P0 | ⏳ | T6 | playwright |
 
 ## Progress Log
-- [2026-03-25 10:00] 📋 Task analysis completed
-- [2026-03-25 10:00] 📋 Created ROLE-MENU-DESIGN.md
-- [2026-03-25 10:00] 📋 Created E2E-TEST-SCENARIOS.md
-- [2026-03-25 10:00] 🔄 Starting service verification...
+- [2026-03-28 10:00] 📋 任务分析完成，PRD已确认
+- [2026-03-28 10:01] 🔄 开始开发HR入驻引导页面
+
+## Implementation Plan
+
+### Phase 1: 前端页面开发
+1. HROnboardingPage - 入驻引导页面
+2. CompanySearchPage - 公司搜索页面
+3. CreateCompanyPage - 创建公司页面
+4. HRProfilePage - HR个人资料页面
+5. CompanyManagementPage - 公司管理页面
+
+### Phase 2: 后端API开发
+1. HR入驻状态API
+2. 公司搜索API
+3. 公司创建API
+4. HR资料API
+5. 图片上传API
+
+### Phase 3: 测试验证
+1. 单元测试
+2. E2E测试
+3. 跨角色流程测试
+
+## Issues Found
+| Issue ID | Severity | Description | Status |
+|----------|----------|-------------|--------|
+| - | - | - | - |
 
 ## Verification Results
-- Pending: Service status check
-- Pending: E2E test run
-- Pending: Issue fixes verification
-
-## Next Steps
-1. Check if services are running (MongoDB, Backend, Frontend)
-2. Run E2E tests to get current state
-3. Fix issues in priority order (P0 → P1 → P2)
-4. Re-run tests to verify fixes
+- 待测试

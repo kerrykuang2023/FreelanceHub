@@ -133,19 +133,22 @@ npx playwright test e2e-tests/debug-white-screen.spec.ts --headed
 ## 📸 系统截图
 
 ### Freelancer 工作台
-![Freelancer Dashboard](test-results/e2e-freelancer-dashboard.png)
+![Freelancer Dashboard](docs/screenshots/e2e-freelancer-dashboard.png)
 
 ### HR 工作台
-![HR Dashboard](test-results/e2e-hr-dashboard.png)
+![HR Dashboard](docs/screenshots/e2e-hr-dashboard.png)
 
 ### Admin 工作台
-![Admin Dashboard](test-results/e2e-admin-dashboard.png)
+![Admin Dashboard](docs/screenshots/e2e-admin-dashboard.png)
 
 ### HR 发布职位
-![HR Post Job](test-results/e2e-hr-post-job.png)
+![HR Post Job](docs/screenshots/e2e-hr-post-job.png)
 
 ### HR 查看申请
-![HR Applications](test-results/e2e-hr-applications.png)
+![HR Applications](docs/screenshots/e2e-hr-applications.png)
+
+### Freelancer 浏览职位
+![Freelancer Jobs](docs/screenshots/e2e-freelancer-jobs.png)
 
 ## 📁 项目结构
 
