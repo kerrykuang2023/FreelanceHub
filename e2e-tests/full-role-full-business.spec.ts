@@ -133,20 +133,20 @@ test.describe('【HR】公司管理功能', () => {
     const hrUser = TEST_USERS.hr1;
     await TestHelper.loginAsUser(page, hrUser);
     
-    await page.goto(`${BASE_URL}/company/register`);
+    await page.goto(`${BASE_URL}/company/setup`);
     await page.waitForLoadState('networkidle');
     
-    const companyNameInput = page.locator('input[name="company_name"], input[placeholder*="公司名称"]').first();
+    const companyNameInput = page.locator('[data-testid="company-name-input"]').first();
     if (await companyNameInput.isVisible({ timeout: 5000 }).catch(() => false)) {
       const companyName = `测试公司-${Date.now()}`;
       await companyNameInput.fill(companyName);
       
-      const businessLicenseInput = page.locator('input[name="business_license_number"]').first();
+      const businessLicenseInput = page.locator('[data-testid="business-license-input"]').first();
       if (await businessLicenseInput.isVisible()) {
         await businessLicenseInput.fill(`91110000MA${Date.now()}`);
       }
       
-      const submitButton = page.locator('button[type="submit"], button:has-text("提交"), button:has-text("注册")').first();
+      const submitButton = page.locator('[data-testid="submit-btn"]').first();
       await submitButton.click();
       
       await page.waitForTimeout(2000);
@@ -159,7 +159,7 @@ test.describe('【HR】公司管理功能', () => {
         expectedBehavior: '公司注册页面应该显示公司名称输入框',
         actualBehavior: '未找到公司名称输入框',
         steps: ['登录HR账号', '访问公司注册页面', '查找公司名称输入框'],
-        page: '/company/register',
+        page: '/company/setup',
         userRole: 'HR Recruiter',
       });
       throw new Error('公司注册页面表单元素不存在');

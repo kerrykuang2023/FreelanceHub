@@ -68,6 +68,71 @@ Phase 8: 反向流程与异常场景 (依赖Phase 1-7的数据)
 - 数据不一致：关联关系错误
 - 状态异常：业务逻辑无法执行
 
+### 1.0.1 页面调整测试规则（重要）
+
+**涉及页面布局、样式、组件调整的测试，必须清理缓存并重启服务后执行。**
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     页面调整测试流程（强制执行）                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Step 1: 停止所有服务
+├── 停止前端开发服务器
+├── 停止后端服务器（如有需要）
+└── 确认进程已终止
+
+Step 2: 清理缓存
+├── 清理浏览器缓存 (Playwright: npx playwright test --clear-cache)
+├── 清理测试结果目录 (Remove-Item test-results -Recurse)
+├── 清理临时文件 (Remove-Item $env:TEMP\playwright-* -Recurse)
+└── 清理node_modules/.vite缓存（如有需要）
+
+Step 3: 重启服务
+├── 启动后端服务器（如有需要）
+├── 启动前端开发服务器 (npm run dev)
+└── 等待服务完全启动（至少等待10秒）
+
+Step 4: 执行测试
+├── 运行E2E测试
+├── 验证页面效果
+└── 检查测试结果
+```
+
+**为什么需要清理缓存和重启服务：**
+1. **CSS样式缓存**：浏览器会缓存CSS文件，修改样式后可能看不到最新效果
+2. **Vite HMR限制**：某些样式更改（如Tailwind配置）需要完全重启才能生效
+3. **Playwright缓存**：测试框架会缓存页面状态，可能影响测试结果
+4. **确保最新代码**：重启服务确保加载的是最新编译的代码
+
+**强制执行场景：**
+- 修改了Tailwind配置 (tailwind.config.js)
+- 修改了全局CSS样式 (index.css)
+- 修改了布局组件 (PortalLayout, GlobalNavbar等)
+- 修改了页面结构 (添加/删除/移动页面元素)
+- 添加了新的CSS类名（特别是@layer components中的类）
+
+**执行命令示例：**
+```powershell
+# 完整的页面调整测试流程
+# Step 1: 停止服务
+# (手动停止或使用 StopCommand)
+
+# Step 2: 清理缓存
+Set-Location d:\claudesapce\JobPortal
+Remove-Item -Recurse -Force test-results -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force "$env:TEMP\playwright-*" -ErrorAction SilentlyContinue
+npx playwright test --clear-cache
+
+# Step 3: 重启服务
+Set-Location JobPortal/client
+npm run dev
+
+# Step 4: 执行测试（等待服务启动后）
+Set-Location d:\claudesapce\JobPortal
+npx playwright test e2e-tests/fullscreen-layout-verification.spec.ts --headed
+```
+
 ### 1.1 测试验证的完整性
 
 每个 E2E 测试用例必须包含以下验证：
