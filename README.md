@@ -1,3 +1,233 @@
+# JobPortal - SAP Consultant Freelance Platform
+
+[中文文档](#jobportal---sap顾问自由职业平台) | [English Documentation](#english-documentation)
+
+---
+
+# English Documentation
+
+A modern recruitment platform connecting Freelancers, HR Recruiters, and Company Administrators.
+
+## 🌟 Core Features
+
+### 👤 Freelancer Dashboard
+- ✅ **Dashboard** - Display weekly hours, active projects, pending payments, pending applications
+- ✅ **Project Management** - View active projects, project details, work logs
+- ✅ **Job Browsing** - Browse and search jobs, apply for positions
+- ✅ **Application Management** - View application status, application history
+- ✅ **Work Log Management** - Submit work logs, view work statistics
+
+### 👔 HR Recruiter Dashboard
+- ✅ **Dashboard** - Display active jobs, pending work logs, received applications, monthly expenses
+- ✅ **Job Posting** - Post new jobs, manage posted jobs
+- ✅ **Application Review** - View applicant applications, review application status
+- ✅ **Work Log Review** - Review work logs submitted by consultants
+
+### 🔧 System Administrator Dashboard
+- ✅ **Dashboard** - Display total users, freelancers, registered companies, pending invoices, etc.
+- ✅ **User Management** - Manage user accounts, role permissions
+- ✅ **Company Management** - Review company registrations, manage company information
+- ✅ **Data Statistics** - Project requirements, work logs, total invoices statistics
+
+### 🔐 Authentication & Authorization
+- ✅ **User Authentication** - Login/Register/Logout
+- ✅ **Role-based Permissions** - Role-based Access Control (RBAC)
+- ✅ **Dynamic Menu** - Display different menus based on user roles
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **React 18** - UI Framework
+- **TypeScript** - Type Safety
+- **Tailwind CSS** - Styling Framework
+- **React Router v6** - Routing
+- **Axios** - HTTP Client
+- **React Query** - Data Fetching & Caching
+
+### Backend
+- **Node.js** - Runtime
+- **Express** - Web Framework
+- **MongoDB** - Database
+- **Mongoose** - ODM
+- **JWT** - Authentication
+- **Passport.js** - Authentication Middleware
+
+### Dev Tools
+- **Docker & Docker Compose** - Containerization
+- **Playwright** - E2E Testing
+- **Vite** - Frontend Build Tool
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+
+- MongoDB 4.4+
+- Docker (Optional)
+
+### Using Docker (Recommended)
+
+```bash
+# Start all services
+docker-compose up -d
+
+# Access the application
+# Frontend: http://localhost:5137
+# Backend API: http://localhost:5555/api/v1
+```
+
+### Manual Start
+
+#### Backend
+```bash
+cd JobPortal/server
+npm install
+npm run dev
+```
+
+#### Frontend
+```bash
+cd JobPortal/client
+npm install
+npm run dev
+```
+
+## 📝 Test Accounts
+
+| Role | Email | Password |
+|------|-------|----------|
+| Freelancer | freelancer@test.com | Test123456! |
+| HR Recruiter | hr@test.com | Test123456! |
+| Admin | admin@test.com | Test123456! |
+| Super Admin | admin@jobportal.com | Admin@123 |
+
+## 📊 Database Schema
+
+### Main Collections
+- `user_account` - User Accounts
+- `user_role` - User Roles
+- `freelancer_profile` - Freelancer Profiles
+- `company` - Company Information
+- `job_post` - Job Posts
+- `job_post_activity` - Job Applications
+- `work_log` - Work Logs
+- `invoice` - Invoices
+
+## 🧪 Testing
+
+### E2E Testing
+```bash
+# Run cross-role end-to-end tests
+npx playwright test e2e-tests/cross-role-e2e.spec.ts --headed
+
+# Run dashboard data validation tests
+npx playwright test e2e-tests/dashboard-data.spec.ts --headed
+
+# Run debug tests
+npx playwright test e2e-tests/debug-white-screen.spec.ts --headed
+```
+
+### Test Results
+- ✅ E2E-01: Freelancer Dashboard Complete Flow - Passed
+- ✅ E2E-02: HR Dashboard Complete Flow - Passed
+- ✅ E2E-03: Admin Dashboard Complete Flow - Passed
+- ✅ E2E-04: API Data Validation - Passed
+- ✅ E2E-05: Cross-role Complete Business Flow - Passed
+- ✅ E2E-06: Page Navigation and Permission Validation - Passed
+
+**Total: 6/6 Passed (100%)**
+
+## 📸 Screenshots
+
+### Freelancer Dashboard
+![Freelancer Dashboard](docs/screenshots/e2e-freelancer-dashboard.png)
+
+### HR Dashboard
+![HR Dashboard](docs/screenshots/e2e-hr-dashboard.png)
+
+### Admin Dashboard
+![Admin Dashboard](docs/screenshots/e2e-admin-dashboard.png)
+
+### HR Post Job
+![HR Post Job](docs/screenshots/e2e-hr-post-job.png)
+
+### HR View Applications
+![HR Applications](docs/screenshots/e2e-hr-applications.png)
+
+### Freelancer Browse Jobs
+![Freelancer Jobs](docs/screenshots/e2e-freelancer-jobs.png)
+
+## 📁 Project Structure
+
+```
+JobPortal/
+├── JobPortal/
+│   ├── client/                    # Frontend Code
+│   │   └── src/
+│   │       ├── components/        # Components
+│   │       │   ├── core-ui/       # Core UI Components
+│   │       │   ├── layouts/       # Layout Components
+│   │       │   └── navigation/    # Navigation Components
+│   │       ├── pages/             # Pages
+│   │       ├── services/          # API Services
+│   │       ├── providers/         # Context Providers
+│   │       ├── hooks/             # Custom Hooks
+│   │       └── constants/         # Constants
+│   └── server/                    # Backend Code
+│       └── src/
+│           ├── controllers/       # Controllers
+│           ├── models/            # Data Models
+│           ├── routes/            # Routes
+│           ├── middlewares/       # Middlewares
+│           └── seeders/           # Data Seeders
+├── e2e-tests/                     # E2E Tests
+├── docs/                          # Documentation
+├── docker-compose.yml
+└── README.md
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+```bash
+# Backend Configuration
+MONGO_URL=mongodb://localhost:27017/jobportal
+JWT_SECRET=your-secret-key
+PORT=5555
+
+# Frontend Configuration
+VITE_API_URL=http://localhost:5555/api/v1
+```
+
+## 🔄 Recent Updates
+
+### 2026-03-28
+- 🐛 Fixed StorageService JSON parsing error causing white screen
+- 🐛 Fixed AuthProvider data parsing error causing role judgment failure
+- ✨ Added cross-role end-to-end E2E tests
+- ✨ Optimized dashboard data loading logic
+- ✨ Added debug logs for troubleshooting
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork this project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+MIT License
+
+## 📞 Contact
+
+- GitHub: https://github.com/kerrykuang2023/JobPortal
+- For questions or suggestions, please submit an Issue
+
+---
+
 # JobPortal - SAP顾问自由职业平台
 
 一个现代化的招聘平台，连接自由顾问（Freelancer）、HR招聘者和企业管理员。
@@ -223,5 +453,5 @@ MIT License
 ---
 
 **开发时间**: 2026-03-19  
-**最后更新**: 2026-03-28  
-**版本**: 1.1.0
+**最后更新**: 2026-03-30  
+**版本**: 1.0.0
