@@ -1,0 +1,70 @@
+{
+  "testRun": {
+    "startTime": "2026-03-23T13:09:37.738Z",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "flowSteps": [
+    {
+      "step": 1,
+      "action": "开始登录",
+      "description": "用户: 自由顾问 (freelancer@test.com)",
+      "success": true,
+      "timestamp": "2026-03-23T13:09:06.720Z"
+    },
+    {
+      "step": 2,
+      "action": "填写输入框: 邮箱",
+      "description": "成功填写值: freelancer@test.com",
+      "success": true,
+      "timestamp": "2026-03-23T13:09:09.875Z"
+    },
+    {
+      "step": 3,
+      "action": "填写输入框: 密码",
+      "description": "成功填写值: Test1234!",
+      "success": true,
+      "timestamp": "2026-03-23T13:09:10.883Z"
+    },
+    {
+      "step": 4,
+      "action": "点击按钮: 登录按钮",
+      "description": "成功点击按钮，选择器: [data-testid=\"login-submit-btn\"]",
+      "success": true,
+      "timestamp": "2026-03-23T13:09:12.595Z"
+    },
+    {
+      "step": 5,
+      "action": "登录成功",
+      "description": "已跳转到: http://localhost:5137/",
+      "success": true,
+      "timestamp": "2026-03-23T13:09:15.607Z"
+    },
+    {
+      "step": 6,
+      "action": "导航到工时管理页面",
+      "description": "准备查看工时记录",
+      "success": true,
+      "timestamp": "2026-03-23T13:09:15.714Z"
+    },
+    {
+      "step": 7,
+      "action": "点击按钮: 填报工时按钮",
+      "description": "成功点击按钮，选择器: a[href=\"/work-logs/new\"], button:has-text(\"填报工时\")",
+      "success": true,
+      "timestamp": "2026-03-23T13:09:19.350Z"
+    },
+    {
+      "step": 8,
+      "action": "选择下拉框: 项目选择",
+      "description": "选择失败: Error: locator.selectOption: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('select#project_requirement_id, select[name=\"project_requirement_id\"]').first()\u001b[22m\n\u001b[2m    - locator resolved to <select id=\"project_requirement_id\" name=\"project_requirement_id\" class=\"w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-300\">…</select>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - did not find some options\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    31 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m       - did not find some options\u001b[22m\n\u001b[2m     - retrying select option action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n",
+      "success": false,
+      "timestamp": "2026-03-23T13:09:36.905Z"
+    }
+  ],
+  "summary": {
+    "totalSteps": 8,
+    "successSteps": 7,
+    "failedSteps": 1
+  }
+}

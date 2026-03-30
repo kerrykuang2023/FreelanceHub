@@ -1,0 +1,84 @@
+{
+  "testRun": {
+    "startTime": "2026-03-23T13:23:26.570Z",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "flowSteps": [
+    {
+      "step": 1,
+      "action": "开始登录",
+      "description": "用户: 自由顾问 (freelancer@test.com)",
+      "success": true,
+      "timestamp": "2026-03-23T13:22:52.410Z"
+    },
+    {
+      "step": 2,
+      "action": "填写输入框: 邮箱",
+      "description": "成功填写值: freelancer@test.com",
+      "success": true,
+      "timestamp": "2026-03-23T13:22:55.431Z"
+    },
+    {
+      "step": 3,
+      "action": "填写输入框: 密码",
+      "description": "成功填写值: Test1234!",
+      "success": true,
+      "timestamp": "2026-03-23T13:22:56.431Z"
+    },
+    {
+      "step": 4,
+      "action": "点击按钮: 登录按钮",
+      "description": "成功点击按钮，选择器: [data-testid=\"login-submit-btn\"]",
+      "success": true,
+      "timestamp": "2026-03-23T13:22:57.989Z"
+    },
+    {
+      "step": 5,
+      "action": "登录成功",
+      "description": "已跳转到: http://localhost:5137/",
+      "success": true,
+      "timestamp": "2026-03-23T13:23:00.992Z"
+    },
+    {
+      "step": 6,
+      "action": "导航到举报页面",
+      "description": "准备提交举报",
+      "success": true,
+      "timestamp": "2026-03-23T13:23:01.099Z"
+    },
+    {
+      "step": 7,
+      "action": "创建举报",
+      "description": "没有举报入口",
+      "success": false,
+      "timestamp": "2026-03-23T13:23:03.362Z"
+    },
+    {
+      "step": 8,
+      "action": "开始登出",
+      "description": "准备退出当前用户",
+      "success": true,
+      "timestamp": "2026-03-23T13:23:03.362Z"
+    },
+    {
+      "step": 9,
+      "action": "开始登录",
+      "description": "用户: 系统管理员 (admin@test.com)",
+      "success": true,
+      "timestamp": "2026-03-23T13:23:04.007Z"
+    },
+    {
+      "step": 10,
+      "action": "登录失败",
+      "description": "邮箱输入框不可见: TimeoutError: locator.waitFor: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('input[name=\"email\"]').first() to be visible\u001b[22m\n",
+      "success": false,
+      "timestamp": "2026-03-23T13:23:25.747Z"
+    }
+  ],
+  "summary": {
+    "totalSteps": 10,
+    "successSteps": 8,
+    "failedSteps": 2
+  }
+}

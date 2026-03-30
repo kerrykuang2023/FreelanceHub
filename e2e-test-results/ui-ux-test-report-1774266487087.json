@@ -1,0 +1,1781 @@
+{
+  "testRun": {
+    "startTime": "2026-03-23T11:48:07.087Z",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "issues": [
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "注册页面页面缺少必需元素: 密码输入框",
+      "expectedBehavior": "密码输入框应可见",
+      "actualBehavior": "元素不可见 (选择器: input[type=\"password\"], input[name=\"password\"])",
+      "steps": [
+        "访问http://localhost:5137/register"
+      ],
+      "page": "http://localhost:5137/register",
+      "userRole": "访客",
+      "userImpact": "用户无法使用密码输入框功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-001",
+      "timestamp": "2026-03-23T11:47:12.175Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "DATA",
+      "severity": "MEDIUM",
+      "priority": "P2",
+      "description": "项目列表页面没有显示任何项目",
+      "expectedBehavior": "应显示可用的项目列表",
+      "actualBehavior": "项目列表为空",
+      "steps": [
+        "访问项目列表页面"
+      ],
+      "page": "http://localhost:5137/jobs",
+      "userImpact": "用户无法浏览和申请项目",
+      "businessImpact": "影响平台活跃度",
+      "suggestedFix": "检查项目数据是否存在，或添加示例项目",
+      "id": "ISS-002",
+      "timestamp": "2026-03-23T11:47:13.041Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "API",
+      "severity": "HIGH",
+      "priority": "P0",
+      "featureId": "AUTH-002",
+      "description": "用户 freelancer@test.com 登录失败",
+      "expectedBehavior": "登录成功后应跳转到首页或工作台",
+      "actualBehavior": "停留在登录页面: http://localhost:5137/login。错误信息: ",
+      "steps": [
+        "输入邮箱",
+        "输入密码",
+        "点击登录按钮"
+      ],
+      "page": "http://localhost:5137/login",
+      "userRole": "自由顾问",
+      "userImpact": "用户无法登录系统，无法使用任何功能",
+      "businessImpact": "系统完全不可用",
+      "suggestedFix": "检查测试用户是否存在，密码是否正确，或创建测试用户脚本",
+      "id": "ISS-003",
+      "timestamp": "2026-03-23T11:47:17.007Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "工时管理页面页面缺少必需元素: 工时列表",
+      "expectedBehavior": "工时列表应可见",
+      "actualBehavior": "元素不可见 (选择器: table, [class*=\"list\"])",
+      "steps": [
+        "访问http://localhost:5137/work-logs"
+      ],
+      "page": "http://localhost:5137/work-logs",
+      "userRole": "自由顾问",
+      "userImpact": "用户无法使用工时列表功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-004",
+      "timestamp": "2026-03-23T11:47:18.828Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "工时管理页面页面缺少必需元素: 创建工时按钮",
+      "expectedBehavior": "创建工时按钮应可见",
+      "actualBehavior": "元素不可见 (选择器: a[href*=\"/work-logs/new\"], button:has-text(\"新建\"), button:has-text(\"创建\"))",
+      "steps": [
+        "访问http://localhost:5137/work-logs"
+      ],
+      "page": "http://localhost:5137/work-logs",
+      "userRole": "自由顾问",
+      "userImpact": "用户无法使用创建工时按钮功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-005",
+      "timestamp": "2026-03-23T11:47:18.828Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "FUNCTIONALITY",
+      "severity": "HIGH",
+      "priority": "P1",
+      "featureId": "WORKLOG-001",
+      "description": "工时管理页面缺少创建工时按钮",
+      "expectedBehavior": "应有明显的创建工时入口",
+      "actualBehavior": "未找到创建按钮",
+      "steps": [
+        "顾问登录",
+        "访问工时管理页面"
+      ],
+      "page": "http://localhost:5137/work-logs",
+      "userRole": "自由顾问",
+      "userImpact": "顾问无法创建新的工时记录",
+      "businessImpact": "阻塞工时填报流程",
+      "suggestedFix": "添加醒目的创建工时按钮",
+      "id": "ISS-006",
+      "timestamp": "2026-03-23T11:47:18.833Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "工时填报表单页面缺少必需元素: 项目选择器",
+      "expectedBehavior": "项目选择器应可见",
+      "actualBehavior": "元素不可见 (选择器: select[name*=\"project\"], [data-testid*=\"project\"])",
+      "steps": [
+        "访问http://localhost:5137/work-logs/new"
+      ],
+      "page": "http://localhost:5137/work-logs/new",
+      "userRole": "自由顾问",
+      "userImpact": "用户无法使用项目选择器功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-007",
+      "timestamp": "2026-03-23T11:47:20.297Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "工时填报表单页面缺少必需元素: 日期选择",
+      "expectedBehavior": "日期选择应可见",
+      "actualBehavior": "元素不可见 (选择器: input[name*=\"date\"], input[type=\"date\"])",
+      "steps": [
+        "访问http://localhost:5137/work-logs/new"
+      ],
+      "page": "http://localhost:5137/work-logs/new",
+      "userRole": "自由顾问",
+      "userImpact": "用户无法使用日期选择功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-008",
+      "timestamp": "2026-03-23T11:47:20.297Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "工时填报表单页面缺少必需元素: 工时输入",
+      "expectedBehavior": "工时输入应可见",
+      "actualBehavior": "元素不可见 (选择器: input[name*=\"hour\"], input[type=\"number\"])",
+      "steps": [
+        "访问http://localhost:5137/work-logs/new"
+      ],
+      "page": "http://localhost:5137/work-logs/new",
+      "userRole": "自由顾问",
+      "userImpact": "用户无法使用工时输入功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-009",
+      "timestamp": "2026-03-23T11:47:20.297Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "工时填报表单页面缺少必需元素: 工作类型",
+      "expectedBehavior": "工作类型应可见",
+      "actualBehavior": "元素不可见 (选择器: select[name*=\"type\"], [data-testid*=\"type\"])",
+      "steps": [
+        "访问http://localhost:5137/work-logs/new"
+      ],
+      "page": "http://localhost:5137/work-logs/new",
+      "userRole": "自由顾问",
+      "userImpact": "用户无法使用工作类型功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-010",
+      "timestamp": "2026-03-23T11:47:20.297Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "工时填报表单页面缺少必需元素: 工作描述",
+      "expectedBehavior": "工作描述应可见",
+      "actualBehavior": "元素不可见 (选择器: textarea)",
+      "steps": [
+        "访问http://localhost:5137/work-logs/new"
+      ],
+      "page": "http://localhost:5137/work-logs/new",
+      "userRole": "自由顾问",
+      "userImpact": "用户无法使用工作描述功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-011",
+      "timestamp": "2026-03-23T11:47:20.297Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "发票管理页面页面缺少必需元素: 发票列表",
+      "expectedBehavior": "发票列表应可见",
+      "actualBehavior": "元素不可见 (选择器: table, [class*=\"list\"])",
+      "steps": [
+        "访问http://localhost:5137/invoices"
+      ],
+      "page": "http://localhost:5137/invoices",
+      "userRole": "自由顾问",
+      "userImpact": "用户无法使用发票列表功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-012",
+      "timestamp": "2026-03-23T11:47:21.203Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "发票管理页面页面缺少必需元素: 创建发票按钮",
+      "expectedBehavior": "创建发票按钮应可见",
+      "actualBehavior": "元素不可见 (选择器: a[href*=\"/invoices/new\"], button:has-text(\"创建\"), button:has-text(\"新建\"))",
+      "steps": [
+        "访问http://localhost:5137/invoices"
+      ],
+      "page": "http://localhost:5137/invoices",
+      "userRole": "自由顾问",
+      "userImpact": "用户无法使用创建发票按钮功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-013",
+      "timestamp": "2026-03-23T11:47:21.203Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "消息中心页面页面缺少必需元素: 消息列表",
+      "expectedBehavior": "消息列表应可见",
+      "actualBehavior": "元素不可见 (选择器: [class*=\"message\"], [class*=\"notification\"])",
+      "steps": [
+        "访问http://localhost:5137/messages"
+      ],
+      "page": "http://localhost:5137/messages",
+      "userRole": "自由顾问",
+      "userImpact": "用户无法使用消息列表功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-014",
+      "timestamp": "2026-03-23T11:47:22.946Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "API",
+      "severity": "HIGH",
+      "priority": "P0",
+      "featureId": "AUTH-002",
+      "description": "用户 hr@test.com 登录失败",
+      "expectedBehavior": "登录成功后应跳转到首页或工作台",
+      "actualBehavior": "停留在登录页面: http://localhost:5137/login。错误信息: ",
+      "steps": [
+        "输入邮箱",
+        "输入密码",
+        "点击登录按钮"
+      ],
+      "page": "http://localhost:5137/login",
+      "userRole": "HR招聘人员",
+      "userImpact": "用户无法登录系统，无法使用任何功能",
+      "businessImpact": "系统完全不可用",
+      "suggestedFix": "检查测试用户是否存在，密码是否正确，或创建测试用户脚本",
+      "id": "ISS-015",
+      "timestamp": "2026-03-23T11:47:27.495Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "HR工作台页面缺少必需元素: 发布职位入口",
+      "expectedBehavior": "发布职位入口应可见",
+      "actualBehavior": "元素不可见 (选择器: a[href*=\"post-job\"], button:has-text(\"发布\"))",
+      "steps": [
+        "访问http://localhost:5137/hr/dashboard"
+      ],
+      "page": "http://localhost:5137/hr/dashboard",
+      "userRole": "HR招聘人员",
+      "userImpact": "用户无法使用发布职位入口功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-016",
+      "timestamp": "2026-03-23T11:47:28.407Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "发布职位页面页面缺少必需元素: 技能要求",
+      "expectedBehavior": "技能要求应可见",
+      "actualBehavior": "元素不可见 (选择器: select[name*=\"skill\"], [data-testid*=\"skill\"])",
+      "steps": [
+        "访问http://localhost:5137/post-job"
+      ],
+      "page": "http://localhost:5137/post-job",
+      "userRole": "HR招聘人员",
+      "userImpact": "用户无法使用技能要求功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-017",
+      "timestamp": "2026-03-23T11:47:29.332Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "发布职位页面页面缺少必需元素: 技能分类",
+      "expectedBehavior": "技能分类应可见",
+      "actualBehavior": "元素不可见 (选择器: select[name*=\"category\"], [data-testid*=\"category\"])",
+      "steps": [
+        "访问http://localhost:5137/post-job"
+      ],
+      "page": "http://localhost:5137/post-job",
+      "userRole": "HR招聘人员",
+      "userImpact": "用户无法使用技能分类功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-018",
+      "timestamp": "2026-03-23T11:47:29.333Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "待审核工时页面页面缺少必需元素: 工时列表",
+      "expectedBehavior": "工时列表应可见",
+      "actualBehavior": "元素不可见 (选择器: table, [class*=\"list\"])",
+      "steps": [
+        "访问http://localhost:5137/company/work-logs/pending"
+      ],
+      "page": "http://localhost:5137/company/work-logs/pending",
+      "userRole": "HR招聘人员",
+      "userImpact": "用户无法使用工时列表功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-019",
+      "timestamp": "2026-03-23T11:47:30.208Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "待审核工时页面页面缺少必需元素: 确认按钮",
+      "expectedBehavior": "确认按钮应可见",
+      "actualBehavior": "元素不可见 (选择器: button:has-text(\"确认\"), button:has-text(\"通过\"))",
+      "steps": [
+        "访问http://localhost:5137/company/work-logs/pending"
+      ],
+      "page": "http://localhost:5137/company/work-logs/pending",
+      "userRole": "HR招聘人员",
+      "userImpact": "用户无法使用确认按钮功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-020",
+      "timestamp": "2026-03-23T11:47:30.208Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "待审核工时页面页面缺少必需元素: 驳回按钮",
+      "expectedBehavior": "驳回按钮应可见",
+      "actualBehavior": "元素不可见 (选择器: button:has-text(\"驳回\"), button:has-text(\"拒绝\"))",
+      "steps": [
+        "访问http://localhost:5137/company/work-logs/pending"
+      ],
+      "page": "http://localhost:5137/company/work-logs/pending",
+      "userRole": "HR招聘人员",
+      "userImpact": "用户无法使用驳回按钮功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-021",
+      "timestamp": "2026-03-23T11:47:30.208Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "FUNCTIONALITY",
+      "severity": "HIGH",
+      "priority": "P1",
+      "featureId": "WORKLOG-008",
+      "description": "待审核工时页面缺少确认/驳回按钮",
+      "expectedBehavior": "应有确认和驳回操作按钮",
+      "actualBehavior": "未找到操作按钮",
+      "steps": [
+        "HR登录",
+        "访问待审核工时页面"
+      ],
+      "page": "http://localhost:5137/company/work-logs/pending",
+      "userRole": "HR招聘人员",
+      "userImpact": "HR无法审核工时",
+      "businessImpact": "阻塞工时审核流程",
+      "suggestedFix": "添加确认和驳回按钮",
+      "id": "ISS-022",
+      "timestamp": "2026-03-23T11:47:30.211Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "申请管理页面页面缺少必需元素: 申请列表",
+      "expectedBehavior": "申请列表应可见",
+      "actualBehavior": "元素不可见 (选择器: table, [class*=\"list\"])",
+      "steps": [
+        "访问http://localhost:5137/applications"
+      ],
+      "page": "http://localhost:5137/applications",
+      "userRole": "HR招聘人员",
+      "userImpact": "用户无法使用申请列表功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-023",
+      "timestamp": "2026-03-23T11:47:31.097Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "API",
+      "severity": "HIGH",
+      "priority": "P0",
+      "featureId": "AUTH-002",
+      "description": "用户 admin@test.com 登录失败",
+      "expectedBehavior": "登录成功后应跳转到首页或工作台",
+      "actualBehavior": "停留在登录页面: http://localhost:5137/login。错误信息: ",
+      "steps": [
+        "输入邮箱",
+        "输入密码",
+        "点击登录按钮"
+      ],
+      "page": "http://localhost:5137/login",
+      "userRole": "系统管理员",
+      "userImpact": "用户无法登录系统，无法使用任何功能",
+      "businessImpact": "系统完全不可用",
+      "suggestedFix": "检查测试用户是否存在，密码是否正确，或创建测试用户脚本",
+      "id": "ISS-024",
+      "timestamp": "2026-03-23T11:47:35.655Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "管理员工作台页面缺少必需元素: 用户管理入口",
+      "expectedBehavior": "用户管理入口应可见",
+      "actualBehavior": "元素不可见 (选择器: a[href*=\"users\"], a:has-text(\"用户\"))",
+      "steps": [
+        "访问http://localhost:5137/admin/dashboard"
+      ],
+      "page": "http://localhost:5137/admin/dashboard",
+      "userRole": "系统管理员",
+      "userImpact": "用户无法使用用户管理入口功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-025",
+      "timestamp": "2026-03-23T11:47:36.536Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "管理员工作台页面缺少必需元素: 系统配置入口",
+      "expectedBehavior": "系统配置入口应可见",
+      "actualBehavior": "元素不可见 (选择器: a[href*=\"config\"], a:has-text(\"配置\"))",
+      "steps": [
+        "访问http://localhost:5137/admin/dashboard"
+      ],
+      "page": "http://localhost:5137/admin/dashboard",
+      "userRole": "系统管理员",
+      "userImpact": "用户无法使用系统配置入口功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-026",
+      "timestamp": "2026-03-23T11:47:36.536Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "系统配置页面页面缺少必需元素: 配置列表",
+      "expectedBehavior": "配置列表应可见",
+      "actualBehavior": "元素不可见 (选择器: table, [class*=\"list\"])",
+      "steps": [
+        "访问http://localhost:5137/admin/configuration"
+      ],
+      "page": "http://localhost:5137/admin/configuration",
+      "userRole": "系统管理员",
+      "userImpact": "用户无法使用配置列表功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-027",
+      "timestamp": "2026-03-23T11:47:37.414Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "技能分类管理页面页面缺少必需元素: 技能分类列表",
+      "expectedBehavior": "技能分类列表应可见",
+      "actualBehavior": "元素不可见 (选择器: table, [class*=\"list\"])",
+      "steps": [
+        "访问http://localhost:5137/admin/config/skill-categories"
+      ],
+      "page": "http://localhost:5137/admin/config/skill-categories",
+      "userRole": "系统管理员",
+      "userImpact": "用户无法使用技能分类列表功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-028",
+      "timestamp": "2026-03-23T11:47:38.334Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "技能分类管理页面页面缺少必需元素: 添加技能按钮",
+      "expectedBehavior": "添加技能按钮应可见",
+      "actualBehavior": "元素不可见 (选择器: button:has-text(\"添加\"), button:has-text(\"新建\"))",
+      "steps": [
+        "访问http://localhost:5137/admin/config/skill-categories"
+      ],
+      "page": "http://localhost:5137/admin/config/skill-categories",
+      "userRole": "系统管理员",
+      "userImpact": "用户无法使用添加技能按钮功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-029",
+      "timestamp": "2026-03-23T11:47:38.335Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "UI",
+      "severity": "HIGH",
+      "priority": "P1",
+      "description": "用户管理页面页面缺少必需元素: 用户列表",
+      "expectedBehavior": "用户列表应可见",
+      "actualBehavior": "元素不可见 (选择器: table, [class*=\"list\"])",
+      "steps": [
+        "访问http://localhost:5137/admin/users"
+      ],
+      "page": "http://localhost:5137/admin/users",
+      "userRole": "系统管理员",
+      "userImpact": "用户无法使用用户列表功能",
+      "businessImpact": "功能缺失，影响用户体验",
+      "id": "ISS-030",
+      "timestamp": "2026-03-23T11:47:39.273Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "API",
+      "severity": "HIGH",
+      "priority": "P0",
+      "featureId": "AUTH-002",
+      "description": "用户 freelancer@test.com 登录失败",
+      "expectedBehavior": "登录成功后应跳转到首页或工作台",
+      "actualBehavior": "停留在登录页面: http://localhost:5137/login。错误信息: ",
+      "steps": [
+        "输入邮箱",
+        "输入密码",
+        "点击登录按钮"
+      ],
+      "page": "http://localhost:5137/login",
+      "userRole": "自由顾问",
+      "userImpact": "用户无法登录系统，无法使用任何功能",
+      "businessImpact": "系统完全不可用",
+      "suggestedFix": "检查测试用户是否存在，密码是否正确，或创建测试用户脚本",
+      "id": "ISS-031",
+      "timestamp": "2026-03-23T11:47:43.786Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "API",
+      "severity": "HIGH",
+      "priority": "P0",
+      "featureId": "AUTH-002",
+      "description": "用户 hr@test.com 登录失败",
+      "expectedBehavior": "登录成功后应跳转到首页或工作台",
+      "actualBehavior": "停留在登录页面: http://localhost:5137/login。错误信息: ",
+      "steps": [
+        "输入邮箱",
+        "输入密码",
+        "点击登录按钮"
+      ],
+      "page": "http://localhost:5137/login",
+      "userRole": "HR招聘人员",
+      "userImpact": "用户无法登录系统，无法使用任何功能",
+      "businessImpact": "系统完全不可用",
+      "suggestedFix": "检查测试用户是否存在，密码是否正确，或创建测试用户脚本",
+      "id": "ISS-032",
+      "timestamp": "2026-03-23T11:47:52.153Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "API",
+      "severity": "HIGH",
+      "priority": "P0",
+      "featureId": "AUTH-002",
+      "description": "用户 hr@test.com 登录失败",
+      "expectedBehavior": "登录成功后应跳转到首页或工作台",
+      "actualBehavior": "停留在登录页面: http://localhost:5137/login。错误信息: ",
+      "steps": [
+        "输入邮箱",
+        "输入密码",
+        "点击登录按钮"
+      ],
+      "page": "http://localhost:5137/login",
+      "userRole": "HR招聘人员",
+      "userImpact": "用户无法登录系统，无法使用任何功能",
+      "businessImpact": "系统完全不可用",
+      "suggestedFix": "检查测试用户是否存在，密码是否正确，或创建测试用户脚本",
+      "id": "ISS-033",
+      "timestamp": "2026-03-23T11:48:02.028Z",
+      "status": "OPEN"
+    },
+    {
+      "category": "API",
+      "severity": "HIGH",
+      "priority": "P0",
+      "featureId": "AUTH-002",
+      "description": "用户 freelancer@test.com 登录失败",
+      "expectedBehavior": "登录成功后应跳转到首页或工作台",
+      "actualBehavior": "停留在登录页面: http://localhost:5137/login。错误信息: ",
+      "steps": [
+        "输入邮箱",
+        "输入密码",
+        "点击登录按钮"
+      ],
+      "page": "http://localhost:5137/login",
+      "userRole": "自由顾问",
+      "userImpact": "用户无法登录系统，无法使用任何功能",
+      "businessImpact": "系统完全不可用",
+      "suggestedFix": "检查测试用户是否存在，密码是否正确，或创建测试用户脚本",
+      "id": "ISS-034",
+      "timestamp": "2026-03-23T11:48:06.609Z",
+      "status": "OPEN"
+    }
+  ],
+  "pageResults": [
+    {
+      "url": "http://localhost:5137",
+      "pageName": "首页",
+      "userRole": "访客",
+      "loadTime": 1051,
+      "elementsChecked": [
+        {
+          "selector": "header",
+          "name": "页面头部",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "JobPortalJobPortalOpen main menu登录注册"
+        },
+        {
+          "selector": "nav, [class*=\"nav\"]",
+          "name": "导航菜单",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "JobPortalJobPortalOpen main menu登录注册"
+        },
+        {
+          "selector": "main, [class*=\"main\"]",
+          "name": "主内容区域",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "SearchFind JobsSearch Results8 Results Founddddddtewt tet testt ete...My CompanySH, CNFull-timeActiveCompetitive3/19/2026This is a test job posting for...My CompanyShanghai, ChinaFull-timeActiveCompetitive3/19/2026Data Scientist - Analyze large...CompanyBoston, United StatesPart-timeActiveCompetitive3/19/2026Mobile Developer - Build cross...CompanyLos Angeles, United StatesRemoteActiveCompetitive3/19/2026DevOps Engineer - Manage cloud...CompanySeattle, United StatesRemoteActiveCompetitive3/19/2026Backend Developer - Design and...CompanyAustin, United StatesRemoteActiveCompetitive3/19/2026Frontend Engineer - Join our d...CompanySan Francisco, United StatesContractActiveCompetitive3/19/2026Senior Full Stack Developer - ...CompanyNew York, United StatesFull-timeActiveCompetitive3/19/2026"
+        },
+        {
+          "selector": "footer, [class*=\"footer\"]",
+          "name": "页面底部",
+          "required": false,
+          "visible": true,
+          "enabled": true,
+          "hasText": "FacebookInstagramXGitHubYouTube© 2026 Job Portal. Made with ❤️ by all the Contributors"
+        },
+        {
+          "selector": "a[href*=\"login\"], button:has-text(\"登录\")",
+          "name": "登录入口",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "登录"
+        },
+        {
+          "selector": "a[href*=\"register\"], button:has-text(\"注册\")",
+          "name": "注册入口",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "注册"
+        }
+      ],
+      "issuesFound": [],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/login",
+      "pageName": "登录页面",
+      "userRole": "访客",
+      "loadTime": 642,
+      "elementsChecked": [
+        {
+          "selector": "form",
+          "name": "登录表单",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "Email address*Password*Remember meForgot password?Sign in"
+        },
+        {
+          "selector": "input[type=\"email\"], input[name=\"email\"]",
+          "name": "邮箱输入框",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": ""
+        },
+        {
+          "selector": "input[type=\"password\"], input[name=\"password\"]",
+          "name": "密码输入框",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": ""
+        },
+        {
+          "selector": "button[type=\"submit\"], button:has-text(\"登录\")",
+          "name": "登录按钮",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "Sign in"
+        },
+        {
+          "selector": "a[href*=\"forgot\"], a:has-text(\"忘记\")",
+          "name": "忘记密码链接",
+          "required": false,
+          "visible": true,
+          "enabled": true,
+          "hasText": "Forgot password?"
+        },
+        {
+          "selector": "a[href*=\"register\"], a:has-text(\"注册\")",
+          "name": "注册链接",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "Register now"
+        }
+      ],
+      "issuesFound": [],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/register",
+      "pageName": "注册页面",
+      "userRole": "访客",
+      "loadTime": 610,
+      "elementsChecked": [
+        {
+          "selector": "form",
+          "name": "注册表单",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "Register as*Freelancer / 求职者Company User / HR招聘官Full Name*Email address*Password*Repeat password*I agree to the terms and conditionsSign up"
+        },
+        {
+          "selector": "input[type=\"email\"], input[name=\"email\"]",
+          "name": "邮箱输入框",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": ""
+        },
+        {
+          "selector": "input[type=\"password\"], input[name=\"password\"]",
+          "name": "密码输入框",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "input[name=\"confirmPassword\"], input[placeholder*=\"确认\"]",
+          "name": "确认密码输入框",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": ""
+        },
+        {
+          "selector": "select[name=\"role\"], [data-testid=\"role-select\"]",
+          "name": "角色选择",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "Freelancer / 求职者Company User / HR招聘官"
+        },
+        {
+          "selector": "button[type=\"submit\"], button:has-text(\"注册\")",
+          "name": "注册按钮",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "Sign up"
+        }
+      ],
+      "issuesFound": [
+        "ISS-001"
+      ],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/jobs",
+      "pageName": "项目列表页面",
+      "userRole": "访客",
+      "loadTime": 578,
+      "elementsChecked": [
+        {
+          "selector": "[class*=\"job-card\"], [class*=\"project-card\"], article",
+          "name": "项目卡片",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "input[type=\"search\"], input[placeholder*=\"搜索\"]",
+          "name": "搜索框",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "select, [class*=\"filter\"]",
+          "name": "筛选器",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "[class*=\"pagination\"]",
+          "name": "分页组件",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        }
+      ],
+      "issuesFound": [],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/dashboard",
+      "pageName": "顾问工作台",
+      "userRole": "自由顾问",
+      "loadTime": 589,
+      "elementsChecked": [
+        {
+          "selector": "[class*=\"stat\"], [class*=\"card\"]",
+          "name": "统计卡片",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "[class*=\"project\"], [class*=\"job\"]",
+          "name": "项目列表",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "a[href*=\"work-logs\"], button:has-text(\"工时\")",
+          "name": "工时入口",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "a[href*=\"invoices\"], button:has-text(\"发票\")",
+          "name": "发票入口",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        }
+      ],
+      "issuesFound": [],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/work-logs",
+      "pageName": "工时管理页面",
+      "userRole": "自由顾问",
+      "loadTime": 570,
+      "elementsChecked": [
+        {
+          "selector": "table, [class*=\"list\"]",
+          "name": "工时列表",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "a[href*=\"/work-logs/new\"], button:has-text(\"新建\"), button:has-text(\"创建\")",
+          "name": "创建工时按钮",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "[class*=\"filter\"], select",
+          "name": "筛选功能",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "[class*=\"status\"], [class*=\"badge\"]",
+          "name": "状态标签",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        }
+      ],
+      "issuesFound": [
+        "ISS-004",
+        "ISS-005"
+      ],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/work-logs/new",
+      "pageName": "工时填报表单",
+      "userRole": "自由顾问",
+      "loadTime": 576,
+      "elementsChecked": [
+        {
+          "selector": "form",
+          "name": "工时表单",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "Email address*Password*Remember meForgot password?Sign in"
+        },
+        {
+          "selector": "select[name*=\"project\"], [data-testid*=\"project\"]",
+          "name": "项目选择器",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "input[name*=\"date\"], input[type=\"date\"]",
+          "name": "日期选择",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "input[name*=\"hour\"], input[type=\"number\"]",
+          "name": "工时输入",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "select[name*=\"type\"], [data-testid*=\"type\"]",
+          "name": "工作类型",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "textarea",
+          "name": "工作描述",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "button[type=\"submit\"]",
+          "name": "提交按钮",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "Sign in"
+        }
+      ],
+      "issuesFound": [
+        "ISS-007",
+        "ISS-008",
+        "ISS-009",
+        "ISS-010",
+        "ISS-011"
+      ],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/invoices",
+      "pageName": "发票管理页面",
+      "userRole": "自由顾问",
+      "loadTime": 607,
+      "elementsChecked": [
+        {
+          "selector": "table, [class*=\"list\"]",
+          "name": "发票列表",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "a[href*=\"/invoices/new\"], button:has-text(\"创建\"), button:has-text(\"新建\")",
+          "name": "创建发票按钮",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "[class*=\"status\"], [class*=\"badge\"]",
+          "name": "状态标签",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        }
+      ],
+      "issuesFound": [
+        "ISS-012",
+        "ISS-013"
+      ],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/profile",
+      "pageName": "个人档案页面",
+      "userRole": "自由顾问",
+      "loadTime": 575,
+      "elementsChecked": [
+        {
+          "selector": "form, [class*=\"profile\"]",
+          "name": "档案表单",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "Email address*Password*Remember meForgot password?Sign in"
+        },
+        {
+          "selector": "input[name*=\"name\"], input[name*=\"display\"]",
+          "name": "姓名输入",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "[class*=\"skill\"], [data-testid*=\"skill\"]",
+          "name": "技能区域",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "[class*=\"experience\"], [data-testid*=\"experience\"]",
+          "name": "经历区域",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "button[type=\"submit\"], button:has-text(\"保存\")",
+          "name": "保存按钮",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "Sign in"
+        }
+      ],
+      "issuesFound": [],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/messages",
+      "pageName": "消息中心页面",
+      "userRole": "自由顾问",
+      "loadTime": 591,
+      "elementsChecked": [
+        {
+          "selector": "[class*=\"message\"], [class*=\"notification\"]",
+          "name": "消息列表",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "[class*=\"unread\"], [class*=\"badge\"]",
+          "name": "未读标识",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        }
+      ],
+      "issuesFound": [
+        "ISS-014"
+      ],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/hr/dashboard",
+      "pageName": "HR工作台",
+      "userRole": "HR招聘人员",
+      "loadTime": 583,
+      "elementsChecked": [
+        {
+          "selector": "[class*=\"stat\"], [class*=\"card\"]",
+          "name": "统计卡片",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "a[href*=\"post-job\"], button:has-text(\"发布\")",
+          "name": "发布职位入口",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "a[href*=\"application\"], a:has-text(\"申请\")",
+          "name": "申请管理入口",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        }
+      ],
+      "issuesFound": [
+        "ISS-016"
+      ],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/post-job",
+      "pageName": "发布职位页面",
+      "userRole": "HR招聘人员",
+      "loadTime": 651,
+      "elementsChecked": [
+        {
+          "selector": "form",
+          "name": "职位表单",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "基本信息项目标题 *项目描述 *0 / 4000 字符工作详情工作性质 *选择工作性质全职兼职自由顾问实习工作形式 *选择工作形式远程现场混合项目周期 *选择项目周期1周以内1个月3个月6个月1年长期招聘人数预计开始日期薪资待遇费率类型 *选择费率类型待面试日薪月薪年薪项目总价费率金额 *货币人民币 (CNY)美元 (USD)欧元 (EUR)英镑 (GBP)技能要求技能大类 *ERPSAPCRMJAVAFrontendDevOpsDatabaseProject Management技能小类 *工作地点街道地址城市 *省/州国家 *邮编对申请人隐藏公司名称取消发布项目"
+        },
+        {
+          "selector": "input[name*=\"title\"], input[placeholder*=\"标题\"]",
+          "name": "职位标题输入",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": ""
+        },
+        {
+          "selector": "textarea, [class*=\"editor\"]",
+          "name": "职位描述",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": ""
+        },
+        {
+          "selector": "select[name*=\"skill\"], [data-testid*=\"skill\"]",
+          "name": "技能要求",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "select[name*=\"category\"], [data-testid*=\"category\"]",
+          "name": "技能分类",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "button[type=\"submit\"], button:has-text(\"发布\")",
+          "name": "发布按钮",
+          "required": true,
+          "visible": true,
+          "enabled": true,
+          "hasText": "发布项目"
+        }
+      ],
+      "issuesFound": [
+        "ISS-017",
+        "ISS-018"
+      ],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/company/work-logs/pending",
+      "pageName": "待审核工时页面",
+      "userRole": "HR招聘人员",
+      "loadTime": 590,
+      "elementsChecked": [
+        {
+          "selector": "table, [class*=\"list\"]",
+          "name": "工时列表",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "button:has-text(\"确认\"), button:has-text(\"通过\")",
+          "name": "确认按钮",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "button:has-text(\"驳回\"), button:has-text(\"拒绝\")",
+          "name": "驳回按钮",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        }
+      ],
+      "issuesFound": [
+        "ISS-019",
+        "ISS-020",
+        "ISS-021"
+      ],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/applications",
+      "pageName": "申请管理页面",
+      "userRole": "HR招聘人员",
+      "loadTime": 594,
+      "elementsChecked": [
+        {
+          "selector": "table, [class*=\"list\"]",
+          "name": "申请列表",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "button:has-text(\"批准\"), button:has-text(\"通过\")",
+          "name": "批准按钮",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "button:has-text(\"拒绝\"), button:has-text(\"驳回\")",
+          "name": "拒绝按钮",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        }
+      ],
+      "issuesFound": [
+        "ISS-023"
+      ],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/admin/dashboard",
+      "pageName": "管理员工作台",
+      "userRole": "系统管理员",
+      "loadTime": 586,
+      "elementsChecked": [
+        {
+          "selector": "[class*=\"stat\"], [class*=\"card\"]",
+          "name": "统计卡片",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "a[href*=\"users\"], a:has-text(\"用户\")",
+          "name": "用户管理入口",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "a[href*=\"compan\"], a:has-text(\"企业\")",
+          "name": "企业管理入口",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "a[href*=\"config\"], a:has-text(\"配置\")",
+          "name": "系统配置入口",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        }
+      ],
+      "issuesFound": [
+        "ISS-025",
+        "ISS-026"
+      ],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/admin/configuration",
+      "pageName": "系统配置页面",
+      "userRole": "系统管理员",
+      "loadTime": 579,
+      "elementsChecked": [
+        {
+          "selector": "table, [class*=\"list\"]",
+          "name": "配置列表",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "button:has-text(\"添加\"), button:has-text(\"新建\")",
+          "name": "添加配置按钮",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "input, select",
+          "name": "配置输入",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        }
+      ],
+      "issuesFound": [
+        "ISS-027"
+      ],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/admin/config/skill-categories",
+      "pageName": "技能分类管理页面",
+      "userRole": "系统管理员",
+      "loadTime": 583,
+      "elementsChecked": [
+        {
+          "selector": "table, [class*=\"list\"]",
+          "name": "技能分类列表",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "button:has-text(\"添加\"), button:has-text(\"新建\")",
+          "name": "添加技能按钮",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        }
+      ],
+      "issuesFound": [
+        "ISS-028",
+        "ISS-029"
+      ],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    },
+    {
+      "url": "http://localhost:5137/admin/users",
+      "pageName": "用户管理页面",
+      "userRole": "系统管理员",
+      "loadTime": 595,
+      "elementsChecked": [
+        {
+          "selector": "table, [class*=\"list\"]",
+          "name": "用户列表",
+          "required": true,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "input[type=\"search\"], input[placeholder*=\"搜索\"]",
+          "name": "搜索框",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        },
+        {
+          "selector": "button:has-text(\"禁用\"), button:has-text(\"启用\")",
+          "name": "状态操作按钮",
+          "required": false,
+          "visible": false,
+          "enabled": false
+        }
+      ],
+      "issuesFound": [
+        "ISS-030"
+      ],
+      "experienceAssessment": [],
+      "accessibilityIssues": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "AxiosError",
+        "AxiosError"
+      ]
+    }
+  ],
+  "summary": {
+    "totalIssues": 34,
+    "criticalIssues": 0,
+    "highIssues": 33,
+    "mediumIssues": 1,
+    "lowIssues": 0,
+    "p0Issues": 7,
+    "p1Issues": 26,
+    "p2Issues": 1
+  }
+}

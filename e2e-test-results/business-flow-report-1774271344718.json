@@ -1,0 +1,105 @@
+{
+  "testRun": {
+    "startTime": "2026-03-23T13:09:04.718Z",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "flowSteps": [
+    {
+      "step": 1,
+      "action": "开始登录",
+      "description": "用户: HR招聘人员 (hr@test.com)",
+      "success": true,
+      "timestamp": "2026-03-23T13:08:34.063Z"
+    },
+    {
+      "step": 2,
+      "action": "填写输入框: 邮箱",
+      "description": "成功填写值: hr@test.com",
+      "success": true,
+      "timestamp": "2026-03-23T13:08:37.188Z"
+    },
+    {
+      "step": 3,
+      "action": "填写输入框: 密码",
+      "description": "成功填写值: Test1234!",
+      "success": true,
+      "timestamp": "2026-03-23T13:08:38.164Z"
+    },
+    {
+      "step": 4,
+      "action": "点击按钮: 登录按钮",
+      "description": "成功点击按钮，选择器: [data-testid=\"login-submit-btn\"]",
+      "success": true,
+      "timestamp": "2026-03-23T13:08:39.904Z"
+    },
+    {
+      "step": 5,
+      "action": "登录成功",
+      "description": "已跳转到: http://localhost:5137/",
+      "success": true,
+      "timestamp": "2026-03-23T13:08:42.910Z"
+    },
+    {
+      "step": 6,
+      "action": "导航到发布项目页面",
+      "description": "准备发布新项目",
+      "success": true,
+      "timestamp": "2026-03-23T13:08:43.016Z"
+    },
+    {
+      "step": 7,
+      "action": "填写输入框: 项目标题",
+      "description": "成功填写值: E2E测试项目_1774271325629",
+      "success": true,
+      "timestamp": "2026-03-23T13:08:46.388Z"
+    },
+    {
+      "step": 8,
+      "action": "填写输入框: 项目描述",
+      "description": "成功填写值: 这是一个E2E自动化测试创建的项目，用于验证跨角色业务流程。",
+      "success": true,
+      "timestamp": "2026-03-23T13:08:47.089Z"
+    },
+    {
+      "step": 9,
+      "action": "点击按钮: 发布项目按钮",
+      "description": "成功点击按钮，选择器: button[type=\"submit\"]",
+      "success": true,
+      "timestamp": "2026-03-23T13:08:48.388Z"
+    },
+    {
+      "step": 10,
+      "action": "项目创建",
+      "description": "项目标题: E2E测试项目_1774271325629",
+      "success": true,
+      "timestamp": "2026-03-23T13:08:51.628Z"
+    },
+    {
+      "step": 11,
+      "action": "开始登出",
+      "description": "准备退出当前用户",
+      "success": true,
+      "timestamp": "2026-03-23T13:08:51.629Z"
+    },
+    {
+      "step": 12,
+      "action": "开始登录",
+      "description": "用户: 自由顾问 (freelancer@test.com)",
+      "success": true,
+      "timestamp": "2026-03-23T13:08:52.346Z"
+    },
+    {
+      "step": 13,
+      "action": "登录失败",
+      "description": "邮箱输入框不可见: Error: locator.waitFor: Target page, context or browser has been closed",
+      "success": false,
+      "timestamp": "2026-03-23T13:09:04.248Z"
+    }
+  ],
+  "summary": {
+    "totalSteps": 13,
+    "successSteps": 12,
+    "failedSteps": 1
+  }
+}

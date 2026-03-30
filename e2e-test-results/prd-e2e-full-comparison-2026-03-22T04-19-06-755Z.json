@@ -1,0 +1,2149 @@
+{
+  "testRun": {
+    "startTime": "2026-03-22T04:18:05.137Z",
+    "endTime": "2026-03-22T04:19:06.755Z",
+    "duration": "61.62s",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "results": {
+    "public": {
+      "passed": 4,
+      "failed": 0,
+      "errors": [],
+      "features": {
+        "PUBLIC-001": {
+          "status": "IMPLEMENTED",
+          "path": "/",
+          "elements": [
+            {
+              "name": "Form",
+              "found": false,
+              "count": 0
+            },
+            {
+              "name": "Input",
+              "found": true,
+              "count": 11
+            },
+            {
+              "name": "Button",
+              "found": true,
+              "count": 3
+            }
+          ]
+        },
+        "AUTH-002": {
+          "status": "IMPLEMENTED",
+          "path": "/login",
+          "elements": [
+            {
+              "name": "Form",
+              "found": true,
+              "count": 1
+            },
+            {
+              "name": "Input",
+              "found": true,
+              "count": 3
+            },
+            {
+              "name": "Button",
+              "found": true,
+              "count": 1
+            }
+          ]
+        },
+        "AUTH-001": {
+          "status": "IMPLEMENTED",
+          "path": "/register",
+          "elements": [
+            {
+              "name": "Form",
+              "found": true,
+              "count": 1
+            },
+            {
+              "name": "Input",
+              "found": true,
+              "count": 4
+            },
+            {
+              "name": "Button",
+              "found": true,
+              "count": 1
+            }
+          ]
+        },
+        "AUTH-003": {
+          "status": "IMPLEMENTED",
+          "path": "/forgot-password",
+          "elements": [
+            {
+              "name": "Form",
+              "found": true,
+              "count": 1
+            },
+            {
+              "name": "Input",
+              "found": true,
+              "count": 1
+            },
+            {
+              "name": "Button",
+              "found": true,
+              "count": 1
+            }
+          ]
+        }
+      }
+    },
+    "freelancer": {
+      "passed": 9,
+      "failed": 7,
+      "errors": [
+        "FreelancerDashboard: Page empty or no matching elements",
+        "MyJobs: Page empty or no matching elements",
+        "SavedJobs: Page empty or no matching elements",
+        "MatchRecommendations: Page empty or no matching elements",
+        "Milestones: Page empty or no matching elements",
+        "Messages: Page empty or no matching elements",
+        "Reports: Page empty or no matching elements"
+      ],
+      "features": {
+        "STAT-001": {
+          "status": "EMPTY",
+          "path": "/reports",
+          "foundElements": []
+        },
+        "PROFILE-001": {
+          "status": "IMPLEMENTED",
+          "path": "/profile",
+          "foundElements": [
+            {
+              "selector": "form",
+              "count": 1
+            },
+            {
+              "selector": "input[name*=\"email\"]",
+              "count": 1
+            },
+            {
+              "selector": "button[type=\"submit\"]",
+              "count": 1
+            }
+          ]
+        },
+        "PROJ-002": {
+          "status": "EMPTY",
+          "path": "/my-jobs",
+          "foundElements": []
+        },
+        "PROJ-009": {
+          "status": "EMPTY",
+          "path": "/saved-jobs",
+          "foundElements": []
+        },
+        "WORKLOG-002": {
+          "status": "IMPLEMENTED",
+          "path": "/work-logs",
+          "foundElements": [
+            {
+              "selector": "button",
+              "count": 1
+            }
+          ]
+        },
+        "WORKLOG-001": {
+          "status": "IMPLEMENTED",
+          "path": "/work-logs/new",
+          "foundElements": [
+            {
+              "selector": "form",
+              "count": 1
+            },
+            {
+              "selector": "button[type=\"submit\"]",
+              "count": 1
+            }
+          ]
+        },
+        "INV-002": {
+          "status": "IMPLEMENTED",
+          "path": "/invoices",
+          "foundElements": [
+            {
+              "selector": "button",
+              "count": 1
+            }
+          ]
+        },
+        "INV-001": {
+          "status": "IMPLEMENTED",
+          "path": "/invoices/new",
+          "foundElements": [
+            {
+              "selector": "form",
+              "count": 1
+            },
+            {
+              "selector": "input",
+              "count": 3
+            },
+            {
+              "selector": "button[type=\"submit\"]",
+              "count": 1
+            }
+          ]
+        },
+        "MATCH-001": {
+          "status": "EMPTY",
+          "path": "/match-recommendations",
+          "foundElements": []
+        },
+        "CONTRACT-001": {
+          "status": "IMPLEMENTED",
+          "path": "/contracts",
+          "foundElements": [
+            {
+              "selector": "button",
+              "count": 1
+            }
+          ]
+        },
+        "MILESTONE-001": {
+          "status": "EMPTY",
+          "path": "/milestones",
+          "foundElements": []
+        },
+        "PAYMENT-001": {
+          "status": "IMPLEMENTED",
+          "path": "/payments",
+          "foundElements": [
+            {
+              "selector": "button",
+              "count": 1
+            }
+          ]
+        },
+        "MSG-001": {
+          "status": "EMPTY",
+          "path": "/messages",
+          "foundElements": []
+        },
+        "RATE-001": {
+          "status": "IMPLEMENTED",
+          "path": "/ratings/create",
+          "foundElements": [
+            {
+              "selector": "form",
+              "count": 1
+            },
+            {
+              "selector": "button",
+              "count": 1
+            }
+          ]
+        },
+        "TICKET-001": {
+          "status": "IMPLEMENTED",
+          "path": "/tickets",
+          "foundElements": [
+            {
+              "selector": "button",
+              "count": 1
+            }
+          ]
+        }
+      }
+    },
+    "hr": {
+      "passed": 3,
+      "failed": 1,
+      "errors": [
+        "MyJobs: Page empty or no matching elements"
+      ],
+      "features": {
+        "STAT-003": {
+          "status": "IMPLEMENTED",
+          "path": "/hr/dashboard",
+          "foundElements": [
+            {
+              "selector": "h2",
+              "count": 1
+            }
+          ]
+        },
+        "PROJ-001": {
+          "status": "IMPLEMENTED",
+          "path": "/post-job",
+          "foundElements": [
+            {
+              "selector": "form",
+              "count": 1
+            },
+            {
+              "selector": "textarea",
+              "count": 1
+            },
+            {
+              "selector": "select",
+              "count": 1
+            },
+            {
+              "selector": "button[type=\"submit\"]",
+              "count": 1
+            }
+          ]
+        },
+        "WORKLOG-008": {
+          "status": "IMPLEMENTED",
+          "path": "/company/work-logs/pending",
+          "foundElements": [
+            {
+              "selector": "button",
+              "count": 1
+            }
+          ]
+        },
+        "PROJ-002": {
+          "status": "EMPTY",
+          "path": "/my-jobs",
+          "foundElements": []
+        }
+      }
+    },
+    "admin": {
+      "passed": 7,
+      "failed": 0,
+      "errors": [],
+      "features": {
+        "ADMIN-001": {
+          "status": "IMPLEMENTED",
+          "path": "/admin/dashboard",
+          "foundElements": [
+            {
+              "selector": "h2",
+              "count": 1
+            }
+          ]
+        },
+        "ADMIN-006": {
+          "status": "IMPLEMENTED",
+          "path": "/admin/config/currencies",
+          "foundElements": [
+            {
+              "selector": "button",
+              "count": 1
+            }
+          ]
+        },
+        "ADMIN-005": {
+          "status": "IMPLEMENTED",
+          "path": "/admin/config/work-types",
+          "foundElements": [
+            {
+              "selector": "button",
+              "count": 1
+            }
+          ]
+        },
+        "ADMIN-008": {
+          "status": "IMPLEMENTED",
+          "path": "/tickets",
+          "foundElements": [
+            {
+              "selector": "button",
+              "count": 1
+            }
+          ]
+        }
+      }
+    },
+    "navigation": {
+      "passed": 3,
+      "failed": 0,
+      "errors": [],
+      "features": {}
+    },
+    "apis": {
+      "passed": 0,
+      "failed": 3,
+      "errors": [
+        "JobsAPI: Failed to fetch",
+        "SkillsAPI: Failed to fetch",
+        "AuthAPI: Failed to fetch"
+      ],
+      "features": {
+        "JobsAPI": {
+          "status": "ERROR",
+          "error": "Failed to fetch"
+        },
+        "SkillsAPI": {
+          "status": "ERROR",
+          "error": "Failed to fetch"
+        },
+        "AuthAPI": {
+          "status": "ERROR",
+          "error": "Failed to fetch"
+        }
+      }
+    },
+    "comparison": {
+      "summary": {
+        "totalPRDFeatures": 76,
+        "implementedFeatures": 19,
+        "missingFeatures": 57,
+        "errorFeatures": 0,
+        "completionRate": "25%"
+      },
+      "byModule": {
+        "AUTH": {
+          "total": 6,
+          "implemented": 3,
+          "missing": 3,
+          "error": 0,
+          "features": {
+            "AUTH-001": {
+              "name": "用户注册",
+              "priority": "P0",
+              "expectedPath": "/register",
+              "status": "IMPLEMENTED"
+            },
+            "AUTH-002": {
+              "name": "用户登录",
+              "priority": "P0",
+              "expectedPath": "/login",
+              "status": "IMPLEMENTED"
+            },
+            "AUTH-003": {
+              "name": "密码找回",
+              "priority": "P0",
+              "expectedPath": "/forgot-password",
+              "status": "IMPLEMENTED"
+            },
+            "AUTH-004": {
+              "name": "身份认证",
+              "priority": "P0",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "AUTH-005": {
+              "name": "角色切换",
+              "priority": "P1",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "AUTH-006": {
+              "name": "登录日志",
+              "priority": "P2",
+              "expectedPath": null,
+              "status": "MISSING"
+            }
+          },
+          "completionRate": "50%"
+        },
+        "PROFILE": {
+          "total": 8,
+          "implemented": 1,
+          "missing": 7,
+          "error": 0,
+          "features": {
+            "PROFILE-001": {
+              "name": "基本信息管理",
+              "priority": "P0",
+              "expectedPath": "/profile",
+              "status": "IMPLEMENTED"
+            },
+            "PROFILE-002": {
+              "name": "技能标签管理",
+              "priority": "P0",
+              "expectedPath": "/profile",
+              "status": "MISSING"
+            },
+            "PROFILE-003": {
+              "name": "项目经历管理",
+              "priority": "P0",
+              "expectedPath": "/profile",
+              "status": "MISSING"
+            },
+            "PROFILE-004": {
+              "name": "资质证书管理",
+              "priority": "P0",
+              "expectedPath": "/profile",
+              "status": "MISSING"
+            },
+            "PROFILE-005": {
+              "name": "费率设置",
+              "priority": "P0",
+              "expectedPath": "/profile",
+              "status": "MISSING"
+            },
+            "PROFILE-006": {
+              "name": "可用性日历",
+              "priority": "P1",
+              "expectedPath": "/profile",
+              "status": "MISSING"
+            },
+            "PROFILE-007": {
+              "name": "档案预览",
+              "priority": "P1",
+              "expectedPath": "/profile",
+              "status": "MISSING"
+            },
+            "PROFILE-008": {
+              "name": "档案完整度",
+              "priority": "P1",
+              "expectedPath": "/profile",
+              "status": "MISSING"
+            }
+          },
+          "completionRate": "13%"
+        },
+        "PROJ": {
+          "total": 10,
+          "implemented": 1,
+          "missing": 9,
+          "error": 0,
+          "features": {
+            "PROJ-001": {
+              "name": "项目发布",
+              "priority": "P0",
+              "expectedPath": "/post-job",
+              "status": "IMPLEMENTED"
+            },
+            "PROJ-002": {
+              "name": "项目列表",
+              "priority": "P0",
+              "expectedPath": "/my-jobs",
+              "status": "EMPTY"
+            },
+            "PROJ-003": {
+              "name": "项目详情",
+              "priority": "P0",
+              "expectedPath": "/jobs/:id",
+              "status": "MISSING"
+            },
+            "PROJ-004": {
+              "name": "项目申请",
+              "priority": "P0",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "PROJ-005": {
+              "name": "申请管理",
+              "priority": "P0",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "PROJ-006": {
+              "name": "智能推荐",
+              "priority": "P0",
+              "expectedPath": "/match-recommendations",
+              "status": "MISSING"
+            },
+            "PROJ-007": {
+              "name": "项目编辑",
+              "priority": "P0",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "PROJ-008": {
+              "name": "项目状态管理",
+              "priority": "P0",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "PROJ-009": {
+              "name": "项目收藏",
+              "priority": "P1",
+              "expectedPath": "/saved-jobs",
+              "status": "EMPTY"
+            },
+            "PROJ-010": {
+              "name": "项目搜索",
+              "priority": "P1",
+              "expectedPath": "/my-jobs",
+              "status": "MISSING"
+            }
+          },
+          "completionRate": "10%"
+        },
+        "WORKLOG": {
+          "total": 10,
+          "implemented": 3,
+          "missing": 7,
+          "error": 0,
+          "features": {
+            "WORKLOG-001": {
+              "name": "工时填报",
+              "priority": "P0",
+              "expectedPath": "/work-logs/new",
+              "status": "IMPLEMENTED"
+            },
+            "WORKLOG-002": {
+              "name": "工时列表",
+              "priority": "P0",
+              "expectedPath": "/work-logs",
+              "status": "IMPLEMENTED"
+            },
+            "WORKLOG-003": {
+              "name": "工时详情",
+              "priority": "P0",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "WORKLOG-004": {
+              "name": "工时编辑",
+              "priority": "P0",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "WORKLOG-005": {
+              "name": "工时删除",
+              "priority": "P0",
+              "expectedPath": "/work-logs",
+              "status": "MISSING"
+            },
+            "WORKLOG-006": {
+              "name": "工时提交",
+              "priority": "P0",
+              "expectedPath": "/work-logs",
+              "status": "MISSING"
+            },
+            "WORKLOG-007": {
+              "name": "批量提交",
+              "priority": "P0",
+              "expectedPath": "/work-logs",
+              "status": "MISSING"
+            },
+            "WORKLOG-008": {
+              "name": "工时审核",
+              "priority": "P0",
+              "expectedPath": "/company/work-logs/pending",
+              "status": "IMPLEMENTED"
+            },
+            "WORKLOG-009": {
+              "name": "工时统计",
+              "priority": "P1",
+              "expectedPath": "/",
+              "status": "MISSING"
+            },
+            "WORKLOG-010": {
+              "name": "工时导出",
+              "priority": "P2",
+              "expectedPath": null,
+              "status": "MISSING"
+            }
+          },
+          "completionRate": "30%"
+        },
+        "INV": {
+          "total": 10,
+          "implemented": 2,
+          "missing": 8,
+          "error": 0,
+          "features": {
+            "INV-001": {
+              "name": "发票创建",
+              "priority": "P0",
+              "expectedPath": "/invoices/new",
+              "status": "IMPLEMENTED"
+            },
+            "INV-002": {
+              "name": "发票列表",
+              "priority": "P0",
+              "expectedPath": "/invoices",
+              "status": "IMPLEMENTED"
+            },
+            "INV-003": {
+              "name": "发票详情",
+              "priority": "P0",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "INV-004": {
+              "name": "发票编辑",
+              "priority": "P0",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "INV-005": {
+              "name": "发票提交",
+              "priority": "P0",
+              "expectedPath": "/invoices",
+              "status": "MISSING"
+            },
+            "INV-006": {
+              "name": "发票审核",
+              "priority": "P0",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "INV-007": {
+              "name": "付款确认",
+              "priority": "P0",
+              "expectedPath": "/payments",
+              "status": "MISSING"
+            },
+            "INV-008": {
+              "name": "税务计算",
+              "priority": "P0",
+              "expectedPath": "/invoices/new",
+              "status": "MISSING"
+            },
+            "INV-009": {
+              "name": "发票统计",
+              "priority": "P1",
+              "expectedPath": "/reports",
+              "status": "MISSING"
+            },
+            "INV-010": {
+              "name": "发票导出",
+              "priority": "P2",
+              "expectedPath": null,
+              "status": "MISSING"
+            }
+          },
+          "completionRate": "20%"
+        },
+        "MSG": {
+          "total": 5,
+          "implemented": 0,
+          "missing": 5,
+          "error": 0,
+          "features": {
+            "MSG-001": {
+              "name": "站内消息",
+              "priority": "P0",
+              "expectedPath": "/messages",
+              "status": "EMPTY"
+            },
+            "MSG-002": {
+              "name": "系统通知",
+              "priority": "P0",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "MSG-003": {
+              "name": "消息设置",
+              "priority": "P1",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "MSG-004": {
+              "name": "邮件通知",
+              "priority": "P1",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "MSG-005": {
+              "name": "短信通知",
+              "priority": "P2",
+              "expectedPath": null,
+              "status": "MISSING"
+            }
+          },
+          "completionRate": "0%"
+        },
+        "RATE": {
+          "total": 5,
+          "implemented": 1,
+          "missing": 4,
+          "error": 0,
+          "features": {
+            "RATE-001": {
+              "name": "顾问评价",
+              "priority": "P1",
+              "expectedPath": "/ratings/create",
+              "status": "IMPLEMENTED"
+            },
+            "RATE-002": {
+              "name": "企业评价",
+              "priority": "P1",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "RATE-003": {
+              "name": "评价展示",
+              "priority": "P1",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "RATE-004": {
+              "name": "评分统计",
+              "priority": "P1",
+              "expectedPath": "/profile",
+              "status": "MISSING"
+            },
+            "RATE-005": {
+              "name": "评价管理",
+              "priority": "P2",
+              "expectedPath": null,
+              "status": "MISSING"
+            }
+          },
+          "completionRate": "20%"
+        },
+        "STAT": {
+          "total": 7,
+          "implemented": 1,
+          "missing": 6,
+          "error": 0,
+          "features": {
+            "STAT-001": {
+              "name": "顾问收入统计",
+              "priority": "P1",
+              "expectedPath": "/reports",
+              "status": "EMPTY"
+            },
+            "STAT-002": {
+              "name": "顾问工时统计",
+              "priority": "P1",
+              "expectedPath": "/reports",
+              "status": "MISSING"
+            },
+            "STAT-003": {
+              "name": "企业项目统计",
+              "priority": "P1",
+              "expectedPath": "/hr/dashboard",
+              "status": "IMPLEMENTED"
+            },
+            "STAT-004": {
+              "name": "企业顾问统计",
+              "priority": "P1",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "STAT-005": {
+              "name": "平台运营统计",
+              "priority": "P1",
+              "expectedPath": "/admin/dashboard",
+              "status": "MISSING"
+            },
+            "STAT-006": {
+              "name": "财务报表",
+              "priority": "P2",
+              "expectedPath": "/reports",
+              "status": "MISSING"
+            },
+            "STAT-007": {
+              "name": "数据导出",
+              "priority": "P2",
+              "expectedPath": null,
+              "status": "MISSING"
+            }
+          },
+          "completionRate": "14%"
+        },
+        "ADMIN": {
+          "total": 10,
+          "implemented": 4,
+          "missing": 6,
+          "error": 0,
+          "features": {
+            "ADMIN-001": {
+              "name": "仪表盘",
+              "priority": "P0",
+              "expectedPath": "/admin/dashboard",
+              "status": "IMPLEMENTED"
+            },
+            "ADMIN-002": {
+              "name": "用户管理",
+              "priority": "P0",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "ADMIN-003": {
+              "name": "企业管理",
+              "priority": "P0",
+              "expectedPath": "/admin/companies/:id",
+              "status": "MISSING"
+            },
+            "ADMIN-004": {
+              "name": "顾问管理",
+              "priority": "P0",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "ADMIN-005": {
+              "name": "技能管理",
+              "priority": "P0",
+              "expectedPath": "/admin/config/skill-categories",
+              "status": "IMPLEMENTED"
+            },
+            "ADMIN-006": {
+              "name": "系统配置",
+              "priority": "P0",
+              "expectedPath": "/admin/configuration",
+              "status": "IMPLEMENTED"
+            },
+            "ADMIN-007": {
+              "name": "内容审核",
+              "priority": "P1",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "ADMIN-008": {
+              "name": "纠纷处理",
+              "priority": "P1",
+              "expectedPath": "/tickets",
+              "status": "IMPLEMENTED"
+            },
+            "ADMIN-009": {
+              "name": "操作日志",
+              "priority": "P2",
+              "expectedPath": null,
+              "status": "MISSING"
+            },
+            "ADMIN-010": {
+              "name": "数据分析",
+              "priority": "P2",
+              "expectedPath": "/admin/dashboard",
+              "status": "MISSING"
+            }
+          },
+          "completionRate": "40%"
+        },
+        "NEW_FEATURES": {
+          "total": 5,
+          "implemented": 3,
+          "missing": 2,
+          "error": 0,
+          "features": {
+            "MATCH-001": {
+              "name": "智能匹配推荐",
+              "priority": "P0",
+              "expectedPath": "/match-recommendations",
+              "status": "EMPTY"
+            },
+            "CONTRACT-001": {
+              "name": "合同管理",
+              "priority": "P0",
+              "expectedPath": "/contracts",
+              "status": "IMPLEMENTED"
+            },
+            "MILESTONE-001": {
+              "name": "项目进度看板",
+              "priority": "P1",
+              "expectedPath": "/milestones",
+              "status": "EMPTY"
+            },
+            "PAYMENT-001": {
+              "name": "付款追踪",
+              "priority": "P0",
+              "expectedPath": "/payments",
+              "status": "IMPLEMENTED"
+            },
+            "TICKET-001": {
+              "name": "工单/纠纷处理",
+              "priority": "P1",
+              "expectedPath": "/tickets",
+              "status": "IMPLEMENTED"
+            }
+          },
+          "completionRate": "60%"
+        }
+      },
+      "missingFeaturesList": [
+        {
+          "featureId": "AUTH-004",
+          "name": "身份认证",
+          "module": "AUTH",
+          "priority": "P0",
+          "expectedPath": null
+        },
+        {
+          "featureId": "PROFILE-002",
+          "name": "技能标签管理",
+          "module": "PROFILE",
+          "priority": "P0",
+          "expectedPath": "/profile"
+        },
+        {
+          "featureId": "PROFILE-003",
+          "name": "项目经历管理",
+          "module": "PROFILE",
+          "priority": "P0",
+          "expectedPath": "/profile"
+        },
+        {
+          "featureId": "PROFILE-004",
+          "name": "资质证书管理",
+          "module": "PROFILE",
+          "priority": "P0",
+          "expectedPath": "/profile"
+        },
+        {
+          "featureId": "PROFILE-005",
+          "name": "费率设置",
+          "module": "PROFILE",
+          "priority": "P0",
+          "expectedPath": "/profile"
+        },
+        {
+          "featureId": "PROJ-002",
+          "name": "项目列表",
+          "module": "PROJ",
+          "priority": "P0",
+          "expectedPath": "/my-jobs"
+        },
+        {
+          "featureId": "PROJ-003",
+          "name": "项目详情",
+          "module": "PROJ",
+          "priority": "P0",
+          "expectedPath": "/jobs/:id"
+        },
+        {
+          "featureId": "PROJ-004",
+          "name": "项目申请",
+          "module": "PROJ",
+          "priority": "P0",
+          "expectedPath": null
+        },
+        {
+          "featureId": "PROJ-005",
+          "name": "申请管理",
+          "module": "PROJ",
+          "priority": "P0",
+          "expectedPath": null
+        },
+        {
+          "featureId": "PROJ-006",
+          "name": "智能推荐",
+          "module": "PROJ",
+          "priority": "P0",
+          "expectedPath": "/match-recommendations"
+        },
+        {
+          "featureId": "PROJ-007",
+          "name": "项目编辑",
+          "module": "PROJ",
+          "priority": "P0",
+          "expectedPath": null
+        },
+        {
+          "featureId": "PROJ-008",
+          "name": "项目状态管理",
+          "module": "PROJ",
+          "priority": "P0",
+          "expectedPath": null
+        },
+        {
+          "featureId": "WORKLOG-003",
+          "name": "工时详情",
+          "module": "WORKLOG",
+          "priority": "P0",
+          "expectedPath": null
+        },
+        {
+          "featureId": "WORKLOG-004",
+          "name": "工时编辑",
+          "module": "WORKLOG",
+          "priority": "P0",
+          "expectedPath": null
+        },
+        {
+          "featureId": "WORKLOG-005",
+          "name": "工时删除",
+          "module": "WORKLOG",
+          "priority": "P0",
+          "expectedPath": "/work-logs"
+        },
+        {
+          "featureId": "WORKLOG-006",
+          "name": "工时提交",
+          "module": "WORKLOG",
+          "priority": "P0",
+          "expectedPath": "/work-logs"
+        },
+        {
+          "featureId": "WORKLOG-007",
+          "name": "批量提交",
+          "module": "WORKLOG",
+          "priority": "P0",
+          "expectedPath": "/work-logs"
+        },
+        {
+          "featureId": "INV-003",
+          "name": "发票详情",
+          "module": "INV",
+          "priority": "P0",
+          "expectedPath": null
+        },
+        {
+          "featureId": "INV-004",
+          "name": "发票编辑",
+          "module": "INV",
+          "priority": "P0",
+          "expectedPath": null
+        },
+        {
+          "featureId": "INV-005",
+          "name": "发票提交",
+          "module": "INV",
+          "priority": "P0",
+          "expectedPath": "/invoices"
+        },
+        {
+          "featureId": "INV-006",
+          "name": "发票审核",
+          "module": "INV",
+          "priority": "P0",
+          "expectedPath": null
+        },
+        {
+          "featureId": "INV-007",
+          "name": "付款确认",
+          "module": "INV",
+          "priority": "P0",
+          "expectedPath": "/payments"
+        },
+        {
+          "featureId": "INV-008",
+          "name": "税务计算",
+          "module": "INV",
+          "priority": "P0",
+          "expectedPath": "/invoices/new"
+        },
+        {
+          "featureId": "MSG-001",
+          "name": "站内消息",
+          "module": "MSG",
+          "priority": "P0",
+          "expectedPath": "/messages"
+        },
+        {
+          "featureId": "MSG-002",
+          "name": "系统通知",
+          "module": "MSG",
+          "priority": "P0",
+          "expectedPath": null
+        },
+        {
+          "featureId": "ADMIN-002",
+          "name": "用户管理",
+          "module": "ADMIN",
+          "priority": "P0",
+          "expectedPath": null
+        },
+        {
+          "featureId": "ADMIN-003",
+          "name": "企业管理",
+          "module": "ADMIN",
+          "priority": "P0",
+          "expectedPath": "/admin/companies/:id"
+        },
+        {
+          "featureId": "ADMIN-004",
+          "name": "顾问管理",
+          "module": "ADMIN",
+          "priority": "P0",
+          "expectedPath": null
+        },
+        {
+          "featureId": "MATCH-001",
+          "name": "智能匹配推荐",
+          "module": "NEW_FEATURES",
+          "priority": "P0",
+          "expectedPath": "/match-recommendations"
+        }
+      ],
+      "implementedFeaturesList": [
+        {
+          "featureId": "AUTH-001",
+          "name": "用户注册",
+          "module": "AUTH",
+          "priority": "P0"
+        },
+        {
+          "featureId": "AUTH-002",
+          "name": "用户登录",
+          "module": "AUTH",
+          "priority": "P0"
+        },
+        {
+          "featureId": "AUTH-003",
+          "name": "密码找回",
+          "module": "AUTH",
+          "priority": "P0"
+        },
+        {
+          "featureId": "PROFILE-001",
+          "name": "基本信息管理",
+          "module": "PROFILE",
+          "priority": "P0"
+        },
+        {
+          "featureId": "PROJ-001",
+          "name": "项目发布",
+          "module": "PROJ",
+          "priority": "P0"
+        },
+        {
+          "featureId": "WORKLOG-001",
+          "name": "工时填报",
+          "module": "WORKLOG",
+          "priority": "P0"
+        },
+        {
+          "featureId": "WORKLOG-002",
+          "name": "工时列表",
+          "module": "WORKLOG",
+          "priority": "P0"
+        },
+        {
+          "featureId": "WORKLOG-008",
+          "name": "工时审核",
+          "module": "WORKLOG",
+          "priority": "P0"
+        },
+        {
+          "featureId": "INV-001",
+          "name": "发票创建",
+          "module": "INV",
+          "priority": "P0"
+        },
+        {
+          "featureId": "INV-002",
+          "name": "发票列表",
+          "module": "INV",
+          "priority": "P0"
+        },
+        {
+          "featureId": "RATE-001",
+          "name": "顾问评价",
+          "module": "RATE",
+          "priority": "P1"
+        },
+        {
+          "featureId": "STAT-003",
+          "name": "企业项目统计",
+          "module": "STAT",
+          "priority": "P1"
+        },
+        {
+          "featureId": "ADMIN-001",
+          "name": "仪表盘",
+          "module": "ADMIN",
+          "priority": "P0"
+        },
+        {
+          "featureId": "ADMIN-005",
+          "name": "技能管理",
+          "module": "ADMIN",
+          "priority": "P0"
+        },
+        {
+          "featureId": "ADMIN-006",
+          "name": "系统配置",
+          "module": "ADMIN",
+          "priority": "P0"
+        },
+        {
+          "featureId": "ADMIN-008",
+          "name": "纠纷处理",
+          "module": "ADMIN",
+          "priority": "P1"
+        },
+        {
+          "featureId": "CONTRACT-001",
+          "name": "合同管理",
+          "module": "NEW_FEATURES",
+          "priority": "P0"
+        },
+        {
+          "featureId": "PAYMENT-001",
+          "name": "付款追踪",
+          "module": "NEW_FEATURES",
+          "priority": "P0"
+        },
+        {
+          "featureId": "TICKET-001",
+          "name": "工单/纠纷处理",
+          "module": "NEW_FEATURES",
+          "priority": "P1"
+        }
+      ]
+    }
+  },
+  "comparison": {
+    "summary": {
+      "totalPRDFeatures": 76,
+      "implementedFeatures": 19,
+      "missingFeatures": 57,
+      "errorFeatures": 0,
+      "completionRate": "25%"
+    },
+    "byModule": {
+      "AUTH": {
+        "total": 6,
+        "implemented": 3,
+        "missing": 3,
+        "error": 0,
+        "features": {
+          "AUTH-001": {
+            "name": "用户注册",
+            "priority": "P0",
+            "expectedPath": "/register",
+            "status": "IMPLEMENTED"
+          },
+          "AUTH-002": {
+            "name": "用户登录",
+            "priority": "P0",
+            "expectedPath": "/login",
+            "status": "IMPLEMENTED"
+          },
+          "AUTH-003": {
+            "name": "密码找回",
+            "priority": "P0",
+            "expectedPath": "/forgot-password",
+            "status": "IMPLEMENTED"
+          },
+          "AUTH-004": {
+            "name": "身份认证",
+            "priority": "P0",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "AUTH-005": {
+            "name": "角色切换",
+            "priority": "P1",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "AUTH-006": {
+            "name": "登录日志",
+            "priority": "P2",
+            "expectedPath": null,
+            "status": "MISSING"
+          }
+        },
+        "completionRate": "50%"
+      },
+      "PROFILE": {
+        "total": 8,
+        "implemented": 1,
+        "missing": 7,
+        "error": 0,
+        "features": {
+          "PROFILE-001": {
+            "name": "基本信息管理",
+            "priority": "P0",
+            "expectedPath": "/profile",
+            "status": "IMPLEMENTED"
+          },
+          "PROFILE-002": {
+            "name": "技能标签管理",
+            "priority": "P0",
+            "expectedPath": "/profile",
+            "status": "MISSING"
+          },
+          "PROFILE-003": {
+            "name": "项目经历管理",
+            "priority": "P0",
+            "expectedPath": "/profile",
+            "status": "MISSING"
+          },
+          "PROFILE-004": {
+            "name": "资质证书管理",
+            "priority": "P0",
+            "expectedPath": "/profile",
+            "status": "MISSING"
+          },
+          "PROFILE-005": {
+            "name": "费率设置",
+            "priority": "P0",
+            "expectedPath": "/profile",
+            "status": "MISSING"
+          },
+          "PROFILE-006": {
+            "name": "可用性日历",
+            "priority": "P1",
+            "expectedPath": "/profile",
+            "status": "MISSING"
+          },
+          "PROFILE-007": {
+            "name": "档案预览",
+            "priority": "P1",
+            "expectedPath": "/profile",
+            "status": "MISSING"
+          },
+          "PROFILE-008": {
+            "name": "档案完整度",
+            "priority": "P1",
+            "expectedPath": "/profile",
+            "status": "MISSING"
+          }
+        },
+        "completionRate": "13%"
+      },
+      "PROJ": {
+        "total": 10,
+        "implemented": 1,
+        "missing": 9,
+        "error": 0,
+        "features": {
+          "PROJ-001": {
+            "name": "项目发布",
+            "priority": "P0",
+            "expectedPath": "/post-job",
+            "status": "IMPLEMENTED"
+          },
+          "PROJ-002": {
+            "name": "项目列表",
+            "priority": "P0",
+            "expectedPath": "/my-jobs",
+            "status": "EMPTY"
+          },
+          "PROJ-003": {
+            "name": "项目详情",
+            "priority": "P0",
+            "expectedPath": "/jobs/:id",
+            "status": "MISSING"
+          },
+          "PROJ-004": {
+            "name": "项目申请",
+            "priority": "P0",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "PROJ-005": {
+            "name": "申请管理",
+            "priority": "P0",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "PROJ-006": {
+            "name": "智能推荐",
+            "priority": "P0",
+            "expectedPath": "/match-recommendations",
+            "status": "MISSING"
+          },
+          "PROJ-007": {
+            "name": "项目编辑",
+            "priority": "P0",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "PROJ-008": {
+            "name": "项目状态管理",
+            "priority": "P0",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "PROJ-009": {
+            "name": "项目收藏",
+            "priority": "P1",
+            "expectedPath": "/saved-jobs",
+            "status": "EMPTY"
+          },
+          "PROJ-010": {
+            "name": "项目搜索",
+            "priority": "P1",
+            "expectedPath": "/my-jobs",
+            "status": "MISSING"
+          }
+        },
+        "completionRate": "10%"
+      },
+      "WORKLOG": {
+        "total": 10,
+        "implemented": 3,
+        "missing": 7,
+        "error": 0,
+        "features": {
+          "WORKLOG-001": {
+            "name": "工时填报",
+            "priority": "P0",
+            "expectedPath": "/work-logs/new",
+            "status": "IMPLEMENTED"
+          },
+          "WORKLOG-002": {
+            "name": "工时列表",
+            "priority": "P0",
+            "expectedPath": "/work-logs",
+            "status": "IMPLEMENTED"
+          },
+          "WORKLOG-003": {
+            "name": "工时详情",
+            "priority": "P0",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "WORKLOG-004": {
+            "name": "工时编辑",
+            "priority": "P0",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "WORKLOG-005": {
+            "name": "工时删除",
+            "priority": "P0",
+            "expectedPath": "/work-logs",
+            "status": "MISSING"
+          },
+          "WORKLOG-006": {
+            "name": "工时提交",
+            "priority": "P0",
+            "expectedPath": "/work-logs",
+            "status": "MISSING"
+          },
+          "WORKLOG-007": {
+            "name": "批量提交",
+            "priority": "P0",
+            "expectedPath": "/work-logs",
+            "status": "MISSING"
+          },
+          "WORKLOG-008": {
+            "name": "工时审核",
+            "priority": "P0",
+            "expectedPath": "/company/work-logs/pending",
+            "status": "IMPLEMENTED"
+          },
+          "WORKLOG-009": {
+            "name": "工时统计",
+            "priority": "P1",
+            "expectedPath": "/",
+            "status": "MISSING"
+          },
+          "WORKLOG-010": {
+            "name": "工时导出",
+            "priority": "P2",
+            "expectedPath": null,
+            "status": "MISSING"
+          }
+        },
+        "completionRate": "30%"
+      },
+      "INV": {
+        "total": 10,
+        "implemented": 2,
+        "missing": 8,
+        "error": 0,
+        "features": {
+          "INV-001": {
+            "name": "发票创建",
+            "priority": "P0",
+            "expectedPath": "/invoices/new",
+            "status": "IMPLEMENTED"
+          },
+          "INV-002": {
+            "name": "发票列表",
+            "priority": "P0",
+            "expectedPath": "/invoices",
+            "status": "IMPLEMENTED"
+          },
+          "INV-003": {
+            "name": "发票详情",
+            "priority": "P0",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "INV-004": {
+            "name": "发票编辑",
+            "priority": "P0",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "INV-005": {
+            "name": "发票提交",
+            "priority": "P0",
+            "expectedPath": "/invoices",
+            "status": "MISSING"
+          },
+          "INV-006": {
+            "name": "发票审核",
+            "priority": "P0",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "INV-007": {
+            "name": "付款确认",
+            "priority": "P0",
+            "expectedPath": "/payments",
+            "status": "MISSING"
+          },
+          "INV-008": {
+            "name": "税务计算",
+            "priority": "P0",
+            "expectedPath": "/invoices/new",
+            "status": "MISSING"
+          },
+          "INV-009": {
+            "name": "发票统计",
+            "priority": "P1",
+            "expectedPath": "/reports",
+            "status": "MISSING"
+          },
+          "INV-010": {
+            "name": "发票导出",
+            "priority": "P2",
+            "expectedPath": null,
+            "status": "MISSING"
+          }
+        },
+        "completionRate": "20%"
+      },
+      "MSG": {
+        "total": 5,
+        "implemented": 0,
+        "missing": 5,
+        "error": 0,
+        "features": {
+          "MSG-001": {
+            "name": "站内消息",
+            "priority": "P0",
+            "expectedPath": "/messages",
+            "status": "EMPTY"
+          },
+          "MSG-002": {
+            "name": "系统通知",
+            "priority": "P0",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "MSG-003": {
+            "name": "消息设置",
+            "priority": "P1",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "MSG-004": {
+            "name": "邮件通知",
+            "priority": "P1",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "MSG-005": {
+            "name": "短信通知",
+            "priority": "P2",
+            "expectedPath": null,
+            "status": "MISSING"
+          }
+        },
+        "completionRate": "0%"
+      },
+      "RATE": {
+        "total": 5,
+        "implemented": 1,
+        "missing": 4,
+        "error": 0,
+        "features": {
+          "RATE-001": {
+            "name": "顾问评价",
+            "priority": "P1",
+            "expectedPath": "/ratings/create",
+            "status": "IMPLEMENTED"
+          },
+          "RATE-002": {
+            "name": "企业评价",
+            "priority": "P1",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "RATE-003": {
+            "name": "评价展示",
+            "priority": "P1",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "RATE-004": {
+            "name": "评分统计",
+            "priority": "P1",
+            "expectedPath": "/profile",
+            "status": "MISSING"
+          },
+          "RATE-005": {
+            "name": "评价管理",
+            "priority": "P2",
+            "expectedPath": null,
+            "status": "MISSING"
+          }
+        },
+        "completionRate": "20%"
+      },
+      "STAT": {
+        "total": 7,
+        "implemented": 1,
+        "missing": 6,
+        "error": 0,
+        "features": {
+          "STAT-001": {
+            "name": "顾问收入统计",
+            "priority": "P1",
+            "expectedPath": "/reports",
+            "status": "EMPTY"
+          },
+          "STAT-002": {
+            "name": "顾问工时统计",
+            "priority": "P1",
+            "expectedPath": "/reports",
+            "status": "MISSING"
+          },
+          "STAT-003": {
+            "name": "企业项目统计",
+            "priority": "P1",
+            "expectedPath": "/hr/dashboard",
+            "status": "IMPLEMENTED"
+          },
+          "STAT-004": {
+            "name": "企业顾问统计",
+            "priority": "P1",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "STAT-005": {
+            "name": "平台运营统计",
+            "priority": "P1",
+            "expectedPath": "/admin/dashboard",
+            "status": "MISSING"
+          },
+          "STAT-006": {
+            "name": "财务报表",
+            "priority": "P2",
+            "expectedPath": "/reports",
+            "status": "MISSING"
+          },
+          "STAT-007": {
+            "name": "数据导出",
+            "priority": "P2",
+            "expectedPath": null,
+            "status": "MISSING"
+          }
+        },
+        "completionRate": "14%"
+      },
+      "ADMIN": {
+        "total": 10,
+        "implemented": 4,
+        "missing": 6,
+        "error": 0,
+        "features": {
+          "ADMIN-001": {
+            "name": "仪表盘",
+            "priority": "P0",
+            "expectedPath": "/admin/dashboard",
+            "status": "IMPLEMENTED"
+          },
+          "ADMIN-002": {
+            "name": "用户管理",
+            "priority": "P0",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "ADMIN-003": {
+            "name": "企业管理",
+            "priority": "P0",
+            "expectedPath": "/admin/companies/:id",
+            "status": "MISSING"
+          },
+          "ADMIN-004": {
+            "name": "顾问管理",
+            "priority": "P0",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "ADMIN-005": {
+            "name": "技能管理",
+            "priority": "P0",
+            "expectedPath": "/admin/config/skill-categories",
+            "status": "IMPLEMENTED"
+          },
+          "ADMIN-006": {
+            "name": "系统配置",
+            "priority": "P0",
+            "expectedPath": "/admin/configuration",
+            "status": "IMPLEMENTED"
+          },
+          "ADMIN-007": {
+            "name": "内容审核",
+            "priority": "P1",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "ADMIN-008": {
+            "name": "纠纷处理",
+            "priority": "P1",
+            "expectedPath": "/tickets",
+            "status": "IMPLEMENTED"
+          },
+          "ADMIN-009": {
+            "name": "操作日志",
+            "priority": "P2",
+            "expectedPath": null,
+            "status": "MISSING"
+          },
+          "ADMIN-010": {
+            "name": "数据分析",
+            "priority": "P2",
+            "expectedPath": "/admin/dashboard",
+            "status": "MISSING"
+          }
+        },
+        "completionRate": "40%"
+      },
+      "NEW_FEATURES": {
+        "total": 5,
+        "implemented": 3,
+        "missing": 2,
+        "error": 0,
+        "features": {
+          "MATCH-001": {
+            "name": "智能匹配推荐",
+            "priority": "P0",
+            "expectedPath": "/match-recommendations",
+            "status": "EMPTY"
+          },
+          "CONTRACT-001": {
+            "name": "合同管理",
+            "priority": "P0",
+            "expectedPath": "/contracts",
+            "status": "IMPLEMENTED"
+          },
+          "MILESTONE-001": {
+            "name": "项目进度看板",
+            "priority": "P1",
+            "expectedPath": "/milestones",
+            "status": "EMPTY"
+          },
+          "PAYMENT-001": {
+            "name": "付款追踪",
+            "priority": "P0",
+            "expectedPath": "/payments",
+            "status": "IMPLEMENTED"
+          },
+          "TICKET-001": {
+            "name": "工单/纠纷处理",
+            "priority": "P1",
+            "expectedPath": "/tickets",
+            "status": "IMPLEMENTED"
+          }
+        },
+        "completionRate": "60%"
+      }
+    },
+    "missingFeaturesList": [
+      {
+        "featureId": "AUTH-004",
+        "name": "身份认证",
+        "module": "AUTH",
+        "priority": "P0",
+        "expectedPath": null
+      },
+      {
+        "featureId": "PROFILE-002",
+        "name": "技能标签管理",
+        "module": "PROFILE",
+        "priority": "P0",
+        "expectedPath": "/profile"
+      },
+      {
+        "featureId": "PROFILE-003",
+        "name": "项目经历管理",
+        "module": "PROFILE",
+        "priority": "P0",
+        "expectedPath": "/profile"
+      },
+      {
+        "featureId": "PROFILE-004",
+        "name": "资质证书管理",
+        "module": "PROFILE",
+        "priority": "P0",
+        "expectedPath": "/profile"
+      },
+      {
+        "featureId": "PROFILE-005",
+        "name": "费率设置",
+        "module": "PROFILE",
+        "priority": "P0",
+        "expectedPath": "/profile"
+      },
+      {
+        "featureId": "PROJ-002",
+        "name": "项目列表",
+        "module": "PROJ",
+        "priority": "P0",
+        "expectedPath": "/my-jobs"
+      },
+      {
+        "featureId": "PROJ-003",
+        "name": "项目详情",
+        "module": "PROJ",
+        "priority": "P0",
+        "expectedPath": "/jobs/:id"
+      },
+      {
+        "featureId": "PROJ-004",
+        "name": "项目申请",
+        "module": "PROJ",
+        "priority": "P0",
+        "expectedPath": null
+      },
+      {
+        "featureId": "PROJ-005",
+        "name": "申请管理",
+        "module": "PROJ",
+        "priority": "P0",
+        "expectedPath": null
+      },
+      {
+        "featureId": "PROJ-006",
+        "name": "智能推荐",
+        "module": "PROJ",
+        "priority": "P0",
+        "expectedPath": "/match-recommendations"
+      },
+      {
+        "featureId": "PROJ-007",
+        "name": "项目编辑",
+        "module": "PROJ",
+        "priority": "P0",
+        "expectedPath": null
+      },
+      {
+        "featureId": "PROJ-008",
+        "name": "项目状态管理",
+        "module": "PROJ",
+        "priority": "P0",
+        "expectedPath": null
+      },
+      {
+        "featureId": "WORKLOG-003",
+        "name": "工时详情",
+        "module": "WORKLOG",
+        "priority": "P0",
+        "expectedPath": null
+      },
+      {
+        "featureId": "WORKLOG-004",
+        "name": "工时编辑",
+        "module": "WORKLOG",
+        "priority": "P0",
+        "expectedPath": null
+      },
+      {
+        "featureId": "WORKLOG-005",
+        "name": "工时删除",
+        "module": "WORKLOG",
+        "priority": "P0",
+        "expectedPath": "/work-logs"
+      },
+      {
+        "featureId": "WORKLOG-006",
+        "name": "工时提交",
+        "module": "WORKLOG",
+        "priority": "P0",
+        "expectedPath": "/work-logs"
+      },
+      {
+        "featureId": "WORKLOG-007",
+        "name": "批量提交",
+        "module": "WORKLOG",
+        "priority": "P0",
+        "expectedPath": "/work-logs"
+      },
+      {
+        "featureId": "INV-003",
+        "name": "发票详情",
+        "module": "INV",
+        "priority": "P0",
+        "expectedPath": null
+      },
+      {
+        "featureId": "INV-004",
+        "name": "发票编辑",
+        "module": "INV",
+        "priority": "P0",
+        "expectedPath": null
+      },
+      {
+        "featureId": "INV-005",
+        "name": "发票提交",
+        "module": "INV",
+        "priority": "P0",
+        "expectedPath": "/invoices"
+      },
+      {
+        "featureId": "INV-006",
+        "name": "发票审核",
+        "module": "INV",
+        "priority": "P0",
+        "expectedPath": null
+      },
+      {
+        "featureId": "INV-007",
+        "name": "付款确认",
+        "module": "INV",
+        "priority": "P0",
+        "expectedPath": "/payments"
+      },
+      {
+        "featureId": "INV-008",
+        "name": "税务计算",
+        "module": "INV",
+        "priority": "P0",
+        "expectedPath": "/invoices/new"
+      },
+      {
+        "featureId": "MSG-001",
+        "name": "站内消息",
+        "module": "MSG",
+        "priority": "P0",
+        "expectedPath": "/messages"
+      },
+      {
+        "featureId": "MSG-002",
+        "name": "系统通知",
+        "module": "MSG",
+        "priority": "P0",
+        "expectedPath": null
+      },
+      {
+        "featureId": "ADMIN-002",
+        "name": "用户管理",
+        "module": "ADMIN",
+        "priority": "P0",
+        "expectedPath": null
+      },
+      {
+        "featureId": "ADMIN-003",
+        "name": "企业管理",
+        "module": "ADMIN",
+        "priority": "P0",
+        "expectedPath": "/admin/companies/:id"
+      },
+      {
+        "featureId": "ADMIN-004",
+        "name": "顾问管理",
+        "module": "ADMIN",
+        "priority": "P0",
+        "expectedPath": null
+      },
+      {
+        "featureId": "MATCH-001",
+        "name": "智能匹配推荐",
+        "module": "NEW_FEATURES",
+        "priority": "P0",
+        "expectedPath": "/match-recommendations"
+      }
+    ],
+    "implementedFeaturesList": [
+      {
+        "featureId": "AUTH-001",
+        "name": "用户注册",
+        "module": "AUTH",
+        "priority": "P0"
+      },
+      {
+        "featureId": "AUTH-002",
+        "name": "用户登录",
+        "module": "AUTH",
+        "priority": "P0"
+      },
+      {
+        "featureId": "AUTH-003",
+        "name": "密码找回",
+        "module": "AUTH",
+        "priority": "P0"
+      },
+      {
+        "featureId": "PROFILE-001",
+        "name": "基本信息管理",
+        "module": "PROFILE",
+        "priority": "P0"
+      },
+      {
+        "featureId": "PROJ-001",
+        "name": "项目发布",
+        "module": "PROJ",
+        "priority": "P0"
+      },
+      {
+        "featureId": "WORKLOG-001",
+        "name": "工时填报",
+        "module": "WORKLOG",
+        "priority": "P0"
+      },
+      {
+        "featureId": "WORKLOG-002",
+        "name": "工时列表",
+        "module": "WORKLOG",
+        "priority": "P0"
+      },
+      {
+        "featureId": "WORKLOG-008",
+        "name": "工时审核",
+        "module": "WORKLOG",
+        "priority": "P0"
+      },
+      {
+        "featureId": "INV-001",
+        "name": "发票创建",
+        "module": "INV",
+        "priority": "P0"
+      },
+      {
+        "featureId": "INV-002",
+        "name": "发票列表",
+        "module": "INV",
+        "priority": "P0"
+      },
+      {
+        "featureId": "RATE-001",
+        "name": "顾问评价",
+        "module": "RATE",
+        "priority": "P1"
+      },
+      {
+        "featureId": "STAT-003",
+        "name": "企业项目统计",
+        "module": "STAT",
+        "priority": "P1"
+      },
+      {
+        "featureId": "ADMIN-001",
+        "name": "仪表盘",
+        "module": "ADMIN",
+        "priority": "P0"
+      },
+      {
+        "featureId": "ADMIN-005",
+        "name": "技能管理",
+        "module": "ADMIN",
+        "priority": "P0"
+      },
+      {
+        "featureId": "ADMIN-006",
+        "name": "系统配置",
+        "module": "ADMIN",
+        "priority": "P0"
+      },
+      {
+        "featureId": "ADMIN-008",
+        "name": "纠纷处理",
+        "module": "ADMIN",
+        "priority": "P1"
+      },
+      {
+        "featureId": "CONTRACT-001",
+        "name": "合同管理",
+        "module": "NEW_FEATURES",
+        "priority": "P0"
+      },
+      {
+        "featureId": "PAYMENT-001",
+        "name": "付款追踪",
+        "module": "NEW_FEATURES",
+        "priority": "P0"
+      },
+      {
+        "featureId": "TICKET-001",
+        "name": "工单/纠纷处理",
+        "module": "NEW_FEATURES",
+        "priority": "P1"
+      }
+    ]
+  }
+}

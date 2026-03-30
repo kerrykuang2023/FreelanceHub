@@ -1,0 +1,27 @@
+{
+  "testRun": {
+    "startTime": "2026-03-23T14:57:50.564Z",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "issues": [
+    {
+      "category": "API",
+      "severity": "HIGH",
+      "description": "用户 hr@test.com 登录失败",
+      "expectedBehavior": "登录成功后应跳转到首页或工作台",
+      "actualBehavior": "停留在登录页面: http://localhost:5137/login",
+      "steps": [
+        "输入邮箱",
+        "输入密码",
+        "点击登录按钮"
+      ],
+      "userRole": "HR Recruiter",
+      "id": "ISS-001",
+      "timestamp": "2026-03-23T14:57:50.037Z"
+    }
+  ],
+  "testProjects": [],
+  "testWorkLogs": [],
+  "testInvoices": []
+}

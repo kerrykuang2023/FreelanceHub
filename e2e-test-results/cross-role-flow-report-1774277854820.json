@@ -1,0 +1,42 @@
+{
+  "testRun": {
+    "startTime": "2026-03-23T14:57:34.821Z",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "issues": [
+    {
+      "category": "DATA",
+      "severity": "HIGH",
+      "description": "项目列表中没有可点击的项目",
+      "expectedBehavior": "应有可点击的项目链接",
+      "actualBehavior": "未找到项目链接",
+      "steps": [
+        "顾问登录",
+        "访问项目列表"
+      ],
+      "page": "http://localhost:5137/jobs",
+      "userRole": "Freelancer",
+      "id": "ISS-001",
+      "timestamp": "2026-03-23T14:57:28.535Z"
+    },
+    {
+      "category": "API",
+      "severity": "HIGH",
+      "description": "用户 hr@test.com 登录失败",
+      "expectedBehavior": "登录成功后应跳转到首页或工作台",
+      "actualBehavior": "停留在登录页面: http://localhost:5137/login",
+      "steps": [
+        "输入邮箱",
+        "输入密码",
+        "点击登录按钮"
+      ],
+      "userRole": "HR Recruiter",
+      "id": "ISS-002",
+      "timestamp": "2026-03-23T14:57:34.240Z"
+    }
+  ],
+  "testProjects": [],
+  "testWorkLogs": [],
+  "testInvoices": []
+}

@@ -1,217 +1,42 @@
-<div align="center">
-  <h1 align="center">Job Portal - SAP顾问自由职业平台</h1>
-</div>
-<h4>
-    Job Portal 是一个现代化的招聘平台，连接自由顾问（Freelancer）、HR招聘者和企业管理员。
-    使用 React, Node, Express, MongoDB 和 TailwindCSS 构建。
-</h4>
+# JobPortal - SAP Consultant Freelance Platform
 
-<div align="center">
-  <a href="https://github.com/kerrykuang2023/JobPortal">GitHub 仓库</a>
-</div>
-
-## 🌟 核心功能
-
-### 👤 自由顾问 (Freelancer) 工作台
-- ✅ **工作台仪表板** - 显示本周工时、进行中项目、待收款、待审核申请
-- ✅ **项目管理** - 查看进行中的项目、项目详情、工时记录
-- ✅ **职位浏览** - 浏览和搜索职位、申请职位
-- ✅ **申请管理** - 查看申请状态、申请历史
-- ✅ **工时管理** - 提交工时记录、查看工时统计
-
-### 👔 HR招聘者 (HR Recruiter) 工作台
-- ✅ **工作台仪表板** - 显示有效职位、待审工时、收到的申请、本月支出
-- ✅ **职位发布** - 发布新职位、管理已发布职位
-- ✅ **申请审核** - 查看求职者申请、审核申请状态
-- ✅ **工时审核** - 审核顾问提交的工时记录
-
-### 🔧 系统管理员 (Admin) 工作台
-- ✅ **工作台仪表板** - 显示总用户数、自由顾问、注册企业、待处理发票等
-- ✅ **用户管理** - 管理用户账户、角色权限
-- ✅ **企业管理** - 审核企业注册、管理企业信息
-- ✅ **数据统计** - 项目需求、工时记录、发票总数等统计
-
-### 🔐 认证与权限
-- ✅ **用户认证** - 登录/注册/登出
-- ✅ **角色权限** - 基于角色的访问控制 (RBAC)
-- ✅ **动态菜单** - 根据用户角色显示不同菜单
-
-## 📸 系统截图
-
-### Freelancer 工作台
-![Freelancer Dashboard](docs/screenshots/e2e-freelancer-dashboard.png)
-
-### HR 工作台
-![HR Dashboard](docs/screenshots/e2e-hr-dashboard.png)
-
-### Admin 工作台
-![Admin Dashboard](docs/screenshots/e2e-admin-dashboard.png)
-
-### HR 发布职位
-![HR Post Job](docs/screenshots/e2e-hr-post-job.png)
-
-### HR 查看申请
-![HR Applications](docs/screenshots/e2e-hr-applications.png)
-
-### Freelancer 浏览职位
-![Freelancer Jobs](docs/screenshots/e2e-freelancer-jobs.png)
-
-## 🛠️ 技术栈
-
-### 前端
-- [React 18](https://react.dev/) - UI 框架
-- [TypeScript](https://www.typescriptlang.org/) - 类型安全
-- [Vite](https://vitejs.dev/) - 前端构建工具
-- [Tailwind CSS](https://tailwindcss.com/) - 样式框架
-- [React Router v6](https://reactrouter.com/) - 路由管理
-- [Axios](https://axios-http.com/) - HTTP 客户端
-
-### 后端
-- [Node.js](https://nodejs.org/) - 运行时
-- [Express](https://expressjs.com) - Web 框架
-- [MongoDB](https://www.mongodb.com/) - 数据库
-- [Mongoose](https://mongoosejs.com/) - Database ODM
-- [JWT](https://jwt.io/) - 身份认证
-
-### 开发工具
-- [Docker & Docker Compose](https://www.docker.com/) - 容器化
-- [Playwright](https://playwright.dev/) - E2E 测试
-
-## 🚀 快速开始
-
-### 环境要求
-- Node.js 18+
-- MongoDB 4.4+
-- Docker (可选)
-
-### 使用 Docker（推荐）
-
-```bash
-# 启动所有服务
-docker-compose up -d
-
-# 访问应用
-# 前端：http://localhost:5137
-# 后端 API: http://localhost:5555/api/v1
-```
-
-### 手动启动
-
-#### 后端
-```bash
-cd server
-npm install
-npm run dev
-```
-
-#### 前端
-```bash
-cd client
-npm install
-npm run dev
-```
-
-## 📝 测试账号
-
-| 角色 | 邮箱 | 密码 |
-|------|------|------|
-| 自由顾问 | freelancer@test.com | Test123456! |
-| HR招聘者 | hr@test.com | Test123456! |
-| 系统管理员 | admin@test.com | Test123456! |
-| 超级管理员 | admin@jobportal.com | Admin@123 |
-
-## 🧪 测试
-
-### E2E 测试
-```bash
-# 运行跨角色全链路测试
-npx playwright test e2e-tests/cross-role-e2e.spec.ts --headed
-
-# 运行工作台数据验证测试
-npx playwright test e2e-tests/dashboard-data.spec.ts --headed
-```
-
-### 测试结果
-- ✅ E2E-01: Freelancer 工作台完整流程 - 通过
-- ✅ E2E-02: HR 工作台完整流程 - 通过
-- ✅ E2E-03: Admin 工作台完整流程 - 通过
-- ✅ E2E-04: API 数据验证 - 通过
-- ✅ E2E-05: 跨角色完整业务流程 - 通过
-- ✅ E2E-06: 页面导航和权限验证 - 通过
-
-**总计: 6/6 通过 (100%)**
-
-## 📁 项目结构
-
-```
-JobPortal/
-├── client/                    # 前端代码
-│   └── src/
-│       ├── components/        # 组件
-│       │   ├── core-ui/       # 核心UI组件
-│       │   ├── layouts/       # 布局组件
-│       │   └── navigation/    # 导航组件
-│       ├── pages/             # 页面
-│       ├── services/          # API服务
-│       ├── providers/         # Context Provider
-│       ├── hooks/             # 自定义Hooks
-│       └── constants/         # 常量配置
-├── server/                    # 后端代码
-│   └── src/
-│       ├── controllers/       # 控制器
-│       ├── models/            # 数据模型
-│       ├── routes/            # 路由
-│       ├── middlewares/       # 中间件
-│       └── seeders/           # 数据填充
-├── docs/                      # 文档
-│   └── screenshots/           # 系统截图
-├── docker-compose.yml
-└── README.md
-```
-
-## 🔧 配置
-
-### 环境变量
-```bash
-# 后端配置
-MONGO_URL=mongodb://localhost:27017/jobportal
-JWT_SECRET=your-secret-key
-PORT=5555
-
-# 前端配置
-VITE_API_URL=http://localhost:5555/api/v1
-```
-
-## 🔄 最近更新
-
-### 2026-03-28
-- 🐛 修复 StorageService JSON 解析错误导致的页面白屏问题
-- 🐛 修复 AuthProvider 数据解析错误导致的角色判断失败
-- ✨ 添加跨角色全链路 E2E 测试
-- ✨ 优化工作台数据加载逻辑
-- ✨ 添加调试日志便于问题排查
-
-## 🤝 贡献
-
-欢迎贡献代码！请遵循以下步骤：
-
-1. Fork 本项目
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 开启 Pull Request
-
-## 📄 许可证
-
-MIT License
-
-## 📞 联系方式
-
-- GitHub: https://github.com/kerrykuang2023/JobPortal
-- 如有问题或建议，请提交 Issue
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![React](https://img.shields.io/badge/React-18-blue?logo=react)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-7-green?logo=mongodb)](https://www.mongodb.com/)
 
 ---
 
-**开发时间**: 2026-03-19  
-**最后更新**: 2026-03-28  
-**版本**: 1.1.0
+## 📖 Documentation / 文档
+
+| Language | Link |
+|:--------:|:----:|
+| 🇺🇸 **English** | [README_EN.md](README_EN.md) |
+| 🇨🇳 **中文** | [README_ZH.md](README_ZH.md) |
+
+---
+
+## 🌟 Quick Overview
+
+A modern, multilingual recruitment platform connecting Freelancers, HR Recruiters, and Company Administrators.
+
+### Key Features
+
+- 🌐 **Multi-language Support**: Chinese, English, Japanese
+- 👤 **Freelancer Dashboard**: Project management, work logs, job applications
+- 👔 **HR Dashboard**: Job posting, application review, work log approval
+- 🔧 **Admin Dashboard**: User management, company review, system configuration
+- 🔐 **Role-based Access Control**: Secure authentication and authorization
+
+### Tech Stack
+
+- **Frontend**: React 18, TypeScript, Tailwind CSS, i18next
+- **Backend**: Node.js, Express, MongoDB, Mongoose
+- **Testing**: Playwright E2E Tests
+
+---
+
+<p align="center">
+  <a href="README_EN.md"><b>🇺🇸 Read in English</b></a> &nbsp;|&nbsp; 
+  <a href="README_ZH.md"><b>🇨🇳 阅读中文文档</b></a>
+</p>

@@ -1,0 +1,42 @@
+{
+  "testRun": {
+    "startTime": "2026-03-23T15:08:06.688Z",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "issues": [
+    {
+      "category": "DATA",
+      "severity": "MEDIUM",
+      "description": "HR待审核工时列表为空",
+      "expectedBehavior": "应显示顾问提交的待审核工时",
+      "actualBehavior": "待审核列表为空",
+      "steps": [
+        "HR登录",
+        "访问待审核工时页面"
+      ],
+      "page": "http://localhost:5137/company/work-logs/pending",
+      "userRole": "HR",
+      "id": "ISS-001",
+      "timestamp": "2026-03-23T15:07:34.860Z"
+    },
+    {
+      "category": "API",
+      "severity": "CRITICAL",
+      "description": "登录过程发生异常: Error: locator.fill: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('input[type=\"email\"], input[name=\"email\"]').first()\u001b[22m\n",
+      "expectedBehavior": "登录流程正常完成",
+      "actualBehavior": "发生异常: Error: locator.fill: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('input[type=\"email\"], input[name=\"email\"]').first()\u001b[22m\n",
+      "steps": [
+        "访问登录页面",
+        "填写表单",
+        "提交登录"
+      ],
+      "userRole": "Job Seeker",
+      "id": "ISS-002",
+      "timestamp": "2026-03-23T15:08:05.090Z"
+    }
+  ],
+  "testProjects": [],
+  "testWorkLogs": [],
+  "testInvoices": []
+}

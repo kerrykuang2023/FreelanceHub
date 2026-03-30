@@ -1,0 +1,57 @@
+{
+  "testRun": {
+    "startTime": "2026-03-23T15:07:24.687Z",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "issues": [
+    {
+      "category": "DATA",
+      "severity": "HIGH",
+      "description": "项目列表中没有可点击的项目",
+      "expectedBehavior": "应有可点击的项目链接",
+      "actualBehavior": "未找到项目链接",
+      "steps": [
+        "顾问登录",
+        "访问项目列表"
+      ],
+      "page": "http://localhost:5137/jobs",
+      "userRole": "Freelancer",
+      "id": "ISS-001",
+      "timestamp": "2026-03-23T15:06:43.583Z"
+    },
+    {
+      "category": "UI",
+      "severity": "MEDIUM",
+      "description": "申请管理页面缺少批准按钮",
+      "expectedBehavior": "应有批准/拒绝按钮",
+      "actualBehavior": "未找到批准按钮",
+      "steps": [
+        "HR登录",
+        "访问申请管理页面"
+      ],
+      "page": "http://localhost:5137/applications/received",
+      "userRole": "HR",
+      "id": "ISS-002",
+      "timestamp": "2026-03-23T15:06:52.427Z"
+    },
+    {
+      "category": "API",
+      "severity": "CRITICAL",
+      "description": "登录过程发生异常: Error: locator.fill: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('input[type=\"email\"], input[name=\"email\"]').first()\u001b[22m\n",
+      "expectedBehavior": "登录流程正常完成",
+      "actualBehavior": "发生异常: Error: locator.fill: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('input[type=\"email\"], input[name=\"email\"]').first()\u001b[22m\n",
+      "steps": [
+        "访问登录页面",
+        "填写表单",
+        "提交登录"
+      ],
+      "userRole": "Job Seeker",
+      "id": "ISS-003",
+      "timestamp": "2026-03-23T15:07:22.696Z"
+    }
+  ],
+  "testProjects": [],
+  "testWorkLogs": [],
+  "testInvoices": []
+}

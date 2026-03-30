@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta name="renderer" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="baidu-site-verification" content="gQZQKmIcDb" />
+  <!-- CSRF Token -->
+  <meta name="csrf-token" content="LJ2tq9QZnA6ZlTJaFisehYLjGyHAQZQaV3bhFesv">
+  <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+    <link rel="shortcut icon" href="https://assets.aishu.cn/officialsite/images/favicon.ico" />
+  
+  <title>您访问的页面不存在</title>
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <link rel="stylesheet" type="text/css" href="/dist/cn/css/app.css?ver=1752222873" />
+  <script type="text/javascript" src="/dist/common/js/config.js?ver=1704848847"></script>
+
+    
+      <link rel="stylesheet" type="text/css" href="https://assets.aishu.cn/officialsite-release/joomla/css/modules/com_aishumenu/common.css?ver=1912" />
+    <link rel="stylesheet" type="text/css" href="https://assets.aishu.cn/officialsite-release/joomla/css/modules/com_aishumenu/bottomNav.css?ver=5192" />
+        <link rel="stylesheet" type="text/css" href="https://assets.aishu.cn/officialsite/com_navigator_server/css/floatside/floatside.css" />
+
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?13c2fd6ef605ae227fe2a5aa08813ca1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+  <!--容联-->
+  <script type='text/javascript'>
+    var name = "sshshh";
+    var isInputM = 0;
+  </script>
+
+  <script type='text/javascript' src='https://ykf-webchat.7moor.com/javascripts/7moorInit.js?accessId=ff0cc370-28aa-11eb-86b4-139fdf05c683&autoShow=false&language=ZHCN' async='async'>
+  </script>
+  <!--容联-->
+
+  <!-- 微软 Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "nda649pags");
+  </script>
+  <!-- 微软 Clarity -->
+
+</head>
+
+<body data-region="cn">
+  <input type="hidden" id="site-version" name="version" value="0.38.3">
+  <!-- 头部导航 -->
+<unified-nav-main></unified-nav-main>  <style>
+.error-tips-page {
+    padding: 160px 0;
+}
+
+.box {
+    box-shadow: 0 0 3px 2px #e3e3e3;
+    padding: 6% 5%;
+    max-width: 800px;
+    box-sizing: border-box;
+
+}
+
+.error-tips-page .img,
+.error-tips-page .text {
+    display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box;
+    max-width: 49%;
+}
+
+.error-tips-page .text {
+    padding-left: 4%;
+
+}
+
+.img .code {
+    background: #454e68;
+    color: #fff;
+    font-size: 70px;
+    padding: 0 20px;
+    border-radius: 5px;
+    display: inline-block;
+    line-height: 86px;
+}
+
+.img .explain {
+    font-size: 24px;
+    text-align: center;
+    font-weight: 600;
+    border-top: 2px solid #454e68;
+    margin-top: 10px;
+    padding-top: 6px;
+}
+
+.error-tips-page .links {
+    text-align: right;
+    margin-top: 40px;
+
+}
+
+.error-tips-page .links .m-btn-3 {
+    padding: 0 30px;
+    margin: 0 10px
+}
+
+.error-tips-page .links .seconds {
+    color: #c80000;
+}
+
+.redirect {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 18px;
+}
+
+.redirect .time {
+    padding: 0 6px;
+    text-decoration: underline;
+}
+
+@media  screen and (max-width:768px) {
+    .error-tips-page .box {
+        padding: 1.6rem 0;
+
+        .box {
+            .links {
+
+                .m-btn-3,
+                .m-btn-1 {
+                    margin: 0.1333rem 0.2667rem;
+                }
+            }
+        }
+
+    }
+}
+</style>
+<div class="error-tips-page t-b-pad2 j-set-white-nav">
+    <div class="box wid1000">
+        <div class="img">
+            <span class="code">404</span>
+            <p class="explain">NOT FOUND</p>
+        </div>
+        <div class="text">
+            <h3 class="til">抱歉！页面无法访问！</h3>
+            <b>可能原因：</b>
+            <p>· 网络信号弱</p>
+            <p>· 网址已失效</p>
+            <p>· 输入的网址有误</p>
+        </div>
+
+        <div class="links">
+            <a class="m-btn-3 act-open-contact-window" href="javascript:void(0)">联系我们</a>
+            <a class="m-btn-4" href="/">返回</a>
+        </div>
+    </div>
+    <p class="redirect">倒计时<span class="time">3</span>秒，为您跳转爱数首页...</p>
+</div>
+<script>
+window.onload = function() {
+    let timeSpan = document.querySelector('.redirect .time'),
+        count = parseInt(timeSpan.innerText);
+    const timer = setInterval(function() {
+        if (count == 0) {
+            clearInterval(timer);
+            location.href = '/'
+        } else {
+            count--;
+            timeSpan.innerText = count;
+        }
+    }, 1000);
+}
+</script>
+  <!-- 展示一级菜单 -->
+<!-- 目录结构（锚点实现） -->
+<!-- 网站地图底部 -->
+<div class="mapBottom unified-footer-nav" base="https://assets.aishu.cn/officialsite-release">
+    <div class="">
+        <div class="container-pc device-container device-content-container">
+            <div class="left">
+                <div class="mainnav-container">
+                    <div class="dl"><div class="dt"><span title="关于爱数">关于爱数</span></div><div class="content"><div class="dd" title="公司新闻"><a class="  act-aishumatomo-tracker"  href="https://www.aishu.cn/cn/news"   matomo-tracking="">公司新闻</a></div><div class="dd" title="公司活动"><a class="  act-aishumatomo-tracker"  href="https://www.aishu.cn/cn/activity"   matomo-tracking="">公司活动</a></div><div class="dd" title="客户成功故事"><a class="  act-aishumatomo-tracker"  href="https://www.aishu.cn/cn/cases"   matomo-tracking="">客户成功故事</a></div><div class="dd" title="加入爱数"><a class="  act-aishumatomo-tracker"  href="https://www.aishu.cn/cn/social-recruit"   matomo-tracking="">加入爱数</a></div><div class="dd" title="联系我们"><a class="  act-aishumatomo-tracker"  href="https://www.aishu.cn/cn/contact-us"   matomo-tracking="">联系我们</a></div></div></div><div class="dl"><div class="dt"><span title="如何购买">如何购买</span></div><div class="content"><div class="dd" title="已有注册账户"><a class=" "  href="https://my.aishu.cn/"  >已有注册账户</a></div></div></div><div class="dl"><div class="dt"><span title="加入伙伴生态">加入伙伴生态</span></div><div class="content"><div class="dd" title="登录合作伙伴门户"><a class=" "  href="https://partner.aishu.cn/"  >登录合作伙伴门户</a></div><div class="dd" title="进入伙伴赋能中心"><a class=" "  href="https://www.aishu.cn/cn/train-certification"  >进入伙伴赋能中心</a></div></div></div><div class="dl"><div class="dt"><span title="快速链接">快速链接</span></div><div class="content"><div class="dd" title="开发者社区"><a class=" "  href="https://developers.aishu.cn/"  >开发者社区</a></div><div class="dd" title="专家博客"><a class=" "  href="https://www.aishu.cn/cn/blogs"  >专家博客</a></div><div class="dd" title="知识库"><a class=" "  href="https://www.aishu.cn/cn/knowledges"  >知识库</a></div></div></div>                </div>
+                <div class="laws-container">
+                    <a class=" "  href="https://www.aishu.cn/cn/privacy-policy"   rel="nofollow" title="隐私声明">隐私声明</a><a class=" "  href="https://www.aishu.cn/cn/legal-notice"   rel="nofollow" title="法律声明">法律声明</a><a class=" "  href="https://www.aishu.cn/cn/user-agreement"   rel="nofollow" title="用户协议">用户协议</a><a class=" "  href="https://www.aishu.cn/cn/cookies-statement"   rel="nofollow" title="Cookie声明">Cookie声明</a><a class=" "  href="https://www.aishu.cn/cn/integrity-agreement"   rel="nofollow" title="廉洁协议">廉洁协议</a><a class=" "  href="https://www.aishu.cn/cn/sla"   rel="nofollow" title="云服务等级协议（SLA）">云服务等级协议（SLA）</a>                </div>
+            </div>
+            <div class="right">
+                <div class="subscribe-container">
+                    <div class="new-subscribe-box">
+  <div class="sub-title">
+    <span>订阅爱数最新动态及产品资讯</span>
+  </div>
+  <div class="subscribe act-subscribe">
+    <span class="email-error-tips">请输入有效的电子邮箱！</span>
+    <div class="input-content">
+      <input
+        class="subscribe-input"
+        type="text"
+        name="email"
+        placeholder="请输入您的常用邮箱"
+        autocomplete="off"
+        validerrormsg="请输入有效的电子邮箱！"
+        style="font-size: 14px"
+      />
+      <span
+        class="subscribe-submit act-submitBtn"
+        rel="https://www.aishu.cn/api/subscriptions"
+		link="https://www.aishu.cn/cn/subscript-preference"
+        onclick="subscribtLinkFClickEvent()"
+        subscribeErrMsg="订阅失败，请重试！"
+        subscribeButtonTitle="订阅"
+        subscribeingButtonTitle="请稍后"
+        style="font-size: 14px"
+      >
+        订阅</span
+      >
+    </div>
+
+    <p class="subscribe-tips ">选择订阅表示我同意接收爱数的 产品资讯以及相关动态。</p>
+  </div>
+</div>
+                </div>
+                <div class="share-container">
+                    <style>
+    .unified-footer-nav .share-container .dl .content .dd{
+        background-color: #126ee3;
+    }
+</style>
+<div class="socialLinks">
+    <div class="dl">
+        <div class="m-module dt">关注爱数</div>
+        <div class="content">
+            <div class="dd"><a class="app qrcode-app apps0 icon" rel-maskid="sitemap-mask-apps0"><img src="https://assets.aishu.cn/officialsite-release/images/tb/wx.png" /></a></div><div class="dd"><a class="app icon" href="https://weibo.com/eisoosoftware" target="_blank"><img src="https://assets.aishu.cn/officialsite-release/images/tb/wb.png" /></a></div><div class="dd"><a class="app qrcode-app apps2 icon" rel-maskid="sitemap-mask-apps2"><img src="https://assets.aishu.cn/officialsite-release/images/tb/dy.png" /></a></div>        </div>
+    </div>
+</div>                </div>
+                <div class="contact-container">
+                    <div class="consulting">
+    <div class="phone dl">
+                    <div class="pc-module dt" title="电话咨询">电话咨询</div>
+            <div class="mi-module dt" title="联系爱数">联系爱数</div>
+            <div class="content">
+        <div class='dd' title='销售咨询'>销售咨询：400 8216055</div><div class='dd' title='技术咨询'>技术咨询：400 8801569</div><div class='dd' title='投诉及建议'>投诉及建议：400 880 1569转9</div></div>    </div>
+    <div class="chat dl">
+        <div class="pc-module dt" title="在线交流">在线交流</div>
+        <div class="mi-module dt" title="关注爱数">关注爱数</div>
+        <div class="dd"><a class="act-open-pre-sale-window" title="联系销售">联系销售</a></div><div class="dd"><a class="act-open-after-sale-window" title="技术支持">技术支持</a></div>    </div>
+</div>                </div>
+            </div>
+            <div class="bottom">
+                <div class="copyright-container">
+                    <p>版权所有 © 2006-2026 上海爱数信息技术股份有限公司 <a href="https://beian.miit.gov.cn/">沪ICP备09089247号</a> <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31011202011832">沪公网安备 31011202011832</a></p>                </div>
+                <div class="lang-container">
+                    <div class="selLan act-langSelect">
+    <div class="langLabel act-span">
+        <img src="https://assets.aishu.cn/officialsite-release/joomla/img/common/global.svg" alt="" class="icon">
+        <span class="lev2">语言选择</span>
+    </div>
+    <ul class="dropdown-options">
+        <li ><a lang="zh-CN"  href="https://www.aishu.cn/cn" title="简体中文">简体中文</a></li><li ><a lang="en-GB"  href="https://www.aishutech.com/en" title="English">English</a></li><li ><a lang="ja-JP"  href="https://www.aishutech.com/ja" title="日本語">日本語</a></li>    </ul>
+</div>                </div>
+            </div>
+        </div>
+
+        <div class="container-ipad device-container device-content-container">
+            <div class="left">
+                <div class="mainnav-container">
+                    <div class="dl"><div class="dt"><span title="关于爱数">关于爱数</span></div><div class="content"><div class="dd" title="公司新闻"><a class="  act-aishumatomo-tracker"  href="https://www.aishu.cn/cn/news"   matomo-tracking="">公司新闻</a></div><div class="dd" title="公司活动"><a class="  act-aishumatomo-tracker"  href="https://www.aishu.cn/cn/activity"   matomo-tracking="">公司活动</a></div><div class="dd" title="客户成功故事"><a class="  act-aishumatomo-tracker"  href="https://www.aishu.cn/cn/cases"   matomo-tracking="">客户成功故事</a></div><div class="dd" title="加入爱数"><a class="  act-aishumatomo-tracker"  href="https://www.aishu.cn/cn/social-recruit"   matomo-tracking="">加入爱数</a></div><div class="dd" title="联系我们"><a class="  act-aishumatomo-tracker"  href="https://www.aishu.cn/cn/contact-us"   matomo-tracking="">联系我们</a></div></div></div><div class="dl"><div class="dt"><span title="如何购买">如何购买</span></div><div class="content"><div class="dd" title="已有注册账户"><a class=" "  href="https://my.aishu.cn/"  >已有注册账户</a></div></div></div><div class="dl"><div class="dt"><span title="加入伙伴生态">加入伙伴生态</span></div><div class="content"><div class="dd" title="登录合作伙伴门户"><a class=" "  href="https://partner.aishu.cn/"  >登录合作伙伴门户</a></div><div class="dd" title="进入伙伴赋能中心"><a class=" "  href="https://www.aishu.cn/cn/train-certification"  >进入伙伴赋能中心</a></div></div></div><div class="dl"><div class="dt"><span title="快速链接">快速链接</span></div><div class="content"><div class="dd" title="开发者社区"><a class=" "  href="https://developers.aishu.cn/"  >开发者社区</a></div><div class="dd" title="专家博客"><a class=" "  href="https://www.aishu.cn/cn/blogs"  >专家博客</a></div><div class="dd" title="知识库"><a class=" "  href="https://www.aishu.cn/cn/knowledges"  >知识库</a></div></div></div>                </div>
+                <div class="contact-container">
+                    <div class="consulting">
+    <div class="phone dl">
+                    <div class="pc-module dt" title="电话咨询">电话咨询</div>
+            <div class="mi-module dt" title="联系爱数">联系爱数</div>
+            <div class="content">
+        <div class='dd' title='销售咨询'>销售咨询：400 8216055</div><div class='dd' title='技术咨询'>技术咨询：400 8801569</div><div class='dd' title='投诉及建议'>投诉及建议：400 880 1569转9</div></div>    </div>
+    <div class="chat dl">
+        <div class="pc-module dt" title="在线交流">在线交流</div>
+        <div class="mi-module dt" title="关注爱数">关注爱数</div>
+        <div class="dd"><a class="act-open-pre-sale-window" title="联系销售">联系销售</a></div><div class="dd"><a class="act-open-after-sale-window" title="技术支持">技术支持</a></div>    </div>
+</div>                </div>
+            </div>
+            <div class="right clearfix">
+                <div class="subscribe-container">
+                    <div class="new-subscribe-box">
+  <div class="sub-title">
+    <span>订阅爱数最新动态及产品资讯</span>
+  </div>
+  <div class="subscribe act-subscribe">
+    <span class="email-error-tips">请输入有效的电子邮箱！</span>
+    <div class="input-content">
+      <input
+        class="subscribe-input"
+        type="text"
+        name="email"
+        placeholder="请输入您的常用邮箱"
+        autocomplete="off"
+        validerrormsg="请输入有效的电子邮箱！"
+        style="font-size: 14px"
+      />
+      <span
+        class="subscribe-submit act-submitBtn"
+        rel="https://www.aishu.cn/api/subscriptions"
+		link="https://www.aishu.cn/cn/subscript-preference"
+        onclick="subscribtLinkFClickEvent()"
+        subscribeErrMsg="订阅失败，请重试！"
+        subscribeButtonTitle="订阅"
+        subscribeingButtonTitle="请稍后"
+        style="font-size: 14px"
+      >
+        订阅</span
+      >
+    </div>
+
+    <p class="subscribe-tips ">选择订阅表示我同意接收爱数的 产品资讯以及相关动态。</p>
+  </div>
+</div>
+                </div>
+                <div class="bottom-fix-container">
+                    <div class="share-container">
+                        <style>
+    .unified-footer-nav .share-container .dl .content .dd{
+        background-color: #126ee3;
+    }
+</style>
+<div class="socialLinks">
+    <div class="dl">
+        <div class="m-module dt">关注爱数</div>
+        <div class="content">
+            <div class="dd"><a class="app qrcode-app apps0 icon" rel-maskid="sitemap-mask-apps0"><img src="https://assets.aishu.cn/officialsite-release/images/tb/wx.png" /></a></div><div class="dd"><a class="app icon" href="https://weibo.com/eisoosoftware" target="_blank"><img src="https://assets.aishu.cn/officialsite-release/images/tb/wb.png" /></a></div><div class="dd"><a class="app qrcode-app apps2 icon" rel-maskid="sitemap-mask-apps2"><img src="https://assets.aishu.cn/officialsite-release/images/tb/dy.png" /></a></div>        </div>
+    </div>
+</div>                    </div>
+                    <div class="lang-container">
+                        <div class="selLan act-langSelect">
+    <div class="langLabel act-span">
+        <img src="https://assets.aishu.cn/officialsite-release/joomla/img/common/global.svg" alt="" class="icon">
+        <span class="lev2">语言选择</span>
+    </div>
+    <ul class="dropdown-options">
+        <li ><a lang="zh-CN"  href="https://www.aishu.cn/cn" title="简体中文">简体中文</a></li><li ><a lang="en-GB"  href="https://www.aishutech.com/en" title="English">English</a></li><li ><a lang="ja-JP"  href="https://www.aishutech.com/ja" title="日本語">日本語</a></li>    </ul>
+</div>                    </div>
+                </div>
+            </div>
+            <div class="bottom">
+                <div class="laws-container">
+                    <a class=" "  href="https://www.aishu.cn/cn/privacy-policy"   rel="nofollow" title="隐私声明">隐私声明</a><a class=" "  href="https://www.aishu.cn/cn/legal-notice"   rel="nofollow" title="法律声明">法律声明</a><a class=" "  href="https://www.aishu.cn/cn/user-agreement"   rel="nofollow" title="用户协议">用户协议</a><a class=" "  href="https://www.aishu.cn/cn/cookies-statement"   rel="nofollow" title="Cookie声明">Cookie声明</a><a class=" "  href="https://www.aishu.cn/cn/integrity-agreement"   rel="nofollow" title="廉洁协议">廉洁协议</a><a class=" "  href="https://www.aishu.cn/cn/sla"   rel="nofollow" title="云服务等级协议（SLA）">云服务等级协议（SLA）</a>                </div>
+                <div class="copyright-container">
+                    <p>版权所有 © 2006-2026 上海爱数信息技术股份有限公司 <a href="https://beian.miit.gov.cn/">沪ICP备09089247号</a> <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31011202011832">沪公网安备 31011202011832</a></p>                </div>
+
+            </div>
+        </div>
+        <div class="container-m device-container">
+            <div class="device-content-container">
+                <div class="subscribe-container">
+                    <div class="new-subscribe-box">
+  <div class="sub-title">
+    <span>订阅爱数最新动态及产品资讯</span>
+  </div>
+  <div class="subscribe act-subscribe">
+    <span class="email-error-tips">请输入有效的电子邮箱！</span>
+    <div class="input-content">
+      <input
+        class="subscribe-input"
+        type="text"
+        name="email"
+        placeholder="请输入您的常用邮箱"
+        autocomplete="off"
+        validerrormsg="请输入有效的电子邮箱！"
+        style="font-size: 14px"
+      />
+      <span
+        class="subscribe-submit act-submitBtn"
+        rel="https://www.aishu.cn/api/subscriptions"
+		link="https://www.aishu.cn/cn/subscript-preference"
+        onclick="subscribtLinkFClickEvent()"
+        subscribeErrMsg="订阅失败，请重试！"
+        subscribeButtonTitle="订阅"
+        subscribeingButtonTitle="请稍后"
+        style="font-size: 14px"
+      >
+        订阅</span
+      >
+    </div>
+
+    <p class="subscribe-tips ">选择订阅表示我同意接收爱数的 产品资讯以及相关动态。</p>
+  </div>
+</div>
+                </div>
+                <div class="mainnav-container">
+                    <div class="dl"><div class="dt"><span title="关于爱数">关于爱数</span></div><div class="content"><div class="dd" title="公司新闻"><a class="  act-aishumatomo-tracker"  href="https://www.aishu.cn/cn/news"   matomo-tracking="">公司新闻</a></div><div class="dd" title="公司活动"><a class="  act-aishumatomo-tracker"  href="https://www.aishu.cn/cn/activity"   matomo-tracking="">公司活动</a></div><div class="dd" title="客户成功故事"><a class="  act-aishumatomo-tracker"  href="https://www.aishu.cn/cn/cases"   matomo-tracking="">客户成功故事</a></div><div class="dd" title="加入爱数"><a class="  act-aishumatomo-tracker"  href="https://www.aishu.cn/cn/social-recruit"   matomo-tracking="">加入爱数</a></div><div class="dd" title="联系我们"><a class="  act-aishumatomo-tracker"  href="https://www.aishu.cn/cn/contact-us"   matomo-tracking="">联系我们</a></div></div></div><div class="dl"><div class="dt"><span title="如何购买">如何购买</span></div><div class="content"><div class="dd" title="已有注册账户"><a class=" "  href="https://my.aishu.cn/"  >已有注册账户</a></div></div></div><div class="dl"><div class="dt"><span title="加入伙伴生态">加入伙伴生态</span></div><div class="content"><div class="dd" title="登录合作伙伴门户"><a class=" "  href="https://partner.aishu.cn/"  >登录合作伙伴门户</a></div><div class="dd" title="进入伙伴赋能中心"><a class=" "  href="https://www.aishu.cn/cn/train-certification"  >进入伙伴赋能中心</a></div></div></div><div class="dl"><div class="dt"><span title="快速链接">快速链接</span></div><div class="content"><div class="dd" title="开发者社区"><a class=" "  href="https://developers.aishu.cn/"  >开发者社区</a></div><div class="dd" title="专家博客"><a class=" "  href="https://www.aishu.cn/cn/blogs"  >专家博客</a></div><div class="dd" title="知识库"><a class=" "  href="https://www.aishu.cn/cn/knowledges"  >知识库</a></div></div></div>                </div>
+                <div class="contact-container">
+                    <div class="consulting">
+    <div class="phone dl">
+                    <div class="pc-module dt" title="电话咨询">电话咨询</div>
+            <div class="mi-module dt" title="联系爱数">联系爱数</div>
+            <div class="content">
+        <div class='dd' title='销售咨询'>销售咨询：400 8216055</div><div class='dd' title='技术咨询'>技术咨询：400 8801569</div><div class='dd' title='投诉及建议'>投诉及建议：400 880 1569转9</div></div>    </div>
+    <div class="chat dl">
+        <div class="pc-module dt" title="在线交流">在线交流</div>
+        <div class="mi-module dt" title="关注爱数">关注爱数</div>
+        <div class="dd"><a class="act-open-pre-sale-window" title="联系销售">联系销售</a></div><div class="dd"><a class="act-open-after-sale-window" title="技术支持">技术支持</a></div>    </div>
+</div>                </div>
+                <div class="share-container">
+                    <style>
+    .unified-footer-nav .share-container .dl .content .dd{
+        background-color: #126ee3;
+    }
+</style>
+<div class="socialLinks">
+    <div class="dl">
+        <div class="m-module dt">关注爱数</div>
+        <div class="content">
+            <div class="dd"><a class="app qrcode-app apps0 icon" rel-maskid="sitemap-mask-apps0"><img src="https://assets.aishu.cn/officialsite-release/images/tb/wx.png" /></a></div><div class="dd"><a class="app icon" href="https://weibo.com/eisoosoftware" target="_blank"><img src="https://assets.aishu.cn/officialsite-release/images/tb/wb.png" /></a></div><div class="dd"><a class="app qrcode-app apps2 icon" rel-maskid="sitemap-mask-apps2"><img src="https://assets.aishu.cn/officialsite-release/images/tb/dy.png" /></a></div>        </div>
+    </div>
+</div>                </div>
+                <div class="lang-container">
+                    <div class="selLan act-langSelect">
+    <div class="langLabel act-span">
+        <img src="https://assets.aishu.cn/officialsite-release/joomla/img/common/global.svg" alt="" class="icon">
+        <span class="lev2">语言选择</span>
+    </div>
+    <ul class="dropdown-options">
+        <li ><a lang="zh-CN"  href="https://www.aishu.cn/cn" title="简体中文">简体中文</a></li><li ><a lang="en-GB"  href="https://www.aishutech.com/en" title="English">English</a></li><li ><a lang="ja-JP"  href="https://www.aishutech.com/ja" title="日本語">日本語</a></li>    </ul>
+</div>                </div>
+                <div class="laws-container">
+                    <a class=" "  href="https://www.aishu.cn/cn/privacy-policy"   rel="nofollow" title="隐私声明">隐私声明</a><a class=" "  href="https://www.aishu.cn/cn/legal-notice"   rel="nofollow" title="法律声明">法律声明</a><a class=" "  href="https://www.aishu.cn/cn/user-agreement"   rel="nofollow" title="用户协议">用户协议</a><a class=" "  href="https://www.aishu.cn/cn/cookies-statement"   rel="nofollow" title="Cookie声明">Cookie声明</a><a class=" "  href="https://www.aishu.cn/cn/integrity-agreement"   rel="nofollow" title="廉洁协议">廉洁协议</a><a class=" "  href="https://www.aishu.cn/cn/sla"   rel="nofollow" title="云服务等级协议（SLA）">云服务等级协议（SLA）</a>                </div>
+            </div>
+            <div class="bottom ">
+                <div class="copyright-container device-content-container">
+                        <div class="bottom-logo">
+        <img src="https://assets.aishu.cn/officialsite/images/logo-cn.png" />
+    </div>
+    
+                    <p>版权所有 © 2006-2026 上海爱数信息技术股份有限公司 <a href="https://beian.miit.gov.cn/">沪ICP备09089247号</a> <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31011202011832">沪公网安备 31011202011832</a></p>                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 弹窗 -->
+    <div class="popcon">
+                    <div class="mask sitemap-mask" id="sitemap-mask-apps0">
+            <div class="mask-main">
+                <div class="mask-content">
+                    <div class="mask-close">
+                        <img class="img " src="https://assets.aishu.cn/officialsite-release/images/close.png">
+                    </div>
+                    <div class="content">
+                        <div class="qrcodes-container">
+                                                            <div class="qrcodes-item">
+                                    <img src="https://assets.aishu.cn/officialsite/images/qrcode/weixin-guanfang.jpg" />
+                                    <p>扫码关注「爱数官方微信」</p>
+                                </div>
+                                                            <div class="qrcodes-item">
+                                    <img src="https://assets.aishu.cn/officialsite/images/qrcode/weixin-support.jpg" />
+                                    <p>扫码关注「爱数服务号」</p>
+                                </div>
+                                                    </div>
+                        <div class="bottom">
+                            <img src="https://assets.aishu.cn/officialsite/images/logo-cn.png" class="b-img aa">
+                            <div class="b-title">
+                                <p>大数据基础设施领航者</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    <div class="mask sitemap-mask" id="sitemap-mask-apps2">
+            <div class="mask-main">
+                <div class="mask-content">
+                    <div class="mask-close">
+                        <img class="img " src="https://assets.aishu.cn/officialsite-release/images/close.png">
+                    </div>
+                    <div class="content">
+                        <div class="qrcodes-container">
+                                                            <div class="qrcodes-item">
+                                    <img src="https://assets.aishu.cn/officialsite-release/images/tb/douyin.jpg" />
+                                    <p>抖音扫一扫  查看更多精彩视频</p>
+                                </div>
+                                                    </div>
+                        <div class="bottom">
+                            <img src="https://assets.aishu.cn/officialsite/images/logo-cn.png" class="b-img aa">
+                            <div class="b-title">
+                                <p>大数据基础设施领航者</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+</div>
+
+
+    <div class="floatside_visible_by_scroll">
+    <div class="aishu_ow_navigator_floatside">
+                <div id="call-400" class="floatside_btn" tabindex="-1">
+            <img class="icon" src="https://assets.aishu.cn/officialsite/com_navigator_server/images/floatside/icon-call.png" alt="call" />
+            <label>拨打400</label>
+            <div class="call-additional">
+                <a class="additional-part" href="tel:400 8216055">
+                    <span class="part-title">免费售前咨询热线</span>
+                    <span class="part-text">400 8216055</span>
+                </a>
+                <a class="additional-part" href="tel:400 8801569">
+                    <span class="part-title">7*24 小时售后服务热线</span>
+                    <span class="part-text">400 880 1569</span>
+                </a>
+                <a class="additional-part" href="tel:400 8801569">
+                    <span class="part-title">投诉及建议服务热线</span>
+                    <span class="part-text">400 880 1569 转 9</span>
+                </a>
+            </div>
+        </div>
+        <div class="floatside_btn act-open-pre-sale-window">
+            <img class="icon" src="https://assets.aishu.cn/officialsite/com_navigator_server/images/floatside/icon-chat.png" alt="chat" />
+            <label>售前咨询</label>
+        </div>
+        <div class="floatside_btn act-open-after-sale-window">
+            <img class="icon" src="https://assets.aishu.cn/officialsite/com_navigator_server/images/floatside/icon-support.png" alt="support" />
+            <label>售后服务</label>
+        </div>
+        <div class="floatside_btn act-return-top">
+            <img class="icon" src="https://assets.aishu.cn/officialsite/com_navigator_server/images/floatside/icon-totop.png" />
+            <label>返回顶部</label>
+        </div>
+    </div>
+</div>
+<script>
+    window.aishuChat = {
+
+        'fsim': {
+            'id': 'fs-im-script',
+            'afterChatSrc': 'https://www.fxiaoke.com/open/imchat/static/creat.js?webImId=2524416747262444109&name=%E8%81%94%E7%B3%BB%E6%88%91&icon=https://a9.fspage.com/FSR/frontend/html/app-dist/onlineservice-dist/assets/images/icon5-16eaa49e2e.png&theme=#0067ED&internalAppType=&customParams=&updateParams=',
+            'preChatSrc': 'https://www.fxiaoke.com/open/imchat/static/creat.js?webImId=2538728100548575975&name=%E8%81%94%E7%B3%BB%E6%88%91&icon=https://a9.fspage.com/FSR/frontend/html/app-dist/onlineservice-dist/assets/images/icon5-16eaa49e2e.png&theme=#ff9c7a&internalAppType=&customParams=&updateParams=',
+            'preSaleType': 'fsim',
+            'iframeSrc': 'https://www.aishutech.com/en/contact-iframe',
+        },
+        'lang': 'zh-CN'
+    }
+</script>
+
+<!--售后留资（仅中文）-->
+    <div class="float-phone-box act-phone-box-sidebar">
+        <div class="rl-phone-box">
+            <div class="rl-header">
+                <span>为了给您提供更优质的服务，请您先完善以下信息：</span>
+                <div class="rl-phone-close act-close">
+                    <svg viewBox="64 64 896 896" focusable="false" data-icon="close" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+                        <path d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"></path>
+                    </svg>
+                </div>
+            </div>
+            <div class="content">
+                <div class="form-item act-form-item">
+                    <label class="label"><span class="require-char"> </span>手机号</label>
+                    <input class="inp act-phone" type="text" name="rl-phone" phone="true"
+                        require="true" autocomplete="off">
+                </div>
+                <div class="form-item act-form-item">
+                    <label class="label"><span class="require-char"></span>姓名</label>
+                    <input class="inp" type="text" name="contactname" require="true" placeholder="" autocomplete="off" maxlength="20">
+                </div>
+                <div class="form-item act-form-item">
+                    <label class="label"><span class="require-char"></span>企业名称</label>
+                    <input class="inp" type="text" name="company" require="true" placeholder="" autocomplete="off" maxlength="50">
+                </div>
+                <div> <a class="new-btn-10 submit act-rl-phone-submit">确认提交</a> </div>
+            </div>
+            <div class="rl-bottom">
+                <div class="rl-gz">
+                    <div class="b-img">
+                        <img src="https://assets.aishu.cn/officialsite/images/qrcode/weixin-support.jpg">
+                    </div>
+                    <div class="b-title">
+                        <p>扫码关注</p>
+                        <p>爱数技术支持中心公众号</p>
+                    </div>
+                </div>
+                <div class="rl-logo">
+                    <img src="https://assets.aishu.cn/officialsite/images/logo-cn.png">
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- 产品线选择 -->
+<div class="float-phone-box act-contact-product-select">
+    <div class="rl-phone-box">
+        <div class="rl-header">
+            <span>请选择：</span>
+            <div class="rl-phone-close act-close">
+                <svg viewBox="64 64 896 896" focusable="false" data-icon="close" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+                    <path d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"></path>
+                </svg>
+            </div>
+        </div>
+        <div class="content">
+            <p>请选择咨询类型</p>
+                            <div class="product-item act-product-item new-btn-10" data-line="1">
+                    AnyShare                </div>
+                            <div class="product-item act-product-item new-btn-10" data-line="2">
+                    AnyBackUp                </div>
+                            <div class="product-item act-product-item new-btn-10" data-line="3">
+                    AnyRobot                </div>
+                    </div>
+        <div class="rl-bottom">
+            <div class="rl-gz">
+                                    <div class="b-img">
+                        <img src="https://assets.aishu.cn/officialsite/images/qrcode/weixin-support.jpg">
+                    </div>
+                    <div class="b-title">
+                        <p>扫码关注</p>
+                        <p>爱数技术支持中心公众号</p>
+                    </div>
+                            </div>
+            <div class="rl-logo">
+                <img src="https://assets.aishu.cn/officialsite/images/logo-cn.png">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 售前咨询留资，不打开 live chat， 仅留资 -->
+<div id="aishu-presale-floatbox">
+    <div class="content">
+        <div class="head">
+            <span>contact us</span>
+            <span class="close"></span>
+        </div>
+        <div class="body">
+            <div class="iframe-content"></div>
+            <div class="success-content">
+                <div class="flex">
+                    <div class="msg">
+                        <p><i class="successIcon"></i></p>
+                        <h3>提交成功！</h3>
+                        <p>我们将在 24 小时之内联系你。</p>
+                    </div>
+
+                    <img src="https://assets.aishu.cn/officialsite/images/logo-cn.png" style="width: 50%;margin: 24px 25%;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <script type="text/javascript" src="/dist/common/widget/swiper/idangerous.swiper.min.js?ver=1704848847"></script>
+  <script type="text/javascript" src="/dist/cn/js/app.js?ver=1730265398"></script>
+    <!--引入js-->
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?13c2fd6ef605ae227fe2a5aa08813ca1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+  <script type="text/javascript">
+        window.externalSystemUrl = JSON.parse('{"customerPortal":"https:\/\/my.aishu.cn"}');
+            window.lang = "zh-CN";
+          </script>
+
+      <script type='text/javascript' src='https://assets.aishu.cn/officialsite-release/joomla/js/modules/com_aishumenu/bottomNav.js?ver=1991' async='async'></script>
+    <script type='text/javascript' src='https://assets.aishu.cn/officialsite-release/joomla/js/modules/com_aishumenu/tracker.js?ver=4356' async='async'></script>
+        <script src="https://assets.aishu.cn/officialsite/unified-nav/unified-nav-main.module.js" type="module"></script>
+<script src="https://assets.aishu.cn/officialsite/unified-nav/unified-nav-main.js" noModule="1"></script>
+<script src="https://assets.aishu.cn/officialsite/mod_navigator_client_header/js/header.js"></script>
+<script src="https://assets.aishu.cn/officialsite/com_navigator_server/js/floatside/fsim.js" type="module"></script>
+<script src="https://assets.aishu.cn/officialsite/com_navigator_server/js/floatside/floatside.js" defer="1"></script>
+
+      <!-- 放置埋点代码 -->
+
+<script>
+window.lang = "zh-CN";
+/**
+ * 全埋点
+ */
+    var siteids = "1,23".split(',');
+    var trackerParams = {
+        siteid: siteids[0],
+        cookie_domain: "aishu.cn",
+        md_url: "tracker.aishu.cn",
+        tracker_ids: siteids.splice(1),
+        domains: "www.aishu.cn,ow-new.aishu.cn".split(','),
+    }
+
+    var _paq = (window._paq = window._paq || []);
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+
+    // cookie 域名
+    _paq.push(["setCookieDomain", "*." + trackerParams.cookie_domain]);
+
+    // 设置同域站点列表
+    if (trackerParams.domains && trackerParams.domains.length) {
+        _paq.push(["setDomains", trackerParams.domains]);
+    }
+
+    _paq.push(["trackPageView"]);
+    _paq.push(["enableLinkTracking"]);
+    _paq.push(["enableHeartBeatTimer"]);
+
+    (function() {
+        // 埋点地址和当前站点地址
+        var u = "//" + trackerParams.md_url + "/";
+        _paq.push(["setTrackerUrl", u + "matomo.php"]);
+        _paq.push(["setSiteId", trackerParams.siteid]);
+
+        // 需要复制的站点id
+        if (trackerParams.tracker_ids && trackerParams.tracker_ids.length) {
+            trackerParams.tracker_ids.forEach(function(value) {
+                if (value)
+                    _paq.push([
+                        "addTracker",
+                        (piwikUrl = u + "matomo.php"),
+                        value,
+                    ]);
+            });
+        }
+
+        var d = document,
+            g = d.createElement("script"),
+            s = d.getElementsByTagName("script")[0];
+        g.type = "text/javascript";
+        g.async = true;
+        g.src = u + "matomo.js";
+        s.parentNode.insertBefore(g, s);
+    })();
+
+    // 追踪访问id
+    _paq.push([function() {
+        window.matomo_visitid = this.getVisitorId()
+    }])
+</script>
+  </body>
+
+</html>

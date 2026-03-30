@@ -1,0 +1,32 @@
+{
+  "testRun": {
+    "startTime": "2026-03-23T14:36:16.123Z",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "issues": [
+    {
+      "category": "API",
+      "severity": "CRITICAL",
+      "description": "登录过程发生异常: Error: locator.fill: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('input[type=\"email\"], input[name=\"email\"]').first()\u001b[22m\n",
+      "expectedBehavior": "登录流程正常完成",
+      "actualBehavior": "发生异常: Error: locator.fill: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('input[type=\"email\"], input[name=\"email\"]').first()\u001b[22m\n",
+      "steps": [
+        "访问登录页面",
+        "填写表单",
+        "提交登录"
+      ],
+      "userRole": "Job Seeker",
+      "id": "ISS-001",
+      "timestamp": "2026-03-23T14:36:14.639Z"
+    }
+  ],
+  "testProjects": [
+    {
+      "title": "E2E测试项目_1774276541856",
+      "description": "这是一个E2E自动化测试创建的项目，用于验证跨角色业务流程。"
+    }
+  ],
+  "testWorkLogs": [],
+  "testInvoices": []
+}

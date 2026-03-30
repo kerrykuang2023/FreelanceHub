@@ -1,0 +1,84 @@
+{
+  "testRun": {
+    "startTime": "2026-03-23T13:01:25.235Z",
+    "baseUrl": "http://localhost:5137",
+    "apiUrl": "http://localhost:5555/api/v1"
+  },
+  "flowSteps": [
+    {
+      "step": 1,
+      "action": "开始登录",
+      "description": "用户: HR招聘人员 (hr@test.com)",
+      "success": true,
+      "timestamp": "2026-03-23T13:01:02.584Z"
+    },
+    {
+      "step": 2,
+      "action": "填写输入框: 邮箱",
+      "description": "成功填写值: hr@test.com",
+      "success": true,
+      "timestamp": "2026-03-23T13:01:05.233Z"
+    },
+    {
+      "step": 3,
+      "action": "填写输入框: 密码",
+      "description": "成功填写值: Test1234!",
+      "success": true,
+      "timestamp": "2026-03-23T13:01:05.480Z"
+    },
+    {
+      "step": 4,
+      "action": "点击按钮: 登录按钮",
+      "description": "成功点击按钮，选择器: [data-testid=\"login-submit-btn\"], button[type=\"submit\"]",
+      "success": true,
+      "timestamp": "2026-03-23T13:01:06.628Z"
+    },
+    {
+      "step": 5,
+      "action": "登录成功",
+      "description": "已跳转到: http://localhost:5137/",
+      "success": true,
+      "timestamp": "2026-03-23T13:01:09.632Z"
+    },
+    {
+      "step": 6,
+      "action": "导航到付款页面",
+      "description": "准备确认付款",
+      "success": true,
+      "timestamp": "2026-03-23T13:01:09.753Z"
+    },
+    {
+      "step": 7,
+      "action": "确认付款",
+      "description": "没有待付款的发票",
+      "success": false,
+      "timestamp": "2026-03-23T13:01:12.153Z"
+    },
+    {
+      "step": 8,
+      "action": "开始登出",
+      "description": "准备退出当前用户",
+      "success": true,
+      "timestamp": "2026-03-23T13:01:12.154Z"
+    },
+    {
+      "step": 9,
+      "action": "开始登录",
+      "description": "用户: 自由顾问 (freelancer@test.com)",
+      "success": true,
+      "timestamp": "2026-03-23T13:01:12.844Z"
+    },
+    {
+      "step": 10,
+      "action": "登录失败",
+      "description": "邮箱输入框不可见",
+      "success": false,
+      "timestamp": "2026-03-23T13:01:24.585Z"
+    }
+  ],
+  "summary": {
+    "totalSteps": 10,
+    "successSteps": 8,
+    "failedSteps": 2
+  }
+}
