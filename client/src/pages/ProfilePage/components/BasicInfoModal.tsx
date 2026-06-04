@@ -62,6 +62,7 @@ const BasicInfoModal = ({ isOpen, onClose, onSubmit, initialData, saving }: Basi
               </label>
               <input
                 type="text"
+                data-testid="basic-headline-input"
                 value={formData.headline}
                 onChange={(e) => setFormData({ ...formData, headline: e.target.value })}
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
@@ -76,6 +77,7 @@ const BasicInfoModal = ({ isOpen, onClose, onSubmit, initialData, saving }: Basi
               </label>
               <input
                 type="text"
+                data-testid="basic-location-input"
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
@@ -88,6 +90,7 @@ const BasicInfoModal = ({ isOpen, onClose, onSubmit, initialData, saving }: Basi
                 个人简介
               </label>
               <textarea
+                data-testid="basic-summary-input"
                 value={formData.summary}
                 onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
                 rows={6}
@@ -110,6 +113,7 @@ const BasicInfoModal = ({ isOpen, onClose, onSubmit, initialData, saving }: Basi
               <button
                 type="submit"
                 disabled={saving}
+                data-testid="basic-info-submit-btn"
                 className="px-6 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50"
               >
                 {saving ? '保存中...' : '保存'}

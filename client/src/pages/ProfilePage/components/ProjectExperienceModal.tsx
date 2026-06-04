@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 interface ProjectExperienceModalProps {
@@ -23,6 +23,20 @@ const ProjectExperienceModal: React.FC<ProjectExperienceModalProps> = ({
     description: initialData?.description || '',
     technologies: initialData?.technologies?.join(', ') || '',
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormData({
+        project_name: initialData?.project_name || '',
+        company_name: initialData?.company_name || '',
+        role: initialData?.role || '',
+        start_date: initialData?.start_date?.split('T')[0] || '',
+        end_date: initialData?.end_date?.split('T')[0] || '',
+        description: initialData?.description || '',
+        technologies: initialData?.technologies?.join(', ') || '',
+      });
+    }
+  }, [initialData, isOpen]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,6 +71,7 @@ const ProjectExperienceModal: React.FC<ProjectExperienceModalProps> = ({
                 <label className="block text-sm font-medium text-gray-700 mb-1">项目名称 *</label>
                 <input
                   type="text"
+                  data-testid="project-name-input"
                   required
                   value={formData.project_name}
                   onChange={(e) => setFormData({ ...formData, project_name: e.target.value })}
@@ -69,6 +84,7 @@ const ProjectExperienceModal: React.FC<ProjectExperienceModalProps> = ({
                 <label className="block text-sm font-medium text-gray-700 mb-1">公司/客户名称 *</label>
                 <input
                   type="text"
+                  data-testid="project-company-input"
                   required
                   value={formData.company_name}
                   onChange={(e) => setFormData({ ...formData, company_name: e.target.value })}
@@ -81,6 +97,7 @@ const ProjectExperienceModal: React.FC<ProjectExperienceModalProps> = ({
                 <label className="block text-sm font-medium text-gray-700 mb-1">您的角色 *</label>
                 <input
                   type="text"
+                  data-testid="project-role-input"
                   required
                   value={formData.role}
                   onChange={(e) => setFormData({ ...formData, role: e.target.value })}
@@ -93,6 +110,7 @@ const ProjectExperienceModal: React.FC<ProjectExperienceModalProps> = ({
                 <label className="block text-sm font-medium text-gray-700 mb-1">开始日期 *</label>
                 <input
                   type="date"
+                  data-testid="project-start-date-input"
                   required
                   value={formData.start_date}
                   onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
@@ -104,6 +122,7 @@ const ProjectExperienceModal: React.FC<ProjectExperienceModalProps> = ({
                 <label className="block text-sm font-medium text-gray-700 mb-1">结束日期</label>
                 <input
                   type="date"
+                  data-testid="project-end-date-input"
                   value={formData.end_date}
                   onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -114,6 +133,7 @@ const ProjectExperienceModal: React.FC<ProjectExperienceModalProps> = ({
               <div className="col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">项目描述 *</label>
                 <textarea
+                  data-testid="project-description-input"
                   required
                   rows={4}
                   value={formData.description}
@@ -127,6 +147,7 @@ const ProjectExperienceModal: React.FC<ProjectExperienceModalProps> = ({
                 <label className="block text-sm font-medium text-gray-700 mb-1">使用技术</label>
                 <input
                   type="text"
+                  data-testid="project-technologies-input"
                   value={formData.technologies}
                   onChange={(e) => setFormData({ ...formData, technologies: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -145,6 +166,7 @@ const ProjectExperienceModal: React.FC<ProjectExperienceModalProps> = ({
               </button>
               <button
                 type="submit"
+                data-testid="project-submit-btn"
                 className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
               >
                 {initialData ? '保存' : '添加'}

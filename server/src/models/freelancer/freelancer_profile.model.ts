@@ -28,6 +28,11 @@ const FreelancerProfileSchema = new mongoose.Schema(
       required: false,
       length: 2000,
     },
+    location: {
+      type: String,
+      required: false,
+      length: 200,
+    },
     skills: [{
       skill_name: { type: String, required: true },
       skill_level: { type: String, enum: ["初级", "中级", "高级", "专家"], default: "中级" },
@@ -51,6 +56,13 @@ const FreelancerProfileSchema = new mongoose.Schema(
       expiry_date: { type: Date },
       credential_id: { type: String },
       credential_url: { type: String },
+    }],
+    education: [{
+      school: { type: String, required: true },
+      degree: { type: String, required: true },
+      field_of_study: { type: String, required: true },
+      start_date: { type: Date, required: true },
+      end_date: { type: Date },
     }],
     current_company: {
       type: mongoose.Schema.Types.ObjectId,
@@ -106,6 +118,11 @@ const FreelancerProfileSchema = new mongoose.Schema(
       type: String,
       enum: ["available", "busy", "not_available", "open_to_opportunities"],
       default: "open_to_opportunities",
+    },
+    available_hours_per_week: {
+      type: Number,
+      min: 0,
+      max: 168,
     },
     availability_notes: {
       type: String,

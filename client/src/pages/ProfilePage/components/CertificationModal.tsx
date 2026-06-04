@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 interface CertificationModalProps {
@@ -22,6 +22,19 @@ const CertificationModal: React.FC<CertificationModalProps> = ({
     credential_id: initialData?.credential_id || '',
     credential_url: initialData?.credential_url || '',
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormData({
+        certification_name: initialData?.certification_name || '',
+        issuing_organization: initialData?.issuing_organization || '',
+        issue_date: initialData?.issue_date?.split('T')[0] || '',
+        expiry_date: initialData?.expiry_date?.split('T')[0] || '',
+        credential_id: initialData?.credential_id || '',
+        credential_url: initialData?.credential_url || '',
+      });
+    }
+  }, [initialData, isOpen]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,6 +68,7 @@ const CertificationModal: React.FC<CertificationModalProps> = ({
               <label className="block text-sm font-medium text-gray-700 mb-1">证书名称 *</label>
               <input
                 type="text"
+                data-testid="certification-name-input"
                 required
                 value={formData.certification_name}
                 onChange={(e) => setFormData({ ...formData, certification_name: e.target.value })}
@@ -67,6 +81,7 @@ const CertificationModal: React.FC<CertificationModalProps> = ({
               <label className="block text-sm font-medium text-gray-700 mb-1">颁发机构 *</label>
               <input
                 type="text"
+                data-testid="certification-issuer-input"
                 required
                 value={formData.issuing_organization}
                 onChange={(e) => setFormData({ ...formData, issuing_organization: e.target.value })}
@@ -80,6 +95,7 @@ const CertificationModal: React.FC<CertificationModalProps> = ({
                 <label className="block text-sm font-medium text-gray-700 mb-1">颁发日期 *</label>
                 <input
                   type="date"
+                  data-testid="certification-issue-date-input"
                   required
                   value={formData.issue_date}
                   onChange={(e) => setFormData({ ...formData, issue_date: e.target.value })}
@@ -91,6 +107,7 @@ const CertificationModal: React.FC<CertificationModalProps> = ({
                 <label className="block text-sm font-medium text-gray-700 mb-1">有效期至</label>
                 <input
                   type="date"
+                  data-testid="certification-expiry-date-input"
                   value={formData.expiry_date}
                   onChange={(e) => setFormData({ ...formData, expiry_date: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -102,6 +119,7 @@ const CertificationModal: React.FC<CertificationModalProps> = ({
               <label className="block text-sm font-medium text-gray-700 mb-1">证书编号</label>
               <input
                 type="text"
+                data-testid="certification-credential-id-input"
                 value={formData.credential_id}
                 onChange={(e) => setFormData({ ...formData, credential_id: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -113,6 +131,7 @@ const CertificationModal: React.FC<CertificationModalProps> = ({
               <label className="block text-sm font-medium text-gray-700 mb-1">证书链接</label>
               <input
                 type="url"
+                data-testid="certification-credential-url-input"
                 value={formData.credential_url}
                 onChange={(e) => setFormData({ ...formData, credential_url: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -130,6 +149,7 @@ const CertificationModal: React.FC<CertificationModalProps> = ({
               </button>
               <button
                 type="submit"
+                data-testid="certification-submit-btn"
                 className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
               >
                 {initialData ? '保存' : '添加'}

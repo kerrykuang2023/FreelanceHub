@@ -5,6 +5,25 @@ import UserAccount from "../models/user/user-account.model";
 import { ApiError } from "../errors/ApiError";
 import mongoose from "mongoose";
 
+async function sendProfileResponse(
+  res: Response,
+  statusCode: number,
+  profile: any,
+  message: string
+) {
+  await profile.populate("user_id", "user_name email user_image");
+  const completion = calculateProfileCompletion(profile);
+
+  res.status(statusCode).json({
+    success: true,
+    message,
+    profile: {
+      ...profile.toObject(),
+      profile_completion: completion,
+    },
+  });
+}
+
 class FreelancerProfileController {
   async getMyProfile(req: Request, res: Response, next: NextFunction) {
     try {
@@ -85,6 +104,7 @@ class FreelancerProfileController {
         "display_name",
         "headline",
         "summary",
+        "location",
         "years_of_experience",
         "hourly_rate",
         "daily_rate",
@@ -132,11 +152,13 @@ class FreelancerProfileController {
   async addSkill(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = (req as any).user?._id || (req as any).user?.id;
-      const skillData = req.body;
+      const skillData = { ...req.body };
 
       if (!userId) {
         throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized", []);
       }
+      if (!skillData.skill_category_id) delete skillData.skill_category_id;
+      if (!skillData.skill_sub_category_id) delete skillData.skill_sub_category_id;
 
       const profile = await FreelancerProfile.findOneAndUpdate(
         { user_id: userId },
@@ -144,13 +166,7 @@ class FreelancerProfileController {
         { new: true, upsert: true }
       );
 
-      const completion = calculateProfileCompletion(profile);
-
-      res.status(StatusCodes.CREATED).json({
-        success: true,
-        message: "Skill added successfully",
-        profile_completion: completion,
-      });
+      await sendProfileResponse(res, StatusCodes.CREATED, profile, "Skill added successfully");
     } catch (error) {
       next(error);
     }
@@ -160,11 +176,13 @@ class FreelancerProfileController {
     try {
       const userId = (req as any).user?._id || (req as any).user?.id;
       const { skillId } = req.params;
-      const skillData = req.body;
+      const skillData = { ...req.body };
 
       if (!userId) {
         throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized", []);
       }
+      if (!skillData.skill_category_id) delete skillData.skill_category_id;
+      if (!skillData.skill_sub_category_id) delete skillData.skill_sub_category_id;
 
       const updateFields: any = {};
       for (const [key, value] of Object.entries(skillData)) {
@@ -181,10 +199,7 @@ class FreelancerProfileController {
         throw new ApiError(StatusCodes.NOT_FOUND, "Skill not found", []);
       }
 
-      res.status(StatusCodes.OK).json({
-        success: true,
-        message: "Skill updated successfully",
-      });
+      await sendProfileResponse(res, StatusCodes.OK, profile, "Skill updated successfully");
     } catch (error) {
       next(error);
     }
@@ -199,15 +214,17 @@ class FreelancerProfileController {
         throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized", []);
       }
 
-      await FreelancerProfile.findOneAndUpdate(
+      const profile = await FreelancerProfile.findOneAndUpdate(
         { user_id: userId },
-        { $pull: { skills: { _id: skillId } } }
+        { $pull: { skills: { _id: skillId } } },
+        { new: true }
       );
 
-      res.status(StatusCodes.OK).json({
-        success: true,
-        message: "Skill deleted successfully",
-      });
+      if (!profile) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Profile not found", []);
+      }
+
+      await sendProfileResponse(res, StatusCodes.OK, profile, "Skill deleted successfully");
     } catch (error) {
       next(error);
     }
@@ -228,13 +245,7 @@ class FreelancerProfileController {
         { new: true, upsert: true }
       );
 
-      const completion = calculateProfileCompletion(profile);
-
-      res.status(StatusCodes.CREATED).json({
-        success: true,
-        message: "Project experience added successfully",
-        profile_completion: completion,
-      });
+      await sendProfileResponse(res, StatusCodes.CREATED, profile, "Project experience added successfully");
     } catch (error) {
       next(error);
     }
@@ -265,10 +276,7 @@ class FreelancerProfileController {
         throw new ApiError(StatusCodes.NOT_FOUND, "Project experience not found", []);
       }
 
-      res.status(StatusCodes.OK).json({
-        success: true,
-        message: "Project experience updated successfully",
-      });
+      await sendProfileResponse(res, StatusCodes.OK, profile, "Project experience updated successfully");
     } catch (error) {
       next(error);
     }
@@ -283,15 +291,17 @@ class FreelancerProfileController {
         throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized", []);
       }
 
-      await FreelancerProfile.findOneAndUpdate(
+      const profile = await FreelancerProfile.findOneAndUpdate(
         { user_id: userId },
-        { $pull: { project_experiences: { _id: experienceId } } }
+        { $pull: { project_experiences: { _id: experienceId } } },
+        { new: true }
       );
 
-      res.status(StatusCodes.OK).json({
-        success: true,
-        message: "Project experience deleted successfully",
-      });
+      if (!profile) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Profile not found", []);
+      }
+
+      await sendProfileResponse(res, StatusCodes.OK, profile, "Project experience deleted successfully");
     } catch (error) {
       next(error);
     }
@@ -312,13 +322,7 @@ class FreelancerProfileController {
         { new: true, upsert: true }
       );
 
-      const completion = calculateProfileCompletion(profile);
-
-      res.status(StatusCodes.CREATED).json({
-        success: true,
-        message: "Certification added successfully",
-        profile_completion: completion,
-      });
+      await sendProfileResponse(res, StatusCodes.CREATED, profile, "Certification added successfully");
     } catch (error) {
       next(error);
     }
@@ -349,10 +353,7 @@ class FreelancerProfileController {
         throw new ApiError(StatusCodes.NOT_FOUND, "Certification not found", []);
       }
 
-      res.status(StatusCodes.OK).json({
-        success: true,
-        message: "Certification updated successfully",
-      });
+      await sendProfileResponse(res, StatusCodes.OK, profile, "Certification updated successfully");
     } catch (error) {
       next(error);
     }
@@ -367,15 +368,94 @@ class FreelancerProfileController {
         throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized", []);
       }
 
-      await FreelancerProfile.findOneAndUpdate(
+      const profile = await FreelancerProfile.findOneAndUpdate(
         { user_id: userId },
-        { $pull: { certifications: { _id: certId } } }
+        { $pull: { certifications: { _id: certId } } },
+        { new: true }
       );
 
-      res.status(StatusCodes.OK).json({
-        success: true,
-        message: "Certification deleted successfully",
-      });
+      if (!profile) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Profile not found", []);
+      }
+
+      await sendProfileResponse(res, StatusCodes.OK, profile, "Certification deleted successfully");
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async addEducation(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = (req as any).user?._id || (req as any).user?.id;
+      const educationData = req.body;
+
+      if (!userId) {
+        throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized", []);
+      }
+
+      const profile = await FreelancerProfile.findOneAndUpdate(
+        { user_id: userId },
+        { $push: { education: educationData } },
+        { new: true, upsert: true }
+      );
+
+      await sendProfileResponse(res, StatusCodes.CREATED, profile, "Education added successfully");
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async updateEducation(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = (req as any).user?._id || (req as any).user?.id;
+      const { educationId } = req.params;
+      const educationData = req.body;
+
+      if (!userId) {
+        throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized", []);
+      }
+
+      const updateFields: any = {};
+      for (const [key, value] of Object.entries(educationData)) {
+        updateFields[`education.$.${key}`] = value;
+      }
+
+      const profile = await FreelancerProfile.findOneAndUpdate(
+        { user_id: userId, "education._id": educationId },
+        { $set: updateFields },
+        { new: true }
+      );
+
+      if (!profile) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Education not found", []);
+      }
+
+      await sendProfileResponse(res, StatusCodes.OK, profile, "Education updated successfully");
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteEducation(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = (req as any).user?._id || (req as any).user?.id;
+      const { educationId } = req.params;
+
+      if (!userId) {
+        throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized", []);
+      }
+
+      const profile = await FreelancerProfile.findOneAndUpdate(
+        { user_id: userId },
+        { $pull: { education: { _id: educationId } } },
+        { new: true }
+      );
+
+      if (!profile) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Profile not found", []);
+      }
+
+      await sendProfileResponse(res, StatusCodes.OK, profile, "Education deleted successfully");
     } catch (error) {
       next(error);
     }
@@ -434,13 +514,9 @@ class FreelancerProfileController {
         { user_id: userId },
         { $set: updateData },
         { new: true, upsert: true }
-      ).populate("user_id", "user_name email user_image");
+      );
 
-      res.status(StatusCodes.OK).json({
-        success: true,
-        message: "Availability updated successfully",
-        profile,
-      });
+      await sendProfileResponse(res, StatusCodes.OK, profile, "Availability updated successfully");
     } catch (error) {
       next(error);
     }
@@ -454,8 +530,10 @@ function calculateProfileCompletion(profile: any): number {
   if (profile.summary) completion += 15;
   if (profile.skills && profile.skills.length > 0) completion += 20;
   if (profile.project_experiences && profile.project_experiences.length > 0) completion += 20;
+  if (profile.education && profile.education.length > 0) completion += 10;
   if (profile.certifications && profile.certifications.length > 0) completion += 10;
   if (profile.hourly_rate || profile.daily_rate || profile.monthly_rate) completion += 15;
+  if (profile.availability_status) completion += 5;
   if (profile.user_id?.user_image) completion += 10;
 
   return Math.min(completion, 100);

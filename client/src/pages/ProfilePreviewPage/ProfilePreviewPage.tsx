@@ -154,11 +154,17 @@ const ProfilePreviewPage = () => {
                   )}
                   {profile.availability_status && (
                     <div className={`px-3 py-1 rounded-full text-sm font-medium ${
-                      profile.availability_status === 'available'
+                      profile.availability_status === 'open_to_opportunities'
                         ? 'bg-green-100 text-green-700'
-                        : 'bg-red-100 text-red-700'
+                        : profile.availability_status === 'busy'
+                        ? 'bg-yellow-100 text-yellow-700'
+                        : 'bg-gray-100 text-gray-700'
                     }`}>
-                      {profile.availability_status === 'available' ? '可接单' : '忙碌中'}
+                      {profile.availability_status === 'open_to_opportunities'
+                        ? '可接单'
+                        : profile.availability_status === 'busy'
+                        ? '较忙'
+                        : '不可用'}
                     </div>
                   )}
                 </div>

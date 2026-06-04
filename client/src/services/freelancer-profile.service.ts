@@ -32,6 +32,15 @@ interface Certification {
   credential_url?: string;
 }
 
+interface Education {
+  _id?: string;
+  school: string;
+  degree: string;
+  field_of_study: string;
+  start_date: string;
+  end_date?: string;
+}
+
 interface FreelancerProfile {
   _id?: string;
   user_id?: {
@@ -46,6 +55,7 @@ interface FreelancerProfile {
   skills?: Skill[];
   project_experiences?: ProjectExperience[];
   certifications?: Certification[];
+  education?: Education[];
   hourly_rate?: number;
   daily_rate?: number;
   monthly_rate?: number;
@@ -86,8 +96,8 @@ class FreelancerProfileService {
     return httpService.put<ProfileResponse>(`${this.baseUrl}/me`, data);
   }
 
-  async updateBasicInfo(data: { headline?: string; summary?: string; display_name?: string }): Promise<ProfileResponse> {
-    return httpService.put<ProfileResponse>(`${this.baseUrl}/me/basic`, data);
+  async updateBasicInfo(data: { headline?: string; summary?: string; display_name?: string; location?: string }): Promise<ProfileResponse> {
+    return httpService.put<ProfileResponse>(`${this.baseUrl}/me`, data);
   }
 
   async addSkill(skill: Skill): Promise<ProfileResponse> {
@@ -126,6 +136,18 @@ class FreelancerProfileService {
     return httpService.delete<ProfileResponse>(`${this.baseUrl}/me/certifications/${id}`);
   }
 
+  async addEducation(education: Education): Promise<ProfileResponse> {
+    return httpService.post<ProfileResponse>(`${this.baseUrl}/me/education`, education);
+  }
+
+  async updateEducation(id: string, education: Education): Promise<ProfileResponse> {
+    return httpService.put<ProfileResponse>(`${this.baseUrl}/me/education/${id}`, education);
+  }
+
+  async deleteEducation(id: string): Promise<ProfileResponse> {
+    return httpService.delete<ProfileResponse>(`${this.baseUrl}/me/education/${id}`);
+  }
+
   async updateRates(data: {
     hourly_rate?: number;
     daily_rate?: number;
@@ -144,4 +166,4 @@ class FreelancerProfileService {
 }
 
 export default new FreelancerProfileService();
-export type { FreelancerProfile, Skill, ProjectExperience, Certification };
+export type { FreelancerProfile, Skill, ProjectExperience, Certification, Education };

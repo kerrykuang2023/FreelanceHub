@@ -29,6 +29,10 @@ class FreelancerProfileRoutes {
     this.router.put("/me/certifications/:certId", authMiddleware, asyncWrapper(FreelancerProfileController.updateCertification));
     this.router.delete("/me/certifications/:certId", authMiddleware, asyncWrapper(FreelancerProfileController.deleteCertification));
 
+    this.router.post("/me/education", authMiddleware, asyncWrapper(FreelancerProfileController.addEducation));
+    this.router.put("/me/education/:educationId", authMiddleware, asyncWrapper(FreelancerProfileController.updateEducation));
+    this.router.delete("/me/education/:educationId", authMiddleware, asyncWrapper(FreelancerProfileController.deleteEducation));
+
     this.router.get("/:id", authMiddleware, asyncWrapper(FreelancerProfileController.getProfileById));
   }
 }

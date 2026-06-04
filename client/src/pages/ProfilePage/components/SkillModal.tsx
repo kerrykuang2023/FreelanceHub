@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 interface SkillModalProps {
@@ -23,9 +23,24 @@ const SkillModal: React.FC<SkillModalProps> = ({
     skill_category_id: initialData?.skill_category_id || '',
   });
 
+  useEffect(() => {
+    if (isOpen) {
+      setFormData({
+        skill_name: initialData?.skill_name || '',
+        skill_level: initialData?.skill_level || '中级',
+        years_of_experience: initialData?.years_of_experience || 1,
+        skill_category_id: initialData?.skill_category_id || '',
+      });
+    }
+  }, [initialData, isOpen]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    const data = { ...formData };
+    if (!data.skill_category_id) {
+      delete (data as any).skill_category_id;
+    }
+    onSubmit(data);
     onClose();
   };
 
@@ -51,6 +66,7 @@ const SkillModal: React.FC<SkillModalProps> = ({
               <label className="block text-sm font-medium text-gray-700 mb-1">技能名称 *</label>
               <input
                 type="text"
+                data-testid="skill-name-input"
                 required
                 value={formData.skill_name}
                 onChange={(e) => setFormData({ ...formData, skill_name: e.target.value })}
@@ -62,6 +78,7 @@ const SkillModal: React.FC<SkillModalProps> = ({
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">技能等级 *</label>
               <select
+                data-testid="skill-level-select"
                 value={formData.skill_level}
                 onChange={(e) => setFormData({ ...formData, skill_level: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -77,6 +94,7 @@ const SkillModal: React.FC<SkillModalProps> = ({
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">技能分类</label>
                 <select
+                  data-testid="skill-category-select"
                   value={formData.skill_category_id}
                   onChange={(e) => setFormData({ ...formData, skill_category_id: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -95,6 +113,7 @@ const SkillModal: React.FC<SkillModalProps> = ({
               <label className="block text-sm font-medium text-gray-700 mb-1">使用年限（年） *</label>
               <input
                 type="number"
+                data-testid="skill-years-input"
                 required
                 min="0"
                 max="50"
@@ -114,6 +133,7 @@ const SkillModal: React.FC<SkillModalProps> = ({
               </button>
               <button
                 type="submit"
+                data-testid="skill-submit-btn"
                 className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
               >
                 {initialData ? '保存' : '添加'}

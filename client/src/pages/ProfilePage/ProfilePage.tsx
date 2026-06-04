@@ -25,6 +25,7 @@ import SkillModal from './components/SkillModal';
 import ProjectExperienceModal from './components/ProjectExperienceModal';
 import CertificationModal from './components/CertificationModal';
 import BasicInfoModal from './components/BasicInfoModal';
+import EducationModal from './components/EducationModal';
 import PageHeader from '@/components/core-ui/PageHeader';
 import PortalLayout from '@/components/layouts/portal/PortalLayout';
 import StatCard from '@/components/core-ui/StatCard';
@@ -87,7 +88,7 @@ interface FreelancerProfile {
   languages?: { language: string; proficiency: string }[];
   portfolio_links?: { title: string; url: string }[];
   education?: {
-    _id: string;
+    _id?: string;
     school: string;
     degree: string;
     field_of_study: string;
@@ -108,10 +109,12 @@ const ProfilePage = () => {
   const [showExperienceModal, setShowExperienceModal] = useState(false);
   const [showCertificationModal, setShowCertificationModal] = useState(false);
   const [showBasicInfoModal, setShowBasicInfoModal] = useState(false);
+  const [showEducationModal, setShowEducationModal] = useState(false);
   
   const [editingSkill, setEditingSkill] = useState<Skill | null>(null);
   const [editingExperience, setEditingExperience] = useState<ProjectExperience | null>(null);
   const [editingCertification, setEditingCertification] = useState<Certification | null>(null);
+  const [editingEducation, setEditingEducation] = useState<NonNullable<FreelancerProfile['education']>[number] | null>(null);
 
   const [rateForm, setRateForm] = useState({
     hourly_rate: '',
@@ -120,7 +123,7 @@ const ProfilePage = () => {
     preferred_currency: 'CNY',
   });
   const [availabilityForm, setAvailabilityForm] = useState({
-    availability_status: 'available',
+    availability_status: 'open_to_opportunities',
     available_hours_per_week: '',
   });
 
@@ -141,7 +144,7 @@ const ProfilePage = () => {
           preferred_currency: response.profile.preferred_currency || 'CNY',
         });
         setAvailabilityForm({
-          availability_status: response.profile.availability_status || 'available',
+          availability_status: response.profile.availability_status || 'open_to_opportunities',
           available_hours_per_week: response.profile.available_hours_per_week?.toString() || '',
         });
       }
@@ -152,12 +155,31 @@ const ProfilePage = () => {
     }
   };
 
+  const applyProfileResponse = async (response: any) => {
+    if (!response.profile) {
+      await loadProfile();
+      return;
+    }
+
+    setProfile(response.profile);
+    setRateForm({
+      hourly_rate: response.profile.hourly_rate?.toString() || '',
+      daily_rate: response.profile.daily_rate?.toString() || '',
+      monthly_rate: response.profile.monthly_rate?.toString() || '',
+      preferred_currency: response.profile.preferred_currency || 'CNY',
+    });
+    setAvailabilityForm({
+      availability_status: response.profile.availability_status || 'open_to_opportunities',
+      available_hours_per_week: response.profile.available_hours_per_week?.toString() || '',
+    });
+  };
+
   const handleAddSkill = async (data: any) => {
     try {
       setSaving(true);
       const response = await freelancerProfileService.addSkill(data);
       if (response.success) {
-        await loadProfile();
+        await applyProfileResponse(response);
       }
     } catch (error) {
       console.error('Failed to add skill:', error);
@@ -173,7 +195,7 @@ const ProfilePage = () => {
       const response = await freelancerProfileService.updateSkill(editingSkill._id, data);
       if (response.success) {
         setEditingSkill(null);
-        await loadProfile();
+        await applyProfileResponse(response);
       }
     } catch (error) {
       console.error('Failed to update skill:', error);
@@ -187,7 +209,7 @@ const ProfilePage = () => {
     try {
       const response = await freelancerProfileService.deleteSkill(skillId);
       if (response.success) {
-        await loadProfile();
+        await applyProfileResponse(response);
       }
     } catch (error) {
       console.error('Failed to delete skill:', error);
@@ -199,7 +221,7 @@ const ProfilePage = () => {
       setSaving(true);
       const response = await freelancerProfileService.addProjectExperience(data);
       if (response.success) {
-        await loadProfile();
+        await applyProfileResponse(response);
       }
     } catch (error) {
       console.error('Failed to add experience:', error);
@@ -215,7 +237,7 @@ const ProfilePage = () => {
       const response = await freelancerProfileService.updateProjectExperience(editingExperience._id, data);
       if (response.success) {
         setEditingExperience(null);
-        await loadProfile();
+        await applyProfileResponse(response);
       }
     } catch (error) {
       console.error('Failed to update experience:', error);
@@ -229,7 +251,7 @@ const ProfilePage = () => {
     try {
       const response = await freelancerProfileService.deleteProjectExperience(experienceId);
       if (response.success) {
-        await loadProfile();
+        await applyProfileResponse(response);
       }
     } catch (error) {
       console.error('Failed to delete experience:', error);
@@ -241,7 +263,7 @@ const ProfilePage = () => {
       setSaving(true);
       const response = await freelancerProfileService.addCertification(data);
       if (response.success) {
-        await loadProfile();
+        await applyProfileResponse(response);
       }
     } catch (error) {
       console.error('Failed to add certification:', error);
@@ -257,7 +279,7 @@ const ProfilePage = () => {
       const response = await freelancerProfileService.updateCertification(editingCertification._id, data);
       if (response.success) {
         setEditingCertification(null);
-        await loadProfile();
+        await applyProfileResponse(response);
       }
     } catch (error) {
       console.error('Failed to update certification:', error);
@@ -271,10 +293,52 @@ const ProfilePage = () => {
     try {
       const response = await freelancerProfileService.deleteCertification(certId);
       if (response.success) {
-        await loadProfile();
+        await applyProfileResponse(response);
       }
     } catch (error) {
       console.error('Failed to delete certification:', error);
+    }
+  };
+
+  const handleAddEducation = async (data: any) => {
+    try {
+      setSaving(true);
+      const response = await freelancerProfileService.addEducation(data);
+      if (response.success) {
+        await applyProfileResponse(response);
+      }
+    } catch (error) {
+      console.error('Failed to add education:', error);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleUpdateEducation = async (data: any) => {
+    if (!editingEducation?._id) return;
+    try {
+      setSaving(true);
+      const response = await freelancerProfileService.updateEducation(editingEducation._id, data);
+      if (response.success) {
+        setEditingEducation(null);
+        await applyProfileResponse(response);
+      }
+    } catch (error) {
+      console.error('Failed to update education:', error);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDeleteEducation = async (educationId?: string) => {
+    if (!educationId || !confirm('确定要删除这个教育经历吗？')) return;
+    try {
+      const response = await freelancerProfileService.deleteEducation(educationId);
+      if (response.success) {
+        await applyProfileResponse(response);
+      }
+    } catch (error) {
+      console.error('Failed to delete education:', error);
     }
   };
 
@@ -288,7 +352,7 @@ const ProfilePage = () => {
         preferred_currency: rateForm.preferred_currency,
       });
       if (response.success) {
-        await loadProfile();
+        await applyProfileResponse(response);
         alert('费率设置已保存');
       }
     } catch (error) {
@@ -308,7 +372,7 @@ const ProfilePage = () => {
           : undefined,
       });
       if (response.success) {
-        await loadProfile();
+        await applyProfileResponse(response);
         alert('可用性设置已保存');
       }
     } catch (error) {
@@ -324,7 +388,7 @@ const ProfilePage = () => {
       const response = await freelancerProfileService.updateBasicInfo(data);
       if (response.success) {
         setShowBasicInfoModal(false);
-        await loadProfile();
+        await applyProfileResponse(response);
       }
     } catch (error) {
       console.error('Failed to update basic info:', error);
@@ -378,11 +442,11 @@ const ProfilePage = () => {
 
   const getAvailabilityBadge = (status: string) => {
     const badges: Record<string, { bg: string; text: string; label: string }> = {
-      'available': { bg: 'bg-green-500', text: 'text-white', label: '可接单' },
+      'open_to_opportunities': { bg: 'bg-green-500', text: 'text-white', label: '可接单' },
       'busy': { bg: 'bg-yellow-500', text: 'text-white', label: '较忙' },
-      'unavailable': { bg: 'bg-gray-400', text: 'text-white', label: '不可用' },
+      'not_available': { bg: 'bg-gray-400', text: 'text-white', label: '不可用' },
     };
-    return badges[status] || badges['unavailable'];
+    return badges[status] || badges['not_available'];
   };
 
   const renderStars = (rating: number) => {
@@ -435,7 +499,7 @@ const ProfilePage = () => {
     );
   }
 
-  const availabilityBadge = getAvailabilityBadge(profile.availability_status || 'unavailable');
+  const availabilityBadge = getAvailabilityBadge(profile.availability_status || 'not_available');
 
   return (
     <PortalLayout title="个人档案">
@@ -643,13 +707,13 @@ const ProfilePage = () => {
                       <span className="text-sm font-medium">可用状态</span>
                     </div>
                     <span className={`inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium ${
-                      profile.availability_status === 'available'
+                      profile.availability_status === 'open_to_opportunities'
                         ? 'bg-green-100 text-green-700'
                         : profile.availability_status === 'busy'
                         ? 'bg-yellow-100 text-yellow-700'
                         : 'bg-gray-200 text-gray-700'
                     }`}>
-                      {profile.availability_status === 'available' ? '可接单' : 
+                      {profile.availability_status === 'open_to_opportunities' ? '可接单' :
                        profile.availability_status === 'busy' ? '较忙' : '不可用'}
                     </span>
                     {profile.available_hours_per_week && (
@@ -743,6 +807,7 @@ const ProfilePage = () => {
                       {profile.skills.map((skill) => (
                         <div
                           key={skill._id}
+                          data-testid="skill-item"
                           className="group bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-colors"
                         >
                           <div className="flex items-start justify-between">
@@ -784,6 +849,7 @@ const ProfilePage = () => {
                       <p className="text-gray-500 mb-4">暂无技能，添加您的专业技能</p>
                       <button 
                         onClick={() => setShowSkillModal(true)}
+                        data-testid="empty-add-skill-btn"
                         className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
                       >
                         <PlusIcon className="w-5 h-5 mr-1" />
@@ -804,6 +870,7 @@ const ProfilePage = () => {
                       setEditingExperience(null);
                       setShowExperienceModal(true);
                     }}
+                    data-testid="add-experience-btn"
                     className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
                   >
                     <PlusIcon className="w-4 h-4 mr-2" />
@@ -816,6 +883,7 @@ const ProfilePage = () => {
                     {profile.project_experiences.map((exp, index) => (
                       <div
                         key={exp._id}
+                        data-testid="experience-item"
                         className="group relative pl-8 pb-6 last:pb-0"
                       >
                         {index < (profile.project_experiences?.length || 0) - 1 && (
@@ -871,6 +939,7 @@ const ProfilePage = () => {
                     <p className="text-gray-500 mb-4">暂无项目经历</p>
                     <button 
                       onClick={() => setShowExperienceModal(true)}
+                      data-testid="empty-add-experience-btn"
                       className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
                     >
                       <PlusIcon className="w-5 h-5 mr-1" />
@@ -886,6 +955,11 @@ const ProfilePage = () => {
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold text-gray-900">教育背景</h3>
                   <button 
+                    onClick={() => {
+                      setEditingEducation(null);
+                      setShowEducationModal(true);
+                    }}
+                    data-testid="add-education-btn"
                     className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
                   >
                     <PlusIcon className="w-4 h-4 mr-2" />
@@ -898,6 +972,7 @@ const ProfilePage = () => {
                     {profile.education.map((edu) => (
                       <div
                         key={edu._id}
+                        data-testid="education-item"
                         className="group bg-gray-50 rounded-xl p-5 hover:bg-gray-100 transition-colors"
                       >
                         <div className="flex items-start justify-between">
@@ -915,10 +990,19 @@ const ProfilePage = () => {
                             </div>
                           </div>
                           <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button className="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-colors">
+                            <button
+                              onClick={() => {
+                                setEditingEducation(edu);
+                                setShowEducationModal(true);
+                              }}
+                              className="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-colors"
+                            >
                               <PencilIcon className="w-4 h-4" />
                             </button>
-                            <button className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                            <button
+                              onClick={() => handleDeleteEducation(edu._id)}
+                              className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                            >
                               <TrashIcon className="w-4 h-4" />
                             </button>
                           </div>
@@ -930,7 +1014,14 @@ const ProfilePage = () => {
                   <div className="text-center py-12 bg-gray-50 rounded-xl">
                     <AcademicCapIcon className="w-12 h-12 mx-auto text-gray-300 mb-4" />
                     <p className="text-gray-500 mb-4">暂无教育背景</p>
-                    <button className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium">
+                    <button
+                      onClick={() => {
+                        setEditingEducation(null);
+                        setShowEducationModal(true);
+                      }}
+                      data-testid="empty-add-education-btn"
+                      className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
+                    >
                       <PlusIcon className="w-5 h-5 mr-1" />
                       添加教育经历
                     </button>
@@ -948,6 +1039,7 @@ const ProfilePage = () => {
                       setEditingCertification(null);
                       setShowCertificationModal(true);
                     }}
+                    data-testid="add-certification-btn"
                     className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
                   >
                     <PlusIcon className="w-4 h-4 mr-2" />
@@ -960,6 +1052,7 @@ const ProfilePage = () => {
                     {profile.certifications.map((cert) => (
                       <div
                         key={cert._id}
+                        data-testid="certification-item"
                         className="group bg-gray-50 rounded-xl p-5 hover:bg-gray-100 transition-colors"
                       >
                         <div className="flex items-start justify-between">
@@ -1005,6 +1098,7 @@ const ProfilePage = () => {
                     <p className="text-gray-500 mb-4">暂无资质证书</p>
                     <button 
                       onClick={() => setShowCertificationModal(true)}
+                      data-testid="empty-add-certification-btn"
                       className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
                     >
                       <PlusIcon className="w-5 h-5 mr-1" />
@@ -1039,6 +1133,7 @@ const ProfilePage = () => {
                       </label>
                       <input
                         type="number"
+                        data-testid="daily-rate-input"
                         value={rateForm.daily_rate}
                         onChange={(e) => setRateForm({ ...rateForm, daily_rate: e.target.value })}
                         className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
@@ -1051,6 +1146,7 @@ const ProfilePage = () => {
                       </label>
                       <input
                         type="number"
+                        data-testid="monthly-rate-input"
                         value={rateForm.monthly_rate}
                         onChange={(e) => setRateForm({ ...rateForm, monthly_rate: e.target.value })}
                         className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
@@ -1062,6 +1158,7 @@ const ProfilePage = () => {
                     <button 
                       onClick={handleSaveRates}
                       disabled={saving}
+                      data-testid="save-rates-btn"
                       className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl font-medium shadow-lg shadow-blue-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50"
                     >
                       {saving ? '保存中...' : '保存费率'}
@@ -1077,13 +1174,14 @@ const ProfilePage = () => {
                         当前状态
                       </label>
                       <select
+                        data-testid="availability-status-select"
                         value={availabilityForm.availability_status}
                         onChange={(e) => setAvailabilityForm({ ...availabilityForm, availability_status: e.target.value })}
                         className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                       >
-                        <option value="available">可接单</option>
+                        <option value="open_to_opportunities">可接单</option>
                         <option value="busy">较忙</option>
-                        <option value="unavailable">不可用</option>
+                        <option value="not_available">不可用</option>
                       </select>
                     </div>
                     <div>
@@ -1092,6 +1190,7 @@ const ProfilePage = () => {
                       </label>
                       <input
                         type="number"
+                        data-testid="available-hours-input"
                         value={availabilityForm.available_hours_per_week}
                         onChange={(e) => setAvailabilityForm({ ...availabilityForm, available_hours_per_week: e.target.value })}
                         className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
@@ -1103,6 +1202,7 @@ const ProfilePage = () => {
                     <button 
                       onClick={handleSaveAvailability}
                       disabled={saving}
+                      data-testid="save-availability-btn"
                       className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl font-medium shadow-lg shadow-blue-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50"
                     >
                       {saving ? '保存中...' : '保存可用性'}
@@ -1143,6 +1243,16 @@ const ProfilePage = () => {
         }}
         onSubmit={editingCertification ? handleUpdateCertification : handleAddCertification}
         initialData={editingCertification}
+      />
+
+      <EducationModal
+        isOpen={showEducationModal}
+        onClose={() => {
+          setShowEducationModal(false);
+          setEditingEducation(null);
+        }}
+        onSubmit={editingEducation ? handleUpdateEducation : handleAddEducation}
+        initialData={editingEducation}
       />
 
       <BasicInfoModal
