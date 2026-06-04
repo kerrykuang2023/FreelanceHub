@@ -31,7 +31,7 @@ async function createTestUser() {
 
     const user = new UserAccount({
       user_type_id: jobType._id,
-      email: 'testuser@jobportal.com',
+      email: 'testuser@freelancehub.com',
       password: hashedPassword,
       registration_date: new Date(),
       is_active: true,
@@ -39,7 +39,7 @@ async function createTestUser() {
 
     await user.save();
     console.log('Test user created successfully!');
-    console.log('Email: testuser@jobportal.com');
+    console.log('Email: testuser@freelancehub.com');
     console.log('Password: password123');
 
   } catch (error) {

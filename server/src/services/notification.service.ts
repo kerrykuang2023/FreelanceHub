@@ -20,6 +20,7 @@ class NotificationService {
         type: params.type,
         title: params.title,
         message: params.message,
+        content: params.message,
         data: params.data || {},
         priority: params.priority || 'normal',
         action_url: params.action_url,

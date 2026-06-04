@@ -19,6 +19,14 @@ export interface Company {
   };
 }
 
+const getApiErrorMessage = (error: any, fallback: string) => {
+  const data = error?.response?.data;
+  if (typeof data?.message === 'string') return data.message;
+  if (typeof data?.error === 'string') return data.error;
+  if (typeof data?.error?.message === 'string') return data.error.message;
+  return fallback;
+};
+
 class CompanyService {
   private http: HttpService;
 
@@ -28,8 +36,8 @@ class CompanyService {
 
   async getMyCompany(): Promise<{ success: boolean; data?: Company }> {
     try {
-      const response = await this.http.get<Company>('/companies/my-company');
-      return { success: true, data: response.data };
+      const response = await this.http.get<any>('/companies/my-company');
+      return { success: true, data: response.data || response.company || response };
     } catch (error) {
       console.error('Failed to get company:', error);
       return { success: false };
@@ -38,21 +46,25 @@ class CompanyService {
 
   async getCompanyById(id: string): Promise<{ success: boolean; data?: Company }> {
     try {
-      const response = await this.http.get<Company>(`/companies/${id}`);
-      return { success: true, data: response.data };
+      const response = await this.http.get<any>(`/companies/${id}`);
+      return { success: true, data: response.data || response };
     } catch (error) {
       console.error('Failed to get company:', error);
       return { success: false };
     }
   }
 
-  async updateCompany(id: string, data: Partial<Company>): Promise<{ success: boolean }> {
+  async updateCompany(id: string, data: Partial<Company>): Promise<{ success: boolean; data?: Company; message?: string }> {
     try {
-      await this.http.put(`/companies/${id}`, data);
-      return { success: true };
+      const response = await this.http.put<any>(`/companies/${id}`, data);
+      return {
+        success: true,
+        data: response.data || response.company || response,
+        message: response.message || '公司信息已保存',
+      };
     } catch (error) {
       console.error('Failed to update company:', error);
-      return { success: false };
+      return { success: false, message: getApiErrorMessage(error, '保存公司信息失败，请稍后重试') };
     }
   }
 
@@ -61,12 +73,12 @@ class CompanyService {
       const formData = new FormData();
       formData.append('logo', file);
       
-      const response = await this.http.post<{ url: string }>(`/companies/${id}/logo`, formData, {
+      const response = await this.http.post<any>(`/companies/${id}/logo`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      return { success: true, url: response.data.url };
+      return { success: true, url: response.data?.url || response.url };
     } catch (error) {
       console.error('Failed to upload logo:', error);
       return { success: false };
@@ -78,12 +90,12 @@ class CompanyService {
       const formData = new FormData();
       formData.append('cover', file);
       
-      const response = await this.http.post<{ url: string }>(`/companies/${id}/cover`, formData, {
+      const response = await this.http.post<any>(`/companies/${id}/cover`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      return { success: true, url: response.data.url };
+      return { success: true, url: response.data?.url || response.url };
     } catch (error) {
       console.error('Failed to upload cover:', error);
       return { success: false };
@@ -92,8 +104,8 @@ class CompanyService {
 
   async searchCompanies(query: string): Promise<{ success: boolean; data?: { items: Company[] } }> {
     try {
-      const response = await this.http.get<{ items: Company[] }>('/companies/search', { params: { q: query } });
-      return { success: true, data: response.data };
+      const response = await this.http.get<any>('/companies/search', { q: query });
+      return { success: true, data: response.data || response };
     } catch (error) {
       console.error('Failed to search companies:', error);
       return { success: false };

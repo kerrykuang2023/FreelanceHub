@@ -41,8 +41,9 @@ const AdminConfigPage = () => {
         configType: "skill_category",
         description: "管理系统技能分类，如SAP、ERP、CRM、JAVA等技能体系",
         columns: [
-          { key: "category_name", label: "分类名称" },
-          { key: "category_code", label: "分类代码" },
+          { key: "display_name", label: "分类名称" },
+          { key: "config_key", label: "分类代码" },
+          { key: "description", label: "描述" },
           { key: "display_order", label: "排序" },
         ],
       };
@@ -120,9 +121,9 @@ const AdminConfigPage = () => {
       };
     } else if (path.includes("rate-types")) {
       return {
-        title: "Rate类型",
+        title: "计费类型",
         configType: "rate_type",
-        description: "管理薪资Rate类型，如日薪、月薪、年薪、项目总价等",
+        description: "管理薪资计费类型，如日薪、月薪、年薪、项目总价等",
         columns: [
           { key: "display_name", label: "类型名称" },
           { key: "config_key", label: "类型Key" },
@@ -174,7 +175,7 @@ const AdminConfigPage = () => {
     try {
       setLoading(true);
       const response = await adminService.getSystemConfigs(pageConfig.configType);
-      setConfigs(response.data.data || []);
+      setConfigs((response as any).data?.data || (response as any).data || response || []);
     } catch (error) {
       console.error("Failed to load configs:", error);
     } finally {

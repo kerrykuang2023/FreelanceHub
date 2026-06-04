@@ -19,7 +19,7 @@ const LoginForm = () => {
             htmlFor="email"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Email address
+            邮箱地址
             <span className="text-red-500">*</span>
           </label>
           <div className="mt-2">
@@ -44,7 +44,7 @@ const LoginForm = () => {
             htmlFor="password"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Password
+            密码
             <span className="text-red-500">*</span>
           </label>
           <div className="mt-2">
@@ -79,7 +79,7 @@ const LoginForm = () => {
               htmlFor="remember-me"
               className="ml-3 block text-sm leading-6 text-gray-700"
             >
-              Remember me
+              记住我
             </label>
           </div>
 
@@ -88,7 +88,7 @@ const LoginForm = () => {
               to="/forgot-password"
               className="font-semibold text-indigo-600 hover:text-indigo-500"
             >
-              Forgot password?
+              忘记密码？
             </Link>
           </div>
         </div>
@@ -100,7 +100,7 @@ const LoginForm = () => {
             className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             disabled={form.isSubmitting}
           >
-            Sign in
+            登录
           </button>
         </div>
       </form>

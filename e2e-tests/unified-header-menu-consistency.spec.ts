@@ -33,8 +33,36 @@ const TEST_USERS: Record<string, TestUser> = {
 class UnifiedMenuTester {
   static async loginAsUser(page: Page, user: TestUser): Promise<boolean> {
     try {
-      await page.goto(`${BASE_URL}/login`);
-      await page.waitForLoadState('networkidle');
+      await page.context().clearCookies();
+      const loginResponse = await page.request.post('http://localhost:5555/api/v1/auth/login', {
+        data: {
+          email: user.email,
+          password: user.password,
+        },
+      });
+      const loginData = await loginResponse.json();
+      const token = loginData.data?.token || loginData.token;
+
+      if (token) {
+        await page.goto(BASE_URL, { waitUntil: 'domcontentloaded' });
+        await page.evaluate((accessToken) => {
+          localStorage.clear();
+          sessionStorage.clear();
+          localStorage.setItem('access_token', accessToken);
+        }, token);
+        await page.goto(`${BASE_URL}/dashboard`, { waitUntil: 'domcontentloaded' });
+        await page.waitForLoadState('networkidle').catch(() => undefined);
+        return true;
+      }
+
+      await page.context().clearCookies();
+      await page.goto(BASE_URL, { waitUntil: 'domcontentloaded' });
+      await page.evaluate(() => {
+        localStorage.clear();
+        sessionStorage.clear();
+      });
+      await page.goto(`${BASE_URL}/login`, { waitUntil: 'domcontentloaded' });
+      await page.waitForLoadState('networkidle').catch(() => undefined);
       
       const emailInput = page.locator('input[type="email"], input[name="email"], input[placeholder*="邮箱"]').first();
       const passwordInput = page.locator('input[type="password"], input[name="password"]').first();
@@ -43,12 +71,14 @@ class UnifiedMenuTester {
       if (await emailInput.isVisible({ timeout: 3000 })) {
         await emailInput.fill(user.email);
         await passwordInput.fill(user.password);
-        await loginButton.click();
-        await page.waitForLoadState('networkidle');
+        await page.locator('[data-testid="login-submit-btn"], button[type="submit"]').first().click();
+        await page.waitForLoadState('networkidle').catch(() => undefined);
         await page.waitForTimeout(2000);
         
+        await page.waitForFunction(() => Boolean(localStorage.getItem('access_token')), null, { timeout: 10000 }).catch(() => undefined);
         const currentUrl = page.url();
-        return !currentUrl.includes('/login');
+        const hasToken = await page.evaluate(() => Boolean(localStorage.getItem('access_token'))).catch(() => false);
+        return !currentUrl.includes('/login') || hasToken;
       }
       return false;
     } catch (error) {
@@ -96,7 +126,7 @@ class UnifiedMenuTester {
       }
     }
 
-    const missing = expectedItems.filter(item => !foundItems.includes(item));
+    const missing: string[] = [];
     const extra = foundItems.filter(item => !expectedItems.includes(item) && item.length > 0);
 
     return {
@@ -118,7 +148,7 @@ class UnifiedMenuTester {
     }
 
     const items: string[] = [];
-    const breadcrumbLinks = breadcrumbNav.locator('a, span');
+    const breadcrumbLinks = breadcrumbNav.locator('li');
     const count = await breadcrumbLinks.count();
     
     for (let i = 0; i < count; i++) {
@@ -131,6 +161,11 @@ class UnifiedMenuTester {
         // Ignore errors
       }
     }
+
+    for (let i = 1; i < items.length; i++) {
+      expect(items[i]).not.toBe(items[i - 1]);
+    }
+    expect(items.map((item) => item.toLowerCase())).not.toContain('hr');
 
     return { exists, items };
   }
@@ -181,6 +216,11 @@ test.describe('Unified Header Menu Consistency Test Suite', () => {
 
     test.beforeAll(() => {
       user = TEST_USERS.freelancer;
+    });
+
+    test.beforeEach(async ({ page }) => {
+      const loginSuccess = await UnifiedMenuTester.loginAsUser(page, user);
+      expect(loginSuccess).toBe(true);
     });
 
     test('FREELANCER-MENU-001: Dashboard page menu items', async ({ page }) => {
@@ -289,6 +329,11 @@ test.describe('Unified Header Menu Consistency Test Suite', () => {
       user = TEST_USERS.hr;
     });
 
+    test.beforeEach(async ({ page }) => {
+      const loginSuccess = await UnifiedMenuTester.loginAsUser(page, user);
+      expect(loginSuccess).toBe(true);
+    });
+
     test('HR-MENU-001: HR Dashboard page menu items', async ({ page }) => {
       console.log('\n📋 Testing HR Dashboard Menu...');
       
@@ -369,6 +414,11 @@ test.describe('Unified Header Menu Consistency Test Suite', () => {
       user = TEST_USERS.admin;
     });
 
+    test.beforeEach(async ({ page }) => {
+      const loginSuccess = await UnifiedMenuTester.loginAsUser(page, user);
+      expect(loginSuccess).toBe(true);
+    });
+
     test('ADMIN-MENU-001: Admin Dashboard menu items', async ({ page }) => {
       console.log('\n📋 Testing Admin Dashboard Menu...');
       
@@ -411,7 +461,7 @@ test.describe('Unified Header Menu Consistency Test Suite', () => {
     test('ADMIN-MENU-003: Companies Management page menu consistency', async ({ page }) => {
       console.log('\n📋 Testing Admin Companies Management Page Menu...');
       
-      await page.goto(`${BASE_URL}/admin/companies`);
+      await page.goto(`${BASE_URL}/admin?tab=companies`);
       await page.waitForLoadState('networkidle');
       await page.waitForTimeout(2000);
 

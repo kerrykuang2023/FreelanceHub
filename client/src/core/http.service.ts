@@ -75,7 +75,7 @@ class HttpService {
     }
   }
 
-  public async get<T>(url: string, params?: any): Promise<T> {
+  public async get<T = any>(url: string, params?: any): Promise<T> {
     const response = await this.request<T>(HttpMethod.GET, url, {
       params,
       headers: this.setupHeaders(),
@@ -83,7 +83,7 @@ class HttpService {
     return response.data;
   }
 
-  public async post<T, P>(url: string, payload?: P, config?: AxiosRequestConfig): Promise<T> {
+  public async post<T = any, P = any>(url: string, payload?: P, config?: AxiosRequestConfig): Promise<T> {
     const response = await this.request<T>(HttpMethod.POST, url, {
       data: payload,
       headers: config?.headers || this.setupHeaders(),
@@ -92,7 +92,7 @@ class HttpService {
     return response.data;
   }
 
-  public async put<T, P>(url: string, payload: P, config?: AxiosRequestConfig): Promise<T> {
+  public async put<T = any, P = any>(url: string, payload?: P, config?: AxiosRequestConfig): Promise<T> {
     const response = await this.request<T>(HttpMethod.PUT, url, {
       data: payload,
       headers: config?.headers || this.setupHeaders(),
@@ -101,11 +101,42 @@ class HttpService {
     return response.data;
   }
 
-  public async delete<T>(url: string): Promise<T> {
+  public async patch<T = any, P = any>(url: string, payload?: P, config?: AxiosRequestConfig): Promise<T> {
+    const response = await this.request<T>("PATCH" as HttpMethod, url, {
+      data: payload,
+      headers: config?.headers || this.setupHeaders(),
+      ...config,
+    });
+    return response.data;
+  }
+
+  public async delete<T = any>(url: string): Promise<T> {
     const response = await this.request<T>(HttpMethod.DELETE, url, {
       headers: this.setupHeaders(),
     });
     return response.data;
+  }
+
+  private static defaultClient = new HttpService();
+
+  public static get<T = any>(url: string, params?: any): Promise<T> {
+    return HttpService.defaultClient.get<T>(url, params);
+  }
+
+  public static post<T = any, P = any>(url: string, payload?: P, config?: AxiosRequestConfig): Promise<T> {
+    return HttpService.defaultClient.post<T, P>(url, payload, config);
+  }
+
+  public static put<T = any, P = any>(url: string, payload?: P, config?: AxiosRequestConfig): Promise<T> {
+    return HttpService.defaultClient.put<T, P>(url, payload, config);
+  }
+
+  public static patch<T = any, P = any>(url: string, payload?: P, config?: AxiosRequestConfig): Promise<T> {
+    return HttpService.defaultClient.patch<T, P>(url, payload, config);
+  }
+
+  public static delete<T = any>(url: string): Promise<T> {
+    return HttpService.defaultClient.delete<T>(url);
   }
 }
 

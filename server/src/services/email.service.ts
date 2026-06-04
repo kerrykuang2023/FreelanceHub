@@ -38,7 +38,7 @@ class EmailService {
         user: process.env.SMTP_USER || "",
         pass: process.env.SMTP_PASS || "",
       },
-      from: process.env.SMTP_FROM || "noreply@jobportal.com",
+      from: process.env.SMTP_FROM || "noreply@freelancehub.com",
     };
 
     this.initializeTransporter();
@@ -186,7 +186,7 @@ class EmailService {
 
     const result = await this.sendEmail({
       to,
-      subject: "Welcome to JobPortal",
+      subject: "Welcome to FreelanceHub",
       html,
     });
 
@@ -220,7 +220,7 @@ class EmailService {
           <p><strong>${d.applicantName}</strong> has applied to your project <strong>${d.projectName}</strong>.</p>
           <p>Please review the application at your earliest convenience.</p>
           <p><a href="${d.applicationUrl}" style="background: #4F46E5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">View Application</a></p>
-          <p>Best regards,<br>JobPortal Team</p>
+          <p>Best regards,<br>FreelanceHub Team</p>
         </div>
       `,
       "application-result": (d) => `
@@ -230,7 +230,7 @@ class EmailService {
           <p>Your application for <strong>${d.projectName}</strong> has been <strong>${d.status}</strong>.</p>
           ${d.reason ? `<p>Reason: ${d.reason}</p>` : ""}
           ${d.status === "approved" ? "<p>You can now start working on this project and submit work logs.</p>" : ""}
-          <p>Best regards,<br>JobPortal Team</p>
+          <p>Best regards,<br>FreelanceHub Team</p>
         </div>
       `,
       "worklog-confirmation": (d) => `
@@ -243,7 +243,7 @@ class EmailService {
             <li>Hours: ${d.hours}</li>
           </ul>
           <p>You can now include this work log in your invoice.</p>
-          <p>Best regards,<br>JobPortal Team</p>
+          <p>Best regards,<br>FreelanceHub Team</p>
         </div>
       `,
       "invoice-notification": (d) => `
@@ -252,7 +252,7 @@ class EmailService {
           <p>Hello,</p>
           <p>Invoice <strong>${d.invoiceNumber}</strong> has been ${d.status}.</p>
           <p>Amount: ${d.currency} ${d.amount}</p>
-          <p>Best regards,<br>JobPortal Team</p>
+          <p>Best regards,<br>FreelanceHub Team</p>
         </div>
       `,
       "payment-confirmation": (d) => `
@@ -265,14 +265,14 @@ class EmailService {
             <li>Payment Date: ${d.paymentDate}</li>
           </ul>
           <p>Thank you for your work!</p>
-          <p>Best regards,<br>JobPortal Team</p>
+          <p>Best regards,<br>FreelanceHub Team</p>
         </div>
       `,
       "welcome": (d) => `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2>Welcome to JobPortal!</h2>
+          <h2>Welcome to FreelanceHub!</h2>
           <p>Hello ${d.name},</p>
-          <p>Thank you for registering with JobPortal. We're excited to have you on board!</p>
+          <p>Thank you for registering with FreelanceHub. We're excited to have you on board!</p>
           <p>You can now:</p>
           <ul>
             <li>Create your professional profile</li>
@@ -280,7 +280,7 @@ class EmailService {
             <li>Apply for opportunities that match your skills</li>
           </ul>
           <p><a href="${d.loginUrl}" style="background: #4F46E5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Get Started</a></p>
-          <p>Best regards,<br>JobPortal Team</p>
+          <p>Best regards,<br>FreelanceHub Team</p>
         </div>
       `,
       "password-reset": (d) => `
@@ -290,7 +290,7 @@ class EmailService {
           <p>We received a request to reset your password. Click the link below to set a new password:</p>
           <p><a href="${d.resetUrl}" style="background: #4F46E5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Reset Password</a></p>
           <p>This link will expire in 1 hour. If you didn't request this, please ignore this email.</p>
-          <p>Best regards,<br>JobPortal Team</p>
+          <p>Best regards,<br>FreelanceHub Team</p>
         </div>
       `,
     };

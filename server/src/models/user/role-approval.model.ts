@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 export type ApprovalStatus = "pending" | "approved" | "rejected" | "expired";
 
 interface ISubmittedData {
+  application_reason?: string;
+  professional_summary?: string;
+  requested_from?: string;
   skills?: string[];
   experience?: {
     company: string;
@@ -84,7 +87,7 @@ const RoleApprovalSchema = new mongoose.Schema(
   },
   {
     collection: "role_approval",
-    timestamps: true,
+    timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
   }
 );
 
@@ -94,6 +97,8 @@ RoleApprovalSchema.index({ status: 1, created_at: -1 });
 RoleApprovalSchema.methods.toJSON = function () {
   const approval = this.toObject();
   approval.id = approval._id;
+  approval.created_at = approval.created_at || approval.createdAt;
+  approval.updated_at = approval.updated_at || approval.updatedAt;
   delete approval._id;
   delete approval.__v;
   return approval;
@@ -103,7 +108,7 @@ RoleApprovalSchema.statics.findPendingApprovals = function () {
   return this.find({ status: "pending" })
     .populate("user_id", "email first_name last_name user_image")
     .populate("reviewed_by", "email first_name last_name")
-    .sort({ created_at: -1 });
+    .sort({ created_at: -1, createdAt: -1 });
 };
 
 RoleApprovalSchema.statics.findExpiredApprovals = function () {

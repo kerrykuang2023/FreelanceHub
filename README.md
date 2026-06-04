@@ -227,13 +227,19 @@
 git clone https://github.com/kerrykuang2023/JobPortal.git
 cd JobPortal
 
-# Start all services
-docker-compose up -d
+# Build and start all services
+docker compose up --build -d
+
+# Check container health
+docker compose ps
 
 # Access the application
 # Frontend: http://localhost:5137
 # Backend API: http://localhost:5555/api/v1
+# Backend health: http://localhost:5555/health
 ```
+
+See [Docker Deployment Guide](docs/DOCKER-DEPLOYMENT-GUIDE.md) for environment variables, health checks, troubleshooting, and the verified local deployment notes.
 
 ### Option 2: Manual Setup
 

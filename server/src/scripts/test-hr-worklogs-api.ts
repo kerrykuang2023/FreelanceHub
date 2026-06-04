@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 async function testHRWorkLogsAPI() {
   try {
-    await mongoose.connect('mongodb://localhost:27017/jobportal');
+    await mongoose.connect('mongodb://localhost:27017/freelancehub');
     const db = mongoose.connection.db;
     
     console.log('\n========================================');
@@ -20,7 +20,7 @@ async function testHRWorkLogsAPI() {
     console.log('  company_id:', userAccount.company_id);
     
     if (!userAccount.company_id) {
-      console.log('❌ HR 用户没有 company_id，API 会返回空数组');
+      console.log('�?HR 用户没有 company_id，API 会返回空数组');
       await mongoose.disconnect();
       return;
     }
@@ -32,12 +32,12 @@ async function testHRWorkLogsAPI() {
       .toArray();
     
     const projectIds = projectRequirements.map(p => p._id);
-    console.log('\nStep 2: HR 公司的项目');
+    console.log('\nStep 2: HR 公司的项�?);
     console.log('  项目数量:', projectIds.length);
     console.log('  项目 IDs:', projectIds);
     
     if (projectIds.length === 0) {
-      console.log('❌ HR 公司没有项目，API 会返回空数组');
+      console.log('�?HR 公司没有项目，API 会返回空数组');
       await mongoose.disconnect();
       return;
     }
@@ -47,15 +47,15 @@ async function testHRWorkLogsAPI() {
       .find({ project_requirement_id: { $in: projectIds } })
       .toArray();
     
-    console.log('\nStep 3: HR 公司项目的工时');
+    console.log('\nStep 3: HR 公司项目的工�?);
     console.log('  工时数量:', workLogs.length);
     
-    // 检查工时状态分布
+    // 检查工时状态分�?
     const statusCount = {};
     for (const w of workLogs) {
       statusCount[w.status] = (statusCount[w.status] || 0) + 1;
     }
-    console.log('  状态分布:', statusCount);
+    console.log('  状态分�?', statusCount);
     
     // Step 4: 检查工时的 project_requirement_id 是否正确
     console.log('\nStep 4: 工时详情');
@@ -64,7 +64,7 @@ async function testHRWorkLogsAPI() {
       console.log(`    project_requirement_id: ${w.project_requirement_id}`);
       console.log(`    status: ${w.status}`);
       console.log(`    company_id: ${w.company_id}`);
-      console.log(`    项目匹配: ${projectIds.some(p => p.toString() === w.project_requirement_id?.toString()) ? '✅' : '❌'}`);
+      console.log(`    项目匹配: ${projectIds.some(p => p.toString() === w.project_requirement_id?.toString()) ? '�? : '�?}`);
     }
     
     await mongoose.disconnect();

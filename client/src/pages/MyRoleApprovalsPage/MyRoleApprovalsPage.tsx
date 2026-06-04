@@ -7,11 +7,12 @@ interface RoleApproval {
   role_type: string;
   status: 'pending' | 'approved' | 'rejected';
   submitted_data: any;
-  reviewed_at?: Date;
+  reviewed_at?: string;
   review_notes?: string;
   rejection_reason?: string;
-  created_at: Date;
-  expires_at: Date;
+  created_at?: string;
+  createdAt?: string;
+  expires_at?: string;
 }
 
 const MyRoleApprovalsPage: React.FC = () => {
@@ -80,8 +81,12 @@ const MyRoleApprovalsPage: React.FC = () => {
     }
   };
 
-  const formatDate = (date: Date | string) => {
-    return new Date(date).toLocaleString('zh-CN', {
+  const formatDate = (date?: string) => {
+    if (!date) return '-';
+    const parsed = new Date(date);
+    if (Number.isNaN(parsed.getTime())) return '-';
+
+    return parsed.toLocaleString('zh-CN', {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',
@@ -89,6 +94,8 @@ const MyRoleApprovalsPage: React.FC = () => {
       minute: '2-digit',
     });
   };
+
+  const getCreatedAt = (approval: RoleApproval) => approval.created_at || approval.createdAt;
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -143,7 +150,7 @@ const MyRoleApprovalsPage: React.FC = () => {
                           {getRoleLabel(approval.role_type)}
                         </h3>
                         <p className="text-sm text-gray-500">
-                          申请时间: {formatDate(approval.created_at)}
+                          申请时间: {formatDate(getCreatedAt(approval))}
                         </p>
                       </div>
                     </div>

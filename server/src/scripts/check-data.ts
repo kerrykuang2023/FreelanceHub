@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 async function check() {
-  await mongoose.connect('mongodb://localhost:27017/jobportal');
+  await mongoose.connect('mongodb://localhost:27017/freelancehub');
   const db = mongoose.connection.db;
   
   const freelancerUser = await db.collection('user_account').findOne({ email: 'freelancer@test.com' });

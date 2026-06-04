@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 async function testAPIs() {
   try {
-    await mongoose.connect('mongodb://localhost:27017/jobportal');
+    await mongoose.connect('mongodb://localhost:27017/freelancehub');
     const db = mongoose.connection.db;
 
     console.log('\n========================================');
@@ -37,9 +37,9 @@ async function testAPIs() {
       status: { $in: ['published', 'in_progress'] }
     }).toArray();
 
-    console.log(`找到的项目: ${projects.length}`);
+    console.log(`找到的项�? ${projects.length}`);
     projects.forEach(p => {
-      console.log(`  - ${p.job_title}, 状态: ${p.status}`);
+      console.log(`  - ${p.job_title}, 状�? ${p.status}`);
     });
 
     console.log('\n=== 模拟 getMyPostedJobs API ===');
@@ -62,9 +62,9 @@ async function testAPIs() {
       is_active: true
     }).toArray();
 
-    console.log(`HR 的职位: ${hrJobs.length}`);
+    console.log(`HR 的职�? ${hrJobs.length}`);
     hrJobs.forEach(j => {
-      console.log(`  - ${j.job_title}, 状态: ${j.status}`);
+      console.log(`  - ${j.job_title}, 状�? ${j.status}`);
     });
 
     console.log('\n=== 模拟 getApplicationsForMyJobs API ===');
@@ -75,33 +75,33 @@ async function testAPIs() {
       job_post_id: { $in: jobIds }
     }).toArray();
 
-    console.log(`收到的申请: ${applications.length}`);
+    console.log(`收到的申�? ${applications.length}`);
     applications.forEach(a => {
-      console.log(`  - 申请ID: ${a._id}, 状态: ${a.status}`);
+      console.log(`  - 申请ID: ${a._id}, 状�? ${a.status}`);
     });
 
     console.log('\n=== 问题总结 ===');
     if (projects.length === 0) {
-      console.log('❌ Freelancer 没有进行中的项目');
+      console.log('�?Freelancer 没有进行中的项目');
     } else {
-      console.log(`✅ Freelancer 有 ${projects.length} 个进行中的项目`);
+      console.log(`�?Freelancer �?${projects.length} 个进行中的项目`);
     }
 
     if (hrJobs.length === 0) {
-      console.log('❌ HR 没有发布的职位');
+      console.log('�?HR 没有发布的职�?);
     } else {
-      console.log(`✅ HR 有 ${hrJobs.length} 个发布的职位`);
+      console.log(`�?HR �?${hrJobs.length} 个发布的职位`);
     }
 
     if (applications.length === 0) {
-      console.log('❌ HR 没有收到的申请');
+      console.log('�?HR 没有收到的申�?);
     } else {
-      console.log(`✅ HR 有 ${applications.length} 个收到的申请`);
+      console.log(`�?HR �?${applications.length} 个收到的申请`);
     }
 
     await mongoose.disconnect();
   } catch (error) {
-    console.error('❌ 测试失败:', error);
+    console.error('�?测试失败:', error);
     await mongoose.disconnect();
     process.exit(1);
   }

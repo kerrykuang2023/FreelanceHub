@@ -9,7 +9,7 @@ class WorkLogService {
   }
 
   async getWorkLogs(params?: any) {
-    return this.http.get(this.baseUrl, { params });
+    return this.http.get(this.baseUrl, params);
   }
 
   async getWorkLogById(id: string) {
@@ -58,13 +58,11 @@ class WorkLogService {
   }
 
   async getWorkLogSummary(params?: any) {
-    return this.http.get(`${this.baseUrl}/summary`, { params });
+    return this.http.get(`${this.baseUrl}/summary`, params);
   }
 
   async getPendingWorkLogsForCompany(params?: any) {
-    return this.http.get(`${this.baseUrl}/company/pending`, {
-      params,
-    });
+    return this.http.get(`${this.baseUrl}/company/pending`, params);
   }
 
   async getAvailableProjects() {

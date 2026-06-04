@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   UserGroupIcon,
   PuzzlePieceIcon,
@@ -9,8 +9,6 @@ import {
   ClockIcon,
   ReceiptPercentIcon,
   ChartBarIcon,
-  PlusIcon,
-  ArrowRightIcon,
   CheckCircleIcon,
   XCircleIcon,
   EyeIcon,
@@ -21,9 +19,18 @@ import { SkeletonCard } from "@/components/core-ui/Skeleton";
 import PageHeader from "@/components/core-ui/PageHeader";
 import PortalLayout from "@/components/layouts/portal/PortalLayout";
 
-type TabType = "overview" | "companies" | "worklogs" | "invoices" | "projects" | "skills" | "financial";
+type TabType = "overview" | "companies" | "worklogs" | "invoices" | "projects" | "financial";
+
+interface FinancialSummary {
+  totalAmount: number;
+  totalTaxAmount: number;
+  invoiceCount: number;
+  statusBreakdown: Record<string, number>;
+}
 
 const AdminDashboardPage = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabType>("overview");
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState<IDashboardStats | null>(null);
@@ -31,6 +38,7 @@ const AdminDashboardPage = () => {
   const [workLogs, setWorkLogs] = useState<IWorkLog[]>([]);
   const [invoices, setInvoices] = useState<IInvoice[]>([]);
   const [projects, setProjects] = useState<IProject[]>([]);
+  const [financialSummary, setFinancialSummary] = useState<FinancialSummary | null>(null);
   const [companyFilter, setCompanyFilter] = useState<"all" | "pending" | "approved" | "rejected">("all");
   const [workLogFilter, setWorkLogFilter] = useState<string>("all");
   const [invoiceFilter, setInvoiceFilter] = useState<string>("all");
@@ -41,6 +49,16 @@ const AdminDashboardPage = () => {
   }, []);
 
   useEffect(() => {
+    const requestedTab = new URLSearchParams(location.search).get("tab") as TabType | null;
+    const supportedTabs: TabType[] = ["overview", "companies", "worklogs", "invoices", "projects", "financial"];
+    if (requestedTab && supportedTabs.includes(requestedTab)) {
+      setActiveTab(requestedTab);
+    } else if (!requestedTab) {
+      setActiveTab("overview");
+    }
+  }, [location.search]);
+
+  useEffect(() => {
     if (activeTab === "companies") {
       loadCompanies();
     } else if (activeTab === "worklogs") {
@@ -49,8 +67,20 @@ const AdminDashboardPage = () => {
       loadInvoices();
     } else if (activeTab === "projects") {
       loadProjects();
+    } else if (activeTab === "financial") {
+      loadFinancialSummary();
     }
   }, [activeTab, companyFilter, workLogFilter, invoiceFilter, pagination.page]);
+
+  const handleTabChange = (tab: TabType) => {
+    setActiveTab(tab);
+    setPagination({ ...pagination, page: 1 });
+    if (tab === "overview") {
+      navigate("/admin/dashboard");
+      return;
+    }
+    navigate(`/admin?tab=${tab}`);
+  };
 
   const loadDashboardData = async () => {
     try {
@@ -152,8 +182,25 @@ const AdminDashboardPage = () => {
     }
   };
 
+  const loadFinancialSummary = async () => {
+    try {
+      setLoading(true);
+      const response = await adminService.getFinancialSummary();
+      const data = response as any;
+      setFinancialSummary(data?.data?.data || data?.data || data || null);
+    } catch (error) {
+      console.error("Failed to load financial summary:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleVerifyCompany = async (id: string, status: "approved" | "rejected") => {
     const reason = prompt(status === "approved" ? "通过原因(可选):" : "拒绝原因:");
+    if (status === "rejected" && !reason?.trim()) {
+      alert("拒绝原因不能为空");
+      return;
+    }
     try {
       await adminService.verifyCompany(id, status, reason ?? undefined);
       loadCompanies();
@@ -249,12 +296,11 @@ const AdminDashboardPage = () => {
           { key: "worklogs", label: "工时管理", icon: ClockIcon },
           { key: "invoices", label: "发票管理", icon: ReceiptPercentIcon, badge: stats?.pendingInvoices },
           { key: "projects", label: "项目管理", icon: PuzzlePieceIcon },
-          { key: "skills", label: "技能分类", icon: CpuChipIcon },
           { key: "financial", label: "财务统计", icon: DocumentChartBarIcon },
         ].map(({ key, label, icon: Icon, badge }) => (
           <button
             key={key}
-            onClick={() => setActiveTab(key as TabType)}
+            onClick={() => handleTabChange(key as TabType)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
               activeTab === key
                 ? "bg-white text-blue-600 shadow-sm"
@@ -280,7 +326,7 @@ const AdminDashboardPage = () => {
               value={stats.totalUsers}
               icon={<UserGroupIcon className="w-6 h-6 text-white" />}
               color="blue"
-              link="/admin?tab=users"
+              link="/admin/users"
             />
             <StatCard
               title="自由顾问"
@@ -323,9 +369,10 @@ const AdminDashboardPage = () => {
             />
             <StatCard
               title="技能分类"
-              value={0}
+              value="配置"
               icon={<CpuChipIcon className="w-6 h-6 text-white" />}
               color="orange"
+              link="/admin/config/skill-categories"
             />
           </div>
 
@@ -336,7 +383,7 @@ const AdminDashboardPage = () => {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <button
-                  onClick={() => setActiveTab("companies")}
+                  onClick={() => handleTabChange("companies")}
                   className="flex flex-col items-center p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors"
                 >
                   <BuildingOfficeIcon className="w-8 h-8 text-blue-600 mb-2" />
@@ -346,21 +393,21 @@ const AdminDashboardPage = () => {
                   )}
                 </button>
                 <button
-                  onClick={() => setActiveTab("worklogs")}
+                  onClick={() => handleTabChange("worklogs")}
                   className="flex flex-col items-center p-4 bg-green-50 rounded-xl hover:bg-green-100 transition-colors"
                 >
                   <ClockIcon className="w-8 h-8 text-green-600 mb-2" />
                   <span className="text-sm font-medium text-gray-900">工时管理</span>
                 </button>
                 <button
-                  onClick={() => setActiveTab("invoices")}
+                  onClick={() => handleTabChange("invoices")}
                   className="flex flex-col items-center p-4 bg-purple-50 rounded-xl hover:bg-purple-100 transition-colors"
                 >
                   <ReceiptPercentIcon className="w-8 h-8 text-purple-600 mb-2" />
                   <span className="text-sm font-medium text-gray-900">发票管理</span>
                 </button>
                 <button
-                  onClick={() => setActiveTab("financial")}
+                  onClick={() => handleTabChange("financial")}
                   className="flex flex-col items-center p-4 bg-orange-50 rounded-xl hover:bg-orange-100 transition-colors"
                 >
                   <DocumentChartBarIcon className="w-8 h-8 text-orange-600 mb-2" />
@@ -459,6 +506,7 @@ const AdminDashboardPage = () => {
                       <Link
                         to={`/admin/companies/${company._id}`}
                         className="text-blue-600 hover:text-blue-900 mr-3"
+                        aria-label={`查看企业 ${company.company_name}`}
                       >
                         <EyeIcon className="w-5 h-5 inline" />
                       </Link>
@@ -468,6 +516,7 @@ const AdminDashboardPage = () => {
                             onClick={() => handleVerifyCompany(company._id, "approved")}
                             className="text-green-600 hover:text-green-900 mr-3 transition-colors"
                             title="通过"
+                            aria-label={`通过企业 ${company.company_name}`}
                           >
                             <CheckCircleIcon className="w-5 h-5 inline" />
                           </button>
@@ -475,6 +524,7 @@ const AdminDashboardPage = () => {
                             onClick={() => handleVerifyCompany(company._id, "rejected")}
                             className="text-red-600 hover:text-red-900 transition-colors"
                             title="拒绝"
+                            aria-label={`拒绝企业 ${company.company_name}`}
                           >
                             <XCircleIcon className="w-5 h-5 inline" />
                           </button>
@@ -679,7 +729,7 @@ const AdminDashboardPage = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">项目名称</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">企业</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">工作形式</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rate类型</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">计费类型</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">招聘人数</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">语言要求</th>
                 </tr>
@@ -728,42 +778,24 @@ const AdminDashboardPage = () => {
         </div>
       )}
 
-      {activeTab === "skills" && (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-gray-900">技能分类管理</h2>
-            <button className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200">
-              <PlusIcon className="w-5 h-5 mr-2" />
-              添加分类
-            </button>
-          </div>
-          <p className="text-sm text-gray-500 mb-4">
-            技能分类用于管理SAP、ERP、CRM等技能体系，支持大类小类联动。
-          </p>
-          <div className="border rounded-xl p-4 text-center text-gray-500">
-            技能分类功能开发中...
-          </div>
-        </div>
-      )}
-
       {activeTab === "financial" && (
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <StatCard
               title="总收入金额"
-              value="¥0"
+              value={`¥${(financialSummary?.totalAmount || 0).toLocaleString()}`}
               icon={<ReceiptPercentIcon className="w-6 h-6 text-white" />}
               color="green"
             />
             <StatCard
               title="税额总额"
-              value="¥0"
+              value={`¥${(financialSummary?.totalTaxAmount || 0).toLocaleString()}`}
               icon={<DocumentChartBarIcon className="w-6 h-6 text-white" />}
               color="blue"
             />
             <StatCard
               title="发票数量"
-              value={stats?.totalInvoices || 0}
+              value={financialSummary?.invoiceCount ?? stats?.totalInvoices ?? 0}
               icon={<ReceiptPercentIcon className="w-6 h-6 text-white" />}
               color="purple"
             />
@@ -773,11 +805,11 @@ const AdminDashboardPage = () => {
             <h2 className="text-lg font-semibold text-gray-900 mb-4">发票状态分布</h2>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               {[
-                { status: "draft", label: "草稿", count: 0 },
-                { status: "submitted", label: "已提交", count: 0 },
-                { status: "approved", label: "已批准", count: 0 },
-                { status: "paid", label: "已支付", count: 0 },
-                { status: "cancelled", label: "已取消", count: 0 },
+                { status: "draft", label: "草稿", count: financialSummary?.statusBreakdown?.draft || 0 },
+                { status: "submitted", label: "已提交", count: financialSummary?.statusBreakdown?.submitted || 0 },
+                { status: "approved", label: "已批准", count: financialSummary?.statusBreakdown?.approved || 0 },
+                { status: "paid", label: "已支付", count: financialSummary?.statusBreakdown?.paid || 0 },
+                { status: "cancelled", label: "已取消", count: financialSummary?.statusBreakdown?.cancelled || 0 },
               ].map(({ status, label, count }) => (
                 <div key={status} className="p-4 bg-gray-50 rounded-xl text-center hover:bg-gray-100 transition-colors">
                   <p className="text-2xl font-bold text-gray-900">{count}</p>

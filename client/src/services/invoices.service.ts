@@ -9,7 +9,7 @@ class InvoiceService {
   }
 
   async getInvoices(params?: any) {
-    return this.http.get(this.baseUrl, { params });
+    return this.http.get(this.baseUrl, params);
   }
 
   async getInvoiceById(id: string) {
@@ -55,11 +55,11 @@ class InvoiceService {
   }
 
   async getMyInvoices(params?: any) {
-    return this.http.get(this.baseUrl, { params });
+    return this.http.get(this.baseUrl, params);
   }
 
   async getCompanyInvoices(params?: any) {
-    return this.http.get(`${this.baseUrl}/company`, { params });
+    return this.http.get(`${this.baseUrl}/company`, params);
   }
 
   async calculateTax(data: { subtotal: number; tax_rate: number; tax_mode: string }) {

@@ -4,7 +4,7 @@ const db = mongoose.connection.db;
 
 async function fixHRApplicationData() {
   try {
-    await mongoose.connect('mongodb://localhost:27017/jobportal');
+    await mongoose.connect('mongodb://localhost:27017/freelancehub');
 
     console.log('\n========================================');
     console.log('  修复 HR 申请数据关联');
@@ -18,9 +18,9 @@ async function fixHRApplicationData() {
       job_post_id: { $in: hrJobs.map(j => j._id) }
     }).toArray();
     
-    console.log(`HR 的职位关联的申请数: ${applications.length}`);
+    console.log(`HR 的职位关联的申请�? ${applications.length}`);
     applications.forEach(app => {
-      console.log(`  申请 ${app._id} 关联职位 ${app.job_post_id}, 状态: ${app.status}`);
+      console.log(`  申请 ${app._id} 关联职位 ${app.job_post_id}, 状�? ${app.status}`);
     });
 
     if (applications.length === 0) {
@@ -43,7 +43,7 @@ async function fixHRApplicationData() {
           application_type: 'job',
           apply_date: new Date(),
           status: 'pending',
-          cover_letter: '测试申请 - 巌作台数据验证',
+          cover_letter: '测试申请 - 巌作台数据验�?,
           expected_rate: 2000,
           availability: '立即可用',
         };
@@ -52,24 +52,24 @@ async function fixHRApplicationData() {
     }
 
     
-    console.log(`创建新申请: ${newApplications.insertedCount} 个`);
+    console.log(`创建新申�? ${newApplications.insertedCount} 个`);
     }
 
     const hrApplications = await db.collection('job_post_activity').find({
       job_post_id: { $in: jobs.map(j => j._id) }
     }).toArray();
     
-    console.log(`修复后 HR 收到的申请数: ${hrApplications.length}`);
+    console.log(`修复�?HR 收到的申请数: ${hrApplications.length}`);
     hrApplications.forEach(app => {
-      console.log(`  申请 ${app._id} 关联职位 ${app.job_post_id}, 状态: ${app.status}`);
+      console.log(`  申请 ${app._id} 关联职位 ${app.job_post_id}, 状�? ${app.status}`);
     });
 
     await mongoose.disconnect();
     
-    console.log('\n✅ 修复完成！');
-    console.log('请重新运行测试验证修复效果');
+    console.log('\n�?修复完成�?);
+    console.log('请重新运行测试验证修复效�?);
   } catch (error) {
-    console.error('❌ 修复失败:', error);
+    console.error('�?修复失败:', error);
     await mongoose.disconnect();
     process.exit(1);
   }

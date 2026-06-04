@@ -11,7 +11,7 @@ import {
   PlusIcon,
 } from '@heroicons/react/24/outline';
 import jobsService from '@/services/jobs.service';
-import applicationsService from '@/services/applications.service';
+import ApplicationsService from '@/services/applications.service';
 import freelancerProfileService from '@/services/freelancer-profile.service';
 
 interface IProject {
@@ -103,7 +103,7 @@ const ProjectApplicationPage = () => {
       setSubmitting(true);
       setError(null);
 
-      await applicationsService.applyForJob(project._id, {
+      await new ApplicationsService().applyForJob(project._id, {
         cover_letter: formData.cover_letter,
         proposed_rate: formData.proposed_rate ? Number(formData.proposed_rate) : undefined,
         rate_type: formData.rate_type,

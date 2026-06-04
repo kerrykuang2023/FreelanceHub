@@ -7,6 +7,11 @@ services:
       - mongo-data:/data/db
     ports:
       - "27017:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand({ ping: 1 })"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   server:
     build: ./server
@@ -15,13 +20,22 @@ services:
     ports:
       - "5555:5555"
     depends_on:
-      - mongo
+      mongo:
+        condition: service_healthy
     environment:
       - MONGO_URL=mongodb://mongo:27017/job-portal
+      - JWT_SECRET=${JWT_SECRET:-local_dev_secret_change_me}
+      - CORS_ORIGIN=http://localhost:5137
+      - PORT=5555
       - NODE_ENV=development
     volumes:
       - ./server/src:/app/src
       - /app/node_modules
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:5555/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   client:
     build: ./client
@@ -32,10 +46,18 @@ services:
     tty: true
     stdin_open: true
     environment:
-      - VITE_API_URL=http://localhost:5555
+      - VITE_API_URL=http://localhost:5555/api/v1
+    depends_on:
+      server:
+        condition: service_healthy
     volumes:
       - ./client/src:/app/src
       - /app/node_modules
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:5137').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
 volumes:
   mongo-data:

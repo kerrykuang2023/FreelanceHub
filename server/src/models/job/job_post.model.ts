@@ -49,17 +49,17 @@ const JobPostSchema = new mongoose.Schema(
     },
     job_nature: {
       type: String,
-      enum: ["全职", "兼职", "自由顾问", "实习", "full_time", "part_time", "freelance", "internship"],
+      enum: ["full_time", "part_time", "freelance", "internship", "全职", "兼职", "自由顾问", "实习"],
       required: false,
     },
     work_format: {
       type: String,
-      enum: ["远程", "现场", "混合", "remote", "onsite", "hybrid"],
+      enum: ["remote", "onsite", "hybrid", "远程", "现场", "混合"],
       required: false,
     },
     rate_type: {
       type: String,
-      enum: ["待面试", "日薪", "月薪", "年薪", "项目总价", "negotiable", "daily", "monthly", "yearly", "project"],
+      enum: ["negotiable", "daily", "monthly", "yearly", "project", "待面试", "日薪", "月薪", "年薪", "项目总价"],
       required: false,
     },
     rate_amount: {
@@ -81,7 +81,7 @@ const JobPostSchema = new mongoose.Schema(
     }],
     project_cycle: {
       type: String,
-      enum: ["1周以内", "1个月", "3个月", "6个月", "1年", "长期", "待定", "1_week", "1_month", "3_months", "6_months", "1_year", "long_term"],
+      enum: ["1_week", "1_month", "3_months", "6_months", "1_year", "long_term", "1个月以内", "1个月", "3个月", "6个月", "1年", "长期"],
       required: false,
     },
     start_date: {
@@ -128,5 +128,4 @@ JobPostSchema.index({ status: 1 });
 JobPostSchema.index({ company_id: 1 });
 
 const JobPost = mongoose.model("JobPost", JobPostSchema);
-
 export default JobPost;

@@ -13,6 +13,7 @@ export interface IWorkLog {
   hours_worked: number;
   work_type: WorkType;
   work_description: string;
+  description?: string;
   work_content_detail?: string;
   attachments: IWorkLogAttachment[];
   status: WorkLogStatus;

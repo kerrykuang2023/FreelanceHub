@@ -212,7 +212,7 @@ const TicketsPage = () => {
                           {CATEGORY_CONFIG[ticket.category].label}
                         </span>
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${PRIORITY_CONFIG[ticket.priority].color}`}>
-                          {PRIORITY_CONFIG[ticket.priority].priority}优先级
+                          {PRIORITY_CONFIG[ticket.priority].label}优先级
                         </span>
                       </div>
                       <p className="text-sm text-gray-600 mt-1 line-clamp-2">{ticket.description}</p>

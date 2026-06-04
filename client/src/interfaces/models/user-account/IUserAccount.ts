@@ -6,7 +6,7 @@ export interface IUserType {
 
 export interface IUserRole {
   id: string;
-  role_type: 'job_seeker' | 'hr_recruiter' | 'admin';
+  role_type: 'job_seeker' | 'freelancer' | 'hr_recruiter' | 'company_user' | 'admin';
   status: 'pending' | 'approved' | 'rejected' | 'frozen';
   is_active: boolean;
   role_specific_data?: {
@@ -34,9 +34,15 @@ export interface IUserAccount {
   createdAt: Date;
   updatedAt: Date;
   user_type_name?: string;
+  user_type?: string;
+  user_name?: string;
   roles?: IUserRole[];
   activeRole?: IUserRole | null;
+  active_role?: IUserRole | null;
   first_name?: string;
   last_name?: string;
   user_image?: string;
+  data?: any;
+  user?: any;
+  [key: string]: any;
 }

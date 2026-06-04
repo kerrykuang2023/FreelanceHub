@@ -13,6 +13,7 @@ const RegisterForm = () => {
     handleOnOpenTermsConditionsModal,
     handleOnCloseTermsConditionsModal,
   } = useRegisterForm();
+  const validationErrors = Object.values(form.errors).filter(Boolean);
 
   return (
     <>
@@ -26,13 +27,21 @@ const RegisterForm = () => {
           <Alert type="error" message={registerErrorMessage} />
         </div>
       )}
+      {form.submitCount > 0 && validationErrors.length > 0 && (
+        <div className="mb-4" data-testid="register-validation-summary">
+          <Alert
+            type="error"
+            message={`请先修正以下信息：${validationErrors.join("；")}`}
+          />
+        </div>
+      )}
       <form onSubmit={form.handleSubmit} className="space-y-6" noValidate>
         <div>
           <label
             htmlFor="user_type_name"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Register as
+            注册身份
             <span className="text-red-500">*</span>
           </label>
           <select
@@ -46,8 +55,8 @@ const RegisterForm = () => {
               form.setFieldValue("user_type_name", e.target.value)
             }
           >
-            <option value="job_seeker">Freelancer / 求职者</option>
-            <option value="hr_recruiter">Company User / HR招聘官</option>
+            <option value="job_seeker">顾问/求职者</option>
+            <option value="hr_recruiter">企业/HR</option>
           </select>
           {form.errors.user_type_name && (
             <FieldError error={form.errors.user_type_name} />
@@ -59,7 +68,7 @@ const RegisterForm = () => {
             htmlFor="name"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Full Name
+            姓名
             <span className="text-red-500">*</span>
           </label>
           <div className="mt-2">
@@ -84,7 +93,7 @@ const RegisterForm = () => {
             htmlFor="email"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Email address
+            邮箱地址
             <span className="text-red-500">*</span>
           </label>
           <div className="mt-2">
@@ -109,7 +118,7 @@ const RegisterForm = () => {
             htmlFor="password"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Password
+            密码
             <span className="text-red-500">*</span>
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
@@ -134,7 +143,7 @@ const RegisterForm = () => {
             htmlFor="confirmPassword"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Repeat password
+            确认密码
             <span className="text-red-500">*</span>
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
@@ -163,6 +172,7 @@ const RegisterForm = () => {
               id="termsConditions"
               name="termsConditions"
               type="checkbox"
+              data-testid="terms-checkbox"
               className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
               checked={form.values.termsConditions}
               onChange={(e) =>
@@ -173,13 +183,13 @@ const RegisterForm = () => {
               htmlFor="termsConditions"
               className="ml-3 block text-sm leading-6 text-gray-700"
             >
-              I agree to the{" "}
+              我已阅读并同意{" "}
               <a
                 href="#"
                 className="font-semibold text-indigo-600 hover:text-indigo-500"
                 onClick={handleOnOpenTermsConditionsModal}
               >
-                terms and conditions
+                服务条款
               </a>
             </label>
           </div>
@@ -191,10 +201,11 @@ const RegisterForm = () => {
         <div>
           <button
             type="submit"
+            data-testid="register-submit-btn"
             className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             disabled={form.isSubmitting}
           >
-            Sign up
+            {form.isSubmitting ? "正在注册..." : "注册"}
           </button>
         </div>
       </form>

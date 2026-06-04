@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 async function initDashboardTestData() {
   try {
-    await mongoose.connect('mongodb://localhost:27017/jobportal');
+    await mongoose.connect('mongodb://localhost:27017/freelancehub');
     const db = mongoose.connection.db;
 
     console.log('\n========================================');
@@ -17,40 +17,40 @@ async function initDashboardTestData() {
     const adminUser = await db.collection('user_account').findOne({ email: 'admin@test.com' });
 
     if (!freelancerUser || !hrUser) {
-      console.log('❌ 测试用户不存在，请先运行基础数据初始化');
+      console.log('�?测试用户不存在，请先运行基础数据初始�?);
       return;
     }
 
-    console.log('✅ 找到测试用户:');
+    console.log('�?找到测试用户:');
     console.log(`   - Freelancer: ${freelancerUser.email} (${freelancerUser._id})`);
     console.log(`   - HR: ${hrUser.email} (${hrUser._id})`);
 
-    let company = await db.collection('company').findOne({ company_name: '工作台测试公司' });
+    let company = await db.collection('company').findOne({ company_name: '工作台测试公�? });
     if (!company) {
       const companyResult = await db.collection('company').insertOne({
-        company_name: '工作台测试公司',
+        company_name: '工作台测试公�?,
         company_code: `DASHBOARD-${timestamp}`,
         status: 'active',
         created_at: now,
         updated_at: now
       });
-      company = { _id: companyResult.insertedId, company_name: '工作台测试公司' };
+      company = { _id: companyResult.insertedId, company_name: '工作台测试公�? };
     }
-    console.log(`✅ 公司: ${company.company_name} (${company._id})`);
+    console.log(`�?公司: ${company.company_name} (${company._id})`);
 
     await db.collection('user_account').updateOne(
       { _id: hrUser._id },
       { $set: { company_id: company._id, updated_at: now } }
     );
-    console.log(`✅ 更新 HR 用户的 company_id`);
+    console.log(`�?更新 HR 用户�?company_id`);
 
     let freelancerProfile = await db.collection('freelancer_profile').findOne({ user_id: freelancerUser._id });
     if (!freelancerProfile) {
       const profileResult = await db.collection('freelancer_profile').insertOne({
         user_id: freelancerUser._id,
         display_name: freelancerUser.user_name || '测试顾问',
-        headline: '资深技术顾问',
-        summary: '10年+企业级应用开发经验',
+        headline: '资深技术顾�?,
+        summary: '10�?企业级应用开发经�?,
         freelancer_type: '独立顾问',
         years_of_experience: 10,
         availability_status: 'open_to_opportunities',
@@ -61,7 +61,7 @@ async function initDashboardTestData() {
       });
       freelancerProfile = { _id: profileResult.insertedId };
     }
-    console.log(`✅ Freelancer Profile: ${freelancerProfile._id}`);
+    console.log(`�?Freelancer Profile: ${freelancerProfile._id}`);
 
     const existingJobs = await db.collection('job_post').find({
       company_id: company._id
@@ -111,7 +111,7 @@ async function initDashboardTestData() {
         {
           posted_by: hrUser._id,
           company_id: company._id,
-          job_title: 'Fiori 前端开发',
+          job_title: 'Fiori 前端开�?,
           job_description: '负责 SAP Fiori 应用的开发和设计',
           status: 'published',
           is_active: true,
@@ -133,12 +133,12 @@ async function initDashboardTestData() {
       job1 = { _id: jobIds[0], ...jobsData[0] };
       job2 = { _id: jobIds[1], ...jobsData[1] };
       job3 = { _id: jobIds[2], ...jobsData[2] };
-      console.log(`✅ 创建职位: ${jobsResult.insertedCount} 个`);
+      console.log(`�?创建职位: ${jobsResult.insertedCount} 个`);
     } else {
       job1 = existingJobs.find(j => j.status === 'published') || existingJobs[0];
       job2 = existingJobs.find(j => j.status === 'in_progress') || existingJobs[1];
       job3 = existingJobs[2] || existingJobs[0];
-      console.log(`✅ 使用现有职位: ${existingJobs.length} 个`);
+      console.log(`�?使用现有职位: ${existingJobs.length} 个`);
     }
 
     const existingApplications = await db.collection('job_post_activity').find({
@@ -157,7 +157,7 @@ async function initDashboardTestData() {
           application_type: 'job',
           apply_date: new Date(now.getTime() - 10 * 24 * 60 * 60 * 1000),
           status: 'accepted',
-          cover_letter: '我有丰富的 SAP 实施经验，希望能参与这个项目。',
+          cover_letter: '我有丰富�?SAP 实施经验，希望能参与这个项目�?,
           expected_rate: 2800,
           availability: '立即可用',
           reviewed_at: new Date(now.getTime() - 8 * 24 * 60 * 60 * 1000),
@@ -173,9 +173,9 @@ async function initDashboardTestData() {
           application_type: 'job',
           apply_date: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000),
           status: 'pending',
-          cover_letter: '我对这个职位很感兴趣。',
+          cover_letter: '我对这个职位很感兴趣�?,
           expected_rate: 3000,
-          availability: '一周内可到岗',
+          availability: '一周内可到�?,
           createdAt: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000),
           updatedAt: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000)
         },
@@ -187,7 +187,7 @@ async function initDashboardTestData() {
           application_type: 'job',
           apply_date: new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000),
           status: 'pending',
-          cover_letter: '我有 Fiori 开发经验。',
+          cover_letter: '我有 Fiori 开发经验�?,
           expected_rate: 2200,
           availability: '立即可用',
           createdAt: new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000),
@@ -199,11 +199,11 @@ async function initDashboardTestData() {
       const appIds = Object.values(appsResult.insertedIds);
       acceptedApp = { _id: appIds[0], ...applicationsData[0] };
       pendingApp = { _id: appIds[1], ...applicationsData[1] };
-      console.log(`✅ 创建申请: ${appsResult.insertedCount} 个`);
+      console.log(`�?创建申请: ${appsResult.insertedCount} 个`);
     } else {
       acceptedApp = existingApplications.find(a => a.status === 'accepted') || existingApplications[0];
       pendingApp = existingApplications.find(a => a.status === 'pending') || existingApplications[1];
-      console.log(`✅ 使用现有申请: ${existingApplications.length} 个`);
+      console.log(`�?使用现有申请: ${existingApplications.length} 个`);
     }
 
     console.log('\n========================================');
@@ -219,12 +219,12 @@ async function initDashboardTestData() {
         { posted_by: hrUser._id }
       ]
     }).toArray();
-    console.log(`HR 发布的职位: ${hrJobs.length} 个`);
+    console.log(`HR 发布的职�? ${hrJobs.length} 个`);
 
     const hrApplications = await db.collection('job_post_activity').find({
       job_post_id: { $in: hrJobs.map(j => j._id) }
     }).toArray();
-    console.log(`HR 收到的申请: ${hrApplications.length} 个`);
+    console.log(`HR 收到的申�? ${hrApplications.length} 个`);
 
     const freelancerAcceptedApps = await db.collection('job_post_activity').find({
       user_account_id: freelancerUser._id,
@@ -241,11 +241,11 @@ async function initDashboardTestData() {
     }).toArray();
     console.log(`Freelancer 进行中的项目: ${freelancerProjects.length} 个`);
 
-    console.log('\n✅ 工作台数据初始化完成！\n');
+    console.log('\n�?工作台数据初始化完成！\n');
 
     await mongoose.disconnect();
   } catch (error) {
-    console.error('❌ 初始化失败:', error);
+    console.error('�?初始化失�?', error);
     await mongoose.disconnect();
     process.exit(1);
   }

@@ -137,7 +137,7 @@ export default class AuthController {
 
       await userAccount.save();
 
-      const roleType = this.mapUserTypeToRoleType(user_type_name);
+      const roleType = AuthController.mapUserTypeToRoleType(user_type_name);
       const userRole = new UserRole({
         user_id: userAccount._id,
         role_type: roleType,
@@ -246,7 +246,8 @@ export default class AuthController {
   public static async applyForRole(req: Request, res: Response, next: NextFunction) {
     try {
       const currentUser = req.user as any;
-      const { role_type, submitted_data } = req.body;
+      const { role_type } = req.body;
+      const submitted_data = req.body.submitted_data || req.body.role_specific_data || {};
 
       if (!currentUser) {
         throw new ApiError(StatusCodes.UNAUTHORIZED, "User not authenticated", []);
@@ -257,12 +258,14 @@ export default class AuthController {
         throw new BadRequestError(`Invalid role type: ${role_type}`, []);
       }
 
+      AuthController.validateRoleApplicationData(role_type, submitted_data);
+
       const existingRole = await UserRole.findOne({
         user_id: currentUser._id,
         role_type: role_type,
       });
 
-      if (existingRole) {
+      if (existingRole && existingRole.status !== "rejected") {
         throw new BadRequestError(`You already have this role: ${role_type}`, []);
       }
 
@@ -286,15 +289,23 @@ export default class AuthController {
 
       await approval.save();
 
-      const pendingRole = new UserRole({
-        user_id: currentUser._id,
-        role_type: role_type,
-        status: "pending",
-        is_active: false,
-        role_specific_data: submitted_data || {},
-      });
+      if (existingRole?.status === "rejected") {
+        existingRole.status = "pending";
+        existingRole.is_active = false;
+        existingRole.role_specific_data = submitted_data || {};
+        existingRole.rejection_reason = undefined;
+        await existingRole.save();
+      } else {
+        const pendingRole = new UserRole({
+          user_id: currentUser._id,
+          role_type: role_type,
+          status: "pending",
+          is_active: false,
+          role_specific_data: submitted_data || {},
+        });
 
-      await pendingRole.save();
+        await pendingRole.save();
+      }
 
       res.status(StatusCodes.CREATED).json({
         success: true,
@@ -303,6 +314,8 @@ export default class AuthController {
           approval_id: approval._id,
           role_type: role_type,
           status: "pending",
+          created_at: approval.created_at || (approval as any).createdAt,
+          expires_at: approval.expires_at,
         },
       });
     } catch (error) {
@@ -383,7 +396,7 @@ export default class AuthController {
 
       const userRoles = await UserRole.find({
         user_id: currentUser._id,
-      }).sort({ created_at: -1 });
+      }).sort({ created_at: -1, createdAt: -1 });
 
       const pendingApprovals = await RoleApproval.find({
         user_id: currentUser._id,
@@ -426,7 +439,7 @@ export default class AuthController {
       const approvals = await RoleApproval.find({
         user_id: currentUser._id,
       })
-        .sort({ created_at: -1 })
+        .sort({ created_at: -1, createdAt: -1 })
         .populate("reviewed_by", "email");
 
       res.status(StatusCodes.OK).json({
@@ -447,5 +460,41 @@ export default class AuthController {
       company_user: "hr_recruiter",
     };
     return mapping[userTypeName] || "job_seeker";
+  }
+
+  private static validateRoleApplicationData(roleType: RoleType, submittedData: any) {
+    const reason = typeof submittedData?.application_reason === "string"
+      ? submittedData.application_reason.trim()
+      : "";
+
+    if (reason.length < 10) {
+      throw new BadRequestError("请填写至少 10 个字的角色申请原因", []);
+    }
+
+    if (roleType === "job_seeker") {
+      const skills = Array.isArray(submittedData?.skills)
+        ? submittedData.skills.filter((skill: unknown) => typeof skill === "string" && skill.trim().length > 0)
+        : [];
+      const summary = typeof submittedData?.professional_summary === "string"
+        ? submittedData.professional_summary.trim()
+        : "";
+
+      if (skills.length === 0 && summary.length < 10) {
+        throw new BadRequestError("申请顾问/求职者角色时，请填写至少 1 项技能或 10 个字以上的经验说明", []);
+      }
+    }
+
+    if (roleType === "hr_recruiter") {
+      const companyName = typeof submittedData?.company_name === "string"
+        ? submittedData.company_name.trim()
+        : "";
+      const position = typeof submittedData?.position === "string"
+        ? submittedData.position.trim()
+        : "";
+
+      if (companyName.length < 2 || position.length < 2) {
+        throw new BadRequestError("申请企业/HR角色时，请填写公司名称和岗位/职能", []);
+      }
+    }
   }
 }

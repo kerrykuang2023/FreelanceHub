@@ -36,25 +36,25 @@ const useRegisterForm = () => {
 
   const validationSchema = Yup.object({
     user_type_name: Yup.string()
-      .required("User type is required")
-      .oneOf(["job_seeker", "hr_recruiter"], "Please select a valid user type"),
+      .required("请选择注册角色")
+      .oneOf(["job_seeker", "hr_recruiter"], "请选择有效的注册角色"),
     name: Yup.string()
-      .required("Name is required")
-      .min(2, "Name must be at least 2 characters")
-      .max(50, "Name must be at most 50 characters"),
+      .required("请输入姓名")
+      .min(2, "姓名至少需要 2 个字符")
+      .max(50, "姓名最多 50 个字符"),
     email: Yup.string()
-      .required("Email is required")
-      .email("Invalid email address"),
+      .required("请输入邮箱")
+      .email("请输入有效的邮箱地址"),
     password: Yup.string()
-      .required("Password is required")
-      .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be at most 20 characters"),
+      .required("请输入密码")
+      .min(8, "密码至少需要 8 个字符")
+      .max(20, "密码最多 20 个字符"),
     confirmPassword: Yup.string()
-      .required("Confirm password is required")
-      .oneOf([Yup.ref("password")], "Passwords must match"),
+      .required("请再次输入密码")
+      .oneOf([Yup.ref("password")], "两次输入的密码不一致"),
     termsConditions: Yup.boolean().oneOf(
       [true],
-      "You must accept the terms and conditions"
+      "请先同意服务条款"
     ),
   });
 
@@ -74,9 +74,17 @@ const useRegisterForm = () => {
         const result = await register(payload);
         form.resetForm();
 
-        // Auto login after successful registration
-        if (result && result.token && result.user) {
-          setLogin(result.token, result.user);
+        const token = result?.data?.token || result?.token;
+        const user = result?.data?.user || result?.user;
+        const roles = result?.data?.roles || result?.roles || [];
+        const activeRole = result?.data?.active_role || result?.active_role || null;
+
+        if (token && user) {
+          await setLogin(token, {
+            ...user,
+            roles,
+            active_role: activeRole,
+          });
           navigate("/");
         }
       } catch (error) {

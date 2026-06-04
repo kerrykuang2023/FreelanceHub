@@ -197,7 +197,7 @@ const EditInvoicePage = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     data-testid="company-select"
                   >
-                    <option value={invoice?.company_id?._id || invoice?.company_id}>
+                    <option value={(invoice?.company_id as any)?._id || (typeof invoice?.company_id === "string" ? invoice.company_id : "")}>
                       {invoice?.company_id?.company_name || "当前公司"}
                     </option>
                   </Field>

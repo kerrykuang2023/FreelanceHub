@@ -14,7 +14,7 @@ class ConfigsService {
 
     try {
       const response = await adminService.getSystemConfigs(configType);
-      const data = response.data.data || [];
+      const data = (response as any).data?.data || (response as any).data || response || [];
       this.cache.set(configType, { data, timestamp: now });
       return data;
     } catch (error) {

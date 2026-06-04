@@ -15,7 +15,7 @@ import {
   ArrowRightIcon,
 } from "@heroicons/react/24/outline";
 import PortalLayout from "@/components/layouts/portal/PortalLayout";
-import JobsService from "@/services/jobs.service";
+import jobsService from "@/services/jobs.service";
 import ApplicationsService from "@/services/applications.service";
 import { IJob } from "@/interfaces";
 import Divider from "@/components/core-ui/Divider";

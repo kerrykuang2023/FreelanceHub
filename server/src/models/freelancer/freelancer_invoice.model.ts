@@ -20,7 +20,7 @@ const FreelancerInvoiceSchema = new mongoose.Schema(
     affiliation_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "FreelancerAffiliation",
-      required: true,
+      required: false,
     },
     project_requirement_id: {
       type: mongoose.Schema.Types.ObjectId,
@@ -32,6 +32,10 @@ const FreelancerInvoiceSchema = new mongoose.Schema(
       ref: "WorkLogBatch",
       required: false,
     },
+    work_log_ids: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "WorkLog",
+    }],
     invoice_type: {
       type: String,
       enum: ["vat_special", "vat_normal", "personal", "service_fee"],
@@ -95,6 +99,24 @@ const FreelancerInvoiceSchema = new mongoose.Schema(
       enum: ["draft", "submitted", "approved", "rejected", "sent", "paid", "cancelled"],
       default: "draft",
     },
+    approved_by: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "UserAccount",
+    },
+    approved_at: {
+      type: Date,
+    },
+    rejected_by: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "UserAccount",
+    },
+    rejected_at: {
+      type: Date,
+    },
+    rejection_reason: {
+      type: String,
+      maxlength: 500,
+    },
     issued_date: {
       type: Date,
     },
@@ -110,6 +132,10 @@ const FreelancerInvoiceSchema = new mongoose.Schema(
     },
     payment_reference: {
       type: String,
+    },
+    paid_by: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "UserAccount",
     },
     billing_info: {
       billing_company_name: String,

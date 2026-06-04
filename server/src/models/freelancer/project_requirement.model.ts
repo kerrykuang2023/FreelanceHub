@@ -7,6 +7,11 @@ const ProjectRequirementSchema = new mongoose.Schema(
       ref: "UserAccount",
       required: true,
     },
+    job_post_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "JobPost",
+      required: false,
+    },
     company_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Company",
@@ -15,36 +20,30 @@ const ProjectRequirementSchema = new mongoose.Schema(
     project_title: {
       type: String,
       required: true,
-      length: 200,
+      maxlength: 200,
     },
     project_description: {
       type: String,
       required: true,
-      length: 4000,
+      maxlength: 4000,
     },
-    language_requirements: [{
-      type: String,
-      enum: ["中文", "英语", "俄语", "日语", "韩语", "法语", "德语", "西班牙语", "葡萄牙语", "阿拉伯语"],
-    }],
+    language_requirements: [String],
     job_nature: {
       type: String,
-      enum: ["全职", "兼职", "自由顾问", "实习"],
+      enum: ["full_time", "part_time", "freelance", "internship", "全职", "兼职", "自由顾问", "实习"],
       required: true,
     },
     work_format: {
       type: String,
-      enum: ["远程", "现场", "混合"],
+      enum: ["remote", "onsite", "hybrid", "远程", "现场", "混合"],
       required: true,
     },
     rate_type: {
       type: String,
-      enum: ["待面试", "日薪", "月薪", "年薪", "项目总价"],
+      enum: ["negotiable", "daily", "monthly", "yearly", "project", "待面试", "日薪", "月薪", "年薪", "项目总价"],
       required: true,
     },
-    rate_amount: {
-      type: Number,
-      required: false,
-    },
+    rate_amount: Number,
     rate_currency: {
       type: String,
       enum: ["CNY", "USD", "EUR", "RUB", "GBP"],
@@ -67,19 +66,13 @@ const ProjectRequirementSchema = new mongoose.Schema(
     },
     project_cycle: {
       type: String,
-      enum: ["1个月以内", "3个月", "6个月", "1年", "2年", "2年以上", "长期", "待定"],
+      enum: ["1_week", "1_month", "3_months", "6_months", "1_year", "long_term", "1个月以内", "1个月", "3个月", "6个月", "1年", "长期"],
       required: true,
     },
-    start_date: {
-      type: Date,
-      required: false,
-    },
+    start_date: Date,
     required_skills: [{
       skill_name: String,
-      skill_level: {
-        type: String,
-        enum: ["入门", "初级", "中级", "高级", "专家"],
-      },
+      skill_level: String,
       is_mandatory: {
         type: Boolean,
         default: true,
@@ -87,7 +80,7 @@ const ProjectRequirementSchema = new mongoose.Schema(
     }],
     work_requirements: {
       type: String,
-      length: 2000,
+      maxlength: 2000,
     },
     budget_range: {
       min: Number,
@@ -113,15 +106,13 @@ const ProjectRequirementSchema = new mongoose.Schema(
     created_date: {
       type: Date,
       required: true,
+      default: Date.now,
     },
-    expiry_date: {
-      type: Date,
-      required: false,
-    },
+    expiry_date: Date,
     status: {
       type: String,
-      enum: ["草稿", "发布", "进行中", "已关闭", "已到期"],
-      default: "发布",
+      enum: ["draft", "published", "in_progress", "closed", "expired", "草稿", "发布", "进行中", "已关闭", "已到期"],
+      default: "published",
     },
   },
   {
@@ -129,6 +120,9 @@ const ProjectRequirementSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+ProjectRequirementSchema.index({ job_post_id: 1 });
+ProjectRequirementSchema.index({ company_id: 1, status: 1 });
 
 const ProjectRequirement = mongoose.model("ProjectRequirement", ProjectRequirementSchema);
 export default ProjectRequirement;

@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
 import {
-  BriefcaseIcon,
-  PlusCircleIcon,
-  ClockIcon,
-  DocumentTextIcon,
-  CurrencyDollarIcon,
-  UsersIcon,
-  BuildingOfficeIcon,
-  CogIcon,
-  ChartBarIcon,
-  UserGroupIcon,
-  DocumentDuplicateIcon,
   BanknotesIcon,
+  BriefcaseIcon,
+  BuildingOfficeIcon,
+  ChartBarIcon,
+  ClockIcon,
+  CogIcon,
+  CurrencyDollarIcon,
+  DocumentDuplicateIcon,
+  DocumentTextIcon,
+  PlusCircleIcon,
+  UserGroupIcon,
+  UsersIcon,
 } from "@heroicons/react/24/outline";
 import { useAuth } from "@/providers";
 
@@ -65,7 +65,7 @@ const allMenuItems: MenuItem[] = [
     id: "applications-received",
     label: "管理申请",
     icon: <UsersIcon className="w-8 h-8" />,
-    href: "/applications/received",
+    href: "/company/applications",
     color: "text-purple-600",
     bgColor: "bg-purple-50",
     hoverBgColor: "hover:bg-purple-100",
@@ -180,13 +180,13 @@ const allMenuItems: MenuItem[] = [
     bgColor: "bg-emerald-50",
     hoverBgColor: "hover:bg-emerald-100",
     roles: ["admin"],
-    description: "财务数据管理",
+    description: "管理财务数据",
   },
   {
     id: "company-setup",
     label: "公司设置",
     icon: <CogIcon className="w-8 h-8" />,
-    href: "/company/setup",
+    href: "/company",
     color: "text-gray-600",
     bgColor: "bg-gray-50",
     hoverBgColor: "hover:bg-gray-100",
@@ -209,9 +209,7 @@ const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({
   showDescription = false,
 }) => {
   const { user, activeRole } = useAuth();
-
   const currentRoleType = activeRole?.role_type || user?.user_type_name || "job_seeker";
-
   const filteredMenuItems = allMenuItems
     .filter((item) => item.roles.includes(currentRoleType))
     .slice(0, maxItems);

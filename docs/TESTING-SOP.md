@@ -166,6 +166,32 @@ npm run dev
 [后端] [Server] Database connected successfully
 ```
 
+### 2.3.1 Docker 启动方式（2026-06-03 修正版）
+
+当前项目已验证可以完整使用 Docker Compose 启动。执行 E2E 或验收测试前，优先使用：
+
+```powershell
+docker compose up --build -d
+docker compose ps
+```
+
+验证服务：
+
+```powershell
+Invoke-WebRequest -UseBasicParsing http://localhost:5137
+Invoke-WebRequest -UseBasicParsing http://localhost:5555/health
+```
+
+测试登录账号：
+
+| 角色 | 邮箱 | 密码 |
+| --- | --- | --- |
+| 管理员 | `admin@test.com` | `Test123456!` |
+| 自由顾问 | `freelancer@test.com` | `Test123456!` |
+| HR | `hr@test.com` | `Test123456!` |
+
+如果 Docker Hub 拉取 `node:20` 不稳定，当前 Dockerfile 已通过安装 Node 20 tarball 绕开该问题。完整排障说明见 `docs/DOCKER-DEPLOYMENT-GUIDE.md`。
+
 ### 2.4 服务健康检查脚本
 
 创建 `health-check.sh`:

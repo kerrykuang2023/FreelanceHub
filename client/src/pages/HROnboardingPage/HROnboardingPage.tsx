@@ -245,7 +245,7 @@ const HROnboardingPage = () => {
     <PortalLayout title="HR入驻">
       <div className="max-w-4xl mx-auto space-y-6" data-testid="hr-onboarding-page">
         <PageHeader
-          title="欢迎加入JobPortal"
+          title="欢迎加入FreelanceHub"
           description="完成以下步骤，开始您的招聘之旅"
           breadcrumbs={[
             { label: "首页", href: "/" },

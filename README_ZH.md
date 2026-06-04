@@ -227,13 +227,19 @@
 git clone https://github.com/kerrykuang2023/JobPortal.git
 cd JobPortal
 
-# 启动所有服务
-docker-compose up -d
+# 构建并启动所有服务
+docker compose up --build -d
+
+# 检查容器健康状态
+docker compose ps
 
 # 访问应用
 # 前端：http://localhost:5137
 # 后端 API: http://localhost:5555/api/v1
+# 后端健康检查: http://localhost:5555/health
 ```
+
+Docker 环境变量、健康检查、排障和本次验证结论见 [Docker 部署指南](docs/DOCKER-DEPLOYMENT-GUIDE.md)。
 
 ### 方式二：手动启动
 

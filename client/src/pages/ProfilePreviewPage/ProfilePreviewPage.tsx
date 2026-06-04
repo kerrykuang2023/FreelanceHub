@@ -16,14 +16,14 @@ import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
 import freelancerProfileService from '@/services/freelancer-profile.service';
 
 interface Skill {
-  _id: string;
+  _id?: string;
   skill_name: string;
   skill_level: '初级' | '中级' | '高级' | '专家';
   years_of_experience: number;
 }
 
 interface ProjectExperience {
-  _id: string;
+  _id?: string;
   project_name: string;
   company_name: string;
   role: string;
@@ -34,7 +34,7 @@ interface ProjectExperience {
 }
 
 interface Certification {
-  _id: string;
+  _id?: string;
   certification_name: string;
   issuing_organization: string;
   issue_date: string;
@@ -44,8 +44,8 @@ interface Certification {
 }
 
 interface FreelancerProfile {
-  _id: string;
-  user_id: {
+  _id?: string;
+  user_id?: {
     _id: string;
     user_name: string;
     email: string;

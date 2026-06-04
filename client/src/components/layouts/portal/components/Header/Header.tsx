@@ -113,7 +113,7 @@ const Header = () => {
     if (!isAdmin) return [];
     
     return [
-      { name: "Dashboard", href: "/admin/dashboard" },
+      { name: "管理后台", href: "/admin/dashboard" },
       { name: "用户管理", href: "/admin/users" },
       { name: "角色审批", href: "/admin/role-approvals" },
       { name: "企业审核", href: "/admin/companies" },
@@ -135,7 +135,7 @@ const Header = () => {
       { name: "语言要求", href: "/admin/config/languages" },
       { name: "工作性质", href: "/admin/config/job-natures" },
       { name: "工作形式", href: "/admin/config/work-formats" },
-      { name: "Rate类型", href: "/admin/config/rate-types" },
+      { name: "计费类型", href: "/admin/config/rate-types" },
       { name: "发票类型", href: "/admin/config/invoice-types" },
       { name: "付款方式", href: "/admin/config/payment-methods" },
     ];
@@ -450,7 +450,7 @@ const Header = () => {
         <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <div className="-m-1.5 p-1.5">
-              <span className="sr-only">JobPortal</span>
+              <span className="sr-only">FreelanceHub</span>
               <Logo />
             </div>
             <button

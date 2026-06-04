@@ -31,9 +31,10 @@ const AdminCompanyReviewPage = () => {
     try {
       setLoading(true);
       const response = await adminService.getCompanyById(id!);
-      setCompany(response.data.data.company);
-      setRelatedUsers(response.data.data.relatedUsers || []);
-      setRelatedFreelancers(response.data.data.relatedFreelancers || []);
+      const payload = response.data?.data || response.data || response;
+      setCompany(payload.company);
+      setRelatedUsers(payload.relatedUsers || []);
+      setRelatedFreelancers(payload.relatedFreelancers || []);
     } catch (error) {
       console.error("Failed to load company:", error);
       alert("加载企业数据失败");
@@ -51,7 +52,7 @@ const AdminCompanyReviewPage = () => {
 
     try {
       setActionLoading(true);
-      await adminService.verifyCompany(id!, status, reason);
+      await adminService.verifyCompany(id!, status, reason || undefined);
       alert(`企业已${status === "approved" ? "通过" : "拒绝"}审核`);
       navigate("/admin?tab=companies");
     } catch (error) {

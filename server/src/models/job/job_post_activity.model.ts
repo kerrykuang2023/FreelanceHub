@@ -34,7 +34,7 @@ const JobPostActivitySchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["pending", "reviewed", "accepted", "rejected", "withdrawn"],
+      enum: ["pending", "reviewed", "accepted", "rejected", "withdrawn", "invalidated"],
       default: "pending",
     },
     notes: {

@@ -98,7 +98,7 @@ const CreateWorkLogPage = () => {
           work_period_end: workPeriodEnd,
           hours_worked: values.hours_worked,
           work_type: values.work_type,
-          description: values.work_description,
+          work_description: values.work_description,
           work_content_detail: values.work_content_detail,
           notes: values.notes,
         });

@@ -37,7 +37,14 @@ export default class AuthService {
     return this.http.get("auth/roles", {});
   }
 
-  public async applyForRole(data: { role_type: string; role_specific_data?: any }) {
-    return this.http.post("auth/roles/apply", data);
+  public async applyForRole(data: { role_type: string; submitted_data?: any; role_specific_data?: any }) {
+    return this.http.post("auth/roles/apply", {
+      role_type: data.role_type,
+      submitted_data: data.submitted_data || data.role_specific_data || {},
+    });
+  }
+
+  public async getMyRoleApprovals() {
+    return this.http.get("auth/my-role-approvals", {});
   }
 }

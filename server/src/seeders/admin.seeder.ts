@@ -4,7 +4,7 @@ import UserRole from "../models/user/user-role.model";
 import UserCredit from "../models/credit/user-credit.model";
 import bcrypt from "bcrypt";
 
-const ADMIN_EMAIL = "admin@jobportal.com";
+const ADMIN_EMAIL = "admin@freelancehub.com";
 const ADMIN_PASSWORD = "Admin@123";
 
 export default class AdminSeeder {

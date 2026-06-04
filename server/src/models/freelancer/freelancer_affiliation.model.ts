@@ -14,7 +14,7 @@ const FreelancerAffiliationSchema = new mongoose.Schema(
     },
     affiliation_type: {
       type: String,
-      enum: ["挂靠", "正式员工", "外包", "合作"],
+      enum: ["contract", "employee", "outsourcing", "partner", "挂靠", "正式员工", "外包", "合作"],
       required: true,
     },
     start_date: {
@@ -43,7 +43,7 @@ const FreelancerAffiliationSchema = new mongoose.Schema(
     billing_info: {
       billing_mode: {
         type: String,
-        enum: ["月薪", "日薪", "项目制", "小时制"],
+        enum: ["monthly", "daily", "project", "hourly", "月薪", "日薪", "项目制", "小时制"],
       },
       billing_currency: {
         type: String,
@@ -65,7 +65,7 @@ const FreelancerAffiliationSchema = new mongoose.Schema(
       },
       invoice_type: {
         type: String,
-        enum: ["增值税专用发票", "增值税普通发票", "个人发票"],
+        enum: ["vat_special", "vat_normal", "personal", "增值税专用发票", "增值税普通发票", "个人发票"],
       },
     },
     payment_info: {

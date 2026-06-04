@@ -4,16 +4,16 @@ import path from 'path';
 
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/jobportal';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/freelancehub';
 
 async function createCompleteTestData() {
   console.log('\n========================================');
-  console.log('  完整测试数据初始化');
+  console.log('  完整测试数据初始�?);
   console.log('========================================\n');
 
   try {
     await mongoose.connect(MONGODB_URI);
-    console.log('✅ MongoDB 连接成功');
+    console.log('�?MongoDB 连接成功');
 
     const db = mongoose.connection.db;
 
@@ -27,22 +27,22 @@ async function createCompleteTestData() {
     const freelancerUser = users.find((u: any) => u.email === 'freelancer@test.com') as any;
 
     if (!adminUser || !hrUser || !freelancerUser) {
-      console.log('❌ 缺少测试用户，请先运行 seeder');
+      console.log('�?缺少测试用户，请先运�?seeder');
       return;
     }
 
-    console.log(`✅ 测试用户已就绪:`);
-    console.log(`   - 管理员: ${adminUser.email}`);
+    console.log(`�?测试用户已就�?`);
+    console.log(`   - 管理�? ${adminUser.email}`);
     console.log(`   - HR: ${hrUser.email}`);
-    console.log(`   - 求职者: ${freelancerUser.email}`);
+    console.log(`   - 求职�? ${freelancerUser.email}`);
 
-    // 2. 获取或创建 FreelancerProfile
+    // 2. 获取或创�?FreelancerProfile
     let freelancerProfile = await db.collection('freelancer_profile').findOne({ user_id: freelancerUser._id });
     
     if (!freelancerProfile) {
       const profileResult = await db.collection('freelancer_profile').insertOne({
         user_id: freelancerUser._id,
-        full_name: freelancerUser.user_name || '测试求职者',
+        full_name: freelancerUser.user_name || '测试求职�?,
         email: freelancerUser.email,
         phone: '13800138000',
         skills: ['SAP', 'ABAP', 'Fiori'],
@@ -52,20 +52,20 @@ async function createCompleteTestData() {
         updated_at: new Date()
       });
       freelancerProfile = { _id: profileResult.insertedId, user_id: freelancerUser._id };
-      console.log('✅ 创建求职者档案');
+      console.log('�?创建求职者档�?);
     } else {
-      console.log(`✅ 求职者档案已存在: ${freelancerProfile._id}`);
+      console.log(`�?求职者档案已存在: ${freelancerProfile._id}`);
     }
 
     const freelancerId = freelancerProfile._id;
 
-    // 3. 获取或创建公司
+    // 3. 获取或创建公�?
     let company = await db.collection('company').findOne({ created_by: hrUser._id });
     
     if (!company) {
       const companyResult = await db.collection('company').insertOne({
         company_name: 'E2E测试公司',
-        profile_description: '这是一个用于端到端测试的公司',
+        profile_description: '这是一个用于端到端测试的公�?,
         company_website_url: 'https://test-company.example.com',
         verification_status: 'approved',
         created_by: hrUser._id,
@@ -73,12 +73,12 @@ async function createCompleteTestData() {
         updated_at: new Date()
       });
       company = { _id: companyResult.insertedId, company_name: 'E2E测试公司' };
-      console.log('✅ 创建测试公司');
+      console.log('�?创建测试公司');
     } else {
-      console.log(`✅ 公司已存在: ${company.company_name}`);
+      console.log(`�?公司已存�? ${company.company_name}`);
     }
 
-    // 4. 创建测试项目（如果不存在）
+    // 4. 创建测试项目（如果不存在�?
     let projects = await db.collection('projectrequirements').find({
       posted_by: hrUser._id,
       status: { $in: ['published', 'in_progress'] }
@@ -109,12 +109,12 @@ async function createCompleteTestData() {
       projects = await db.collection('projectrequirements').find({
         posted_by: hrUser._id
       }).toArray();
-      console.log('✅ 创建测试项目');
+      console.log('�?创建测试项目');
     } else {
-      console.log(`✅ 项目已存在: ${projects.length} 个`);
+      console.log(`�?项目已存�? ${projects.length} 个`);
     }
 
-    // 5. 创建挂靠关系（Affiliation）
+    // 5. 创建挂靠关系（Affiliation�?
     let affiliation = await db.collection('freelanceraffiliations').findOne({
       freelancer_id: freelancerId,
       company_id: company._id
@@ -137,9 +137,9 @@ async function createCompleteTestData() {
         updated_at: new Date()
       });
       affiliation = { _id: affiliationResult.insertedId };
-      console.log('✅ 创建挂靠关系');
+      console.log('�?创建挂靠关系');
     } else {
-      console.log('✅ 挂靠关系已存在');
+      console.log('�?挂靠关系已存�?);
     }
 
     // 6. 创建项目分配
@@ -151,7 +151,7 @@ async function createCompleteTestData() {
         $set: { status: 'in_progress', updated_at: new Date() }
       }
     );
-    console.log('✅ 分配求职者到项目');
+    console.log('�?分配求职者到项目');
 
     // 7. 创建测试工时记录
     const existingWorkLogs = await db.collection('work_log').countDocuments({
@@ -170,7 +170,7 @@ async function createCompleteTestData() {
           work_period_end: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000 + 18 * 60 * 60 * 1000),
           hours_worked: 8,
           work_type: '远程工作',
-          work_description: 'E2E测试工时-已完成需求分析',
+          work_description: 'E2E测试工时-已完成需求分�?,
           status: 'confirmed',
           billing_info: {
             daily_rate: 2000,
@@ -198,7 +198,7 @@ async function createCompleteTestData() {
           work_period_end: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000 + 18 * 60 * 60 * 1000),
           hours_worked: 8,
           work_type: '远程工作',
-          work_description: 'E2E测试工时-待审核',
+          work_description: 'E2E测试工时-待审�?,
           status: 'submitted',
           billing_info: {
             daily_rate: 2000,
@@ -242,9 +242,9 @@ async function createCompleteTestData() {
       ];
 
       await db.collection('work_log').insertMany(workLogsData);
-      console.log('✅ 创建测试工时记录: 3条 (1草稿, 1待审核, 1已确认)');
+      console.log('�?创建测试工时记录: 3�?(1草稿, 1待审�? 1已确�?');
     } else {
-      console.log(`✅ 工时记录已存在: ${existingWorkLogs} 条`);
+      console.log(`�?工时记录已存�? ${existingWorkLogs} 条`);
     }
 
     // 8. 创建测试发票
@@ -272,7 +272,7 @@ async function createCompleteTestData() {
           items: [{
             description: 'SAP顾问服务',
             quantity: 1,
-            unit: '天',
+            unit: '�?,
             unit_price: 2000,
             amount: 2000,
             work_log_id: confirmedWorkLog._id
@@ -286,7 +286,7 @@ async function createCompleteTestData() {
           billing_info: {
             billing_company_name: 'E2E测试公司',
             billing_tax_id: '91110000MA00ABCD12',
-            billing_address: '上海市浦东新区测试路123号',
+            billing_address: '上海市浦东新区测试路123�?,
             billing_phone: '021-12345678',
             billing_bank_name: '测试银行',
             billing_bank_account: '1234567890'
@@ -298,10 +298,10 @@ async function createCompleteTestData() {
         };
 
         await db.collection('freelancer_invoice').insertOne(invoiceData);
-        console.log('✅ 创建测试发票');
+        console.log('�?创建测试发票');
       }
     } else {
-      console.log(`✅ 发票已存在: ${existingInvoices} 条`);
+      console.log(`�?发票已存�? ${existingInvoices} 条`);
     }
 
     // 9. 验证数据
@@ -313,15 +313,15 @@ async function createCompleteTestData() {
     const finalInvoices = await db.collection('freelancer_invoice').countDocuments({});
     const finalProjects = await db.collection('projectrequirements').countDocuments({});
 
-    console.log(`📊 最终数据统计:`);
+    console.log(`📊 最终数据统�?`);
     console.log(`   - 项目: ${finalProjects} 个`);
     console.log(`   - 工时: ${finalWorkLogs} 条`);
     console.log(`   - 发票: ${finalInvoices} 条`);
 
-    console.log('\n✅ 测试数据初始化完成！\n');
+    console.log('\n�?测试数据初始化完成！\n');
 
   } catch (error) {
-    console.error('❌ 初始化失败:', error);
+    console.error('�?初始化失�?', error);
   } finally {
     await mongoose.disconnect();
   }

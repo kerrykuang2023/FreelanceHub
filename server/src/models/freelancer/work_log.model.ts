@@ -20,7 +20,7 @@ const WorkLogSchema = new mongoose.Schema(
     affiliation_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "FreelancerAffiliation",
-      required: true,
+      required: false,
     },
     work_period_start: {
       type: Date,

@@ -210,8 +210,8 @@ const HRWorkLogsPage = () => {
                       <tr key={workLog._id} className="hover:bg-gray-50 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-gray-900">
-                            {typeof workLog.freelancer_id === 'object'
-                              ? workLog.freelancer_id?.display_name
+                            {workLog.freelancer_id && typeof workLog.freelancer_id === 'object'
+                              ? (workLog.freelancer_id as any)?.display_name
                               : "Freelancer"}
                           </div>
                         </td>
@@ -344,8 +344,8 @@ const HRWorkLogsPage = () => {
                     <div>
                       <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">Freelancer</label>
                       <p className="text-base text-gray-900 mt-1 font-medium">
-                        {typeof selectedWorkLog.freelancer_id === 'object'
-                          ? selectedWorkLog.freelancer_id?.display_name
+                        {selectedWorkLog.freelancer_id && typeof selectedWorkLog.freelancer_id === 'object'
+                          ? (selectedWorkLog.freelancer_id as any)?.display_name
                           : "Freelancer"}
                       </p>
                     </div>

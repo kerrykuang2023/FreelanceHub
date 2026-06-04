@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 import Company from "../models/company-profile/company.model";
+import UserAccount from "../models/user/user-account.model";
 import { ApiError } from "../errors/ApiError";
 import mongoose from "mongoose";
 import { IAuthRequest } from "../types/user.interface";
@@ -379,18 +380,35 @@ export default class CompaniesController {
         throw new ApiError(StatusCodes.NOT_FOUND, "Company not found", []);
       }
 
-      if (company.created_by?.toString() !== user._id.toString()) {
-        throw new ApiError(StatusCodes.FORBIDDEN, "Not authorized to update this company", []);
+      const userAccount = await UserAccount.findById(user._id);
+      const isCompanyCreator = company.created_by?.toString() === user._id.toString();
+      const isCompanyMember = userAccount?.company_id?.toString() === company._id.toString();
+
+      if (!isCompanyCreator && !isCompanyMember) {
+        throw new ApiError(StatusCodes.FORBIDDEN, "您只能编辑自己创建或已绑定的公司信息", []);
       }
 
-      Object.keys(updateData).forEach((key) => {
+      const allowedFields = [
+        "company_name",
+        "industry",
+        "company_size",
+        "profile_description",
+        "description",
+        "company_website_url",
+        "company_address",
+        "contact_phone",
+        "contact_email",
+      ];
+
+      Object.keys(updateData).filter((key) => allowedFields.includes(key)).forEach((key) => {
         (company as any)[key] = updateData[key];
       });
 
       await company.save();
 
       res.status(StatusCodes.OK).json({
-        message: "Company updated successfully",
+        success: true,
+        message: "公司信息已保存",
         company,
       });
     } catch (error) {

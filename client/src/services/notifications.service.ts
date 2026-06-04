@@ -27,7 +27,7 @@ class NotificationService {
   }
 
   async getNotifications(params?: any): Promise<{ notifications: INotification[]; pagination: any }> {
-    return this.http.get(this.baseUrl, { params });
+    return this.http.get(this.baseUrl, params);
   }
 
   async getUnreadCount(): Promise<{ count: number }> {

@@ -38,7 +38,7 @@ const LoginPage = () => {
 
           <div className="mt-8 text-center">
             <p className="text-xs text-gray-400">
-              © 2024 JobPortal. 保留所有权利。
+              © 2024 FreelanceHub. 保留所有权利。
             </p>
           </div>
         </div>

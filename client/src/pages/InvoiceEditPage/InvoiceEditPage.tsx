@@ -359,8 +359,8 @@ const InvoiceEditPage = () => {
                               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                               data-testid={`item-${index}-description`}
                             />
-                            {errors.items?.[index]?.description && touched.items?.[index]?.description && (
-                              <p className="mt-1 text-xs text-red-500">{errors.items[index].description}</p>
+                            {(errors.items as any)?.[index]?.description && (touched.items as any)?.[index]?.description && (
+                              <p className="mt-1 text-xs text-red-500">{(errors.items as any)[index].description}</p>
                             )}
                           </div>
                           <div className="col-span-2">

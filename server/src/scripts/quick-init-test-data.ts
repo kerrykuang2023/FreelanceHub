@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 async function quickInit() {
-  await mongoose.connect('mongodb://localhost:27017/jobportal');
+  await mongoose.connect('mongodb://localhost:27017/freelancehub');
   const db = mongoose.connection.db;
   
   // Get test users
@@ -31,7 +31,7 @@ async function quickInit() {
     const result = await db.collection('project_requirement').insertOne({
       job_title: '审批测试项目',
       company_id: company._id,
-      status: '进行中',
+      status: '进行�?,
       created_at: new Date()
     });
     project = { _id: result.insertedId };
@@ -67,7 +67,7 @@ async function quickInit() {
       work_period_end: new Date(Date.now() - 2*24*60*60*1000 + 18*60*60*1000),
       hours_worked: 8,
       work_type: 'remote_work',
-      work_description: '审批测试工时-待审批',
+      work_description: '审批测试工时-待审�?,
       status: 'submitted',
       billing_info: { daily_rate: 2000, hours_billable: 8, amount: 2000, currency: 'CNY' },
       submitted_at: new Date(),
@@ -105,7 +105,7 @@ async function quickInit() {
       billing_period_end: new Date(),
       due_date: new Date(Date.now() + 30*24*60*60*1000),
       status: 'submitted',
-      description: '审批测试发票-待审批',
+      description: '审批测试发票-待审�?,
       items: [{ description: '服务', quantity: 8, unit_price: 250, amount: 2000 }],
       subtotal_amount: 2000,
       tax_rate: 0.06,

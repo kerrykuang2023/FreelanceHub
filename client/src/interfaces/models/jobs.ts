@@ -29,9 +29,19 @@ export interface IJob {
   company_id: ICompany;
   is_company_name_hidden: boolean;
   created_date: Date;
+  posted_date?: Date | string;
+  job_title?: string;
   job_description: string;
   job_location_id: IJobLocation;
   is_active: boolean;
+  status?: string;
+  salary_range?: string;
+  skills_required?: string[];
+  required_skills?: string[];
+  rate_type?: string;
+  rate_amount?: number;
+  rate_currency?: string;
+  [key: string]: any;
 }
 
 export interface IJobsResponse {
@@ -80,3 +90,5 @@ export interface IUpdateJobPayload {
 export interface IDeleteJobResponse {
   message: string;
 }
+
+export type { IProjectRequirement } from "./freelancer";

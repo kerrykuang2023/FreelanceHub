@@ -11,7 +11,7 @@ import mongoose from "mongoose";
 import { IAuthRequest } from "../types/user.interface";
 import NotificationHelper from "../services/notification-helper.service";
 
-const ALLOWED_APPLICATION_STATUSES = ["pending", "reviewed", "accepted", "rejected"];
+const ALLOWED_APPLICATION_STATUSES = ["pending", "reviewed", "accepted", "rejected", "invalidated"];
 const ALLOWED_PROJECT_STATUSES_FOR_APPLICATION = ["published"];
 const PROJECT_STATUS_IN_PROGRESS = "in_progress";
 const PROJECT_STATUS_CLOSED = "closed";
@@ -303,7 +303,7 @@ export default class JobApplicationsController {
       }
 
       if (!ALLOWED_APPLICATION_STATUSES.includes(status)) {
-        throw new BadRequestError(`Invalid status value. Allowed: ${ALLOWED_APPLICATION_STATUSES.join(", ")}`, []);
+        throw new BadRequestError("无效的申请状态，请刷新列表后重新操作", []);
       }
 
       const application = await JobPostActivity.findById(id).populate("job_post_id");
@@ -321,28 +321,29 @@ export default class JobApplicationsController {
       if (!isJobOwner && !isCompanyOwner) {
         throw new ApiError(
           StatusCodes.FORBIDDEN,
-          "You are not authorized to update this application",
+          "该申请所属项目不属于当前企业或当前账号，不能处理此申请",
           []
         );
       }
 
       if (application.status === "accepted") {
-        throw new BadRequestError("Cannot update an already accepted application", []);
+        throw new BadRequestError("该申请已经录用，不能重复更新状态", []);
       }
 
       if (application.status === "rejected" && status !== "rejected") {
-        throw new BadRequestError("Cannot change status of a rejected application", []);
+        throw new BadRequestError("该申请已被拒绝，不能再改为其他状态", []);
       }
 
+      const jobId = job._id || application.job_post_id;
       const acceptedCount = await JobPostActivity.countDocuments({
-        job_post_id: application.job_post_id,
+        job_post_id: jobId,
         status: "accepted",
         _id: { $ne: application._id }
       });
 
       if (status === "accepted" && acceptedCount > 0) {
         throw new BadRequestError(
-          "Another application has already been accepted for this job. Only one application can be accepted per job.",
+          "该项目已经录用了一位顾问，不能重复录用。其他待处理申请会在录用后自动失效。",
           []
         );
       }
@@ -358,12 +359,30 @@ export default class JobApplicationsController {
 
       if (status === "accepted") {
         const freelancerId = application.freelancer_id;
-        const jobId = application.job_post_id;
         
         await JobPost.findByIdAndUpdate(jobId, {
           $addToSet: { assigned_freelancers: freelancerId },
           status: "in_progress"
         });
+        await ProjectRequirement.updateOne(
+          { job_post_id: jobId },
+          { $set: { status: "in_progress", is_active: true } }
+        );
+        await JobPostActivity.updateMany(
+          {
+            _id: { $ne: application._id },
+            job_post_id: jobId,
+            status: { $in: ["pending", "reviewed"] },
+          },
+          {
+            $set: {
+              status: "invalidated",
+              notes: "Automatically invalidated because another applicant was accepted.",
+              reviewed_at: new Date(),
+              reviewed_by: user._id,
+            },
+          }
+        );
         
         console.log(`Freelancer ${freelancerId} assigned to job ${jobId}, status updated to in_progress`);
       }
@@ -384,6 +403,7 @@ export default class JobApplicationsController {
       }
 
       res.status(StatusCodes.OK).json({
+        success: true,
         message: "Application status updated successfully",
         application: updatedApplication,
       });

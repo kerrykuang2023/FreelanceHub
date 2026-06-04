@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AppWrapper from "./AppWrapper";
 import { useAuth, ToastProvider } from "./providers";
 import { usePermissions, RoleType } from "./hooks/usePermissions";
+import PortalLayout from "@/components/layouts/portal/PortalLayout";
 
 const LoginPage = lazy(() => import("@/pages/AuthPages/LoginPage"));
 const RegisterPage = lazy(() => import("@/pages/AuthPages/RegisterPage"));
@@ -97,6 +98,16 @@ const AdminRoute = ({ children }: { children: React.ReactNode }) => (
   <RoleRoute allowedRoles={['admin']}>{children}</RoleRoute>
 );
 
+const AdminLayoutRoute = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  <AdminRoute>
+    <PortalLayout title={title}>{children}</PortalLayout>
+  </AdminRoute>
+);
+
+const AuthenticatedLayoutRoute = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  <PortalLayout title={title}>{children}</PortalLayout>
+);
+
 const HROrAdminRoute = ({ children }: { children: React.ReactNode }) => (
   <RoleRoute allowedRoles={['hr_recruiter', 'admin']}>{children}</RoleRoute>
 );
@@ -138,6 +149,7 @@ function App() {
             <Routes>
               <Route path="/" element={<AppWrapper />}>
                 <Route index element={getDashboardPage()} />
+                <Route path="/dashboard" element={getDashboardPage()} />
                 <Route path="/jobs" element={<JobsListPage />} />
                 <Route path="/my-projects" element={<MyJobsPage />} />
                 <Route path="/applications" element={<MyJobsPage />} />
@@ -148,8 +160,8 @@ function App() {
                 <Route path="/hr/onboarding" element={<HROnboardingPage />} />
                 <Route path="/company" element={<HROrAdminRoute><CompanyManagementPage /></HROrAdminRoute>} />
                 <Route path="/profile/verification" element={<IdentityVerificationPage />} />
-                <Route path="/profile/switch-role" element={<RoleSwitchPage />} />
-                <Route path="/profile/role-approvals" element={<MyRoleApprovalsPage />} />
+                <Route path="/profile/switch-role" element={<AuthenticatedLayoutRoute title="角色与切换"><RoleSwitchPage /></AuthenticatedLayoutRoute>} />
+                <Route path="/profile/role-approvals" element={<AuthenticatedLayoutRoute title="我的角色申请"><MyRoleApprovalsPage /></AuthenticatedLayoutRoute>} />
                 <Route path="/profile/credits" element={<CreditHistoryPage />} />
                 <Route path="/report" element={<ReportPage />} />
                 <Route path="/jobs/:id" element={<JobDetailPage />} />
@@ -160,25 +172,26 @@ function App() {
                 <Route path="/work-logs/new" element={<CreateWorkLogPage />} />
                 <Route path="/hr/dashboard" element={<HROrAdminRoute><HRDashboardPage /></HROrAdminRoute>} />
                 <Route path="/company/work-logs/pending" element={<HROrAdminRoute><HRWorkLogsPage /></HROrAdminRoute>} />
+                <Route path="/admin" element={<AdminRoute><AdminDashboardPage /></AdminRoute>} />
                 <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboardPage /></AdminRoute>} />
                 <Route path="/admin/companies" element={<AdminRoute><Navigate to="/admin?tab=companies" replace /></AdminRoute>} />
                 <Route path="/admin/projects" element={<AdminRoute><Navigate to="/admin?tab=projects" replace /></AdminRoute>} />
                 <Route path="/admin/worklogs" element={<AdminRoute><Navigate to="/admin?tab=worklogs" replace /></AdminRoute>} />
                 <Route path="/admin/invoices" element={<AdminRoute><Navigate to="/admin?tab=invoices" replace /></AdminRoute>} />
                 <Route path="/admin/config" element={<AdminRoute><Navigate to="/admin/configuration" replace /></AdminRoute>} />
-                <Route path="/admin/role-approvals" element={<AdminRoute><RoleApprovalsPage /></AdminRoute>} />
-                <Route path="/admin/companies/:id" element={<AdminRoute><AdminCompanyReviewPage /></AdminRoute>} />
-                <Route path="/admin/configuration" element={<AdminRoute><SystemConfigurationPage /></AdminRoute>} />
-                <Route path="/admin/config/skill-categories" element={<AdminRoute><AdminConfigPage /></AdminRoute>} />
-                <Route path="/admin/config/work-types" element={<AdminRoute><AdminConfigPage /></AdminRoute>} />
-                <Route path="/admin/config/tax-rates" element={<AdminRoute><AdminConfigPage /></AdminRoute>} />
-                <Route path="/admin/config/currencies" element={<AdminRoute><AdminConfigPage /></AdminRoute>} />
-                <Route path="/admin/config/languages" element={<AdminRoute><AdminConfigPage /></AdminRoute>} />
-                <Route path="/admin/config/job-natures" element={<AdminRoute><AdminConfigPage /></AdminRoute>} />
-                <Route path="/admin/config/work-formats" element={<AdminRoute><AdminConfigPage /></AdminRoute>} />
-                <Route path="/admin/config/rate-types" element={<AdminRoute><AdminConfigPage /></AdminRoute>} />
-                <Route path="/admin/config/invoice-types" element={<AdminRoute><AdminConfigPage /></AdminRoute>} />
-                <Route path="/admin/config/payment-methods" element={<AdminRoute><AdminConfigPage /></AdminRoute>} />
+                <Route path="/admin/role-approvals" element={<AdminLayoutRoute title="角色审批"><RoleApprovalsPage /></AdminLayoutRoute>} />
+                <Route path="/admin/companies/:id" element={<AdminLayoutRoute title="企业详情"><AdminCompanyReviewPage /></AdminLayoutRoute>} />
+                <Route path="/admin/configuration" element={<AdminLayoutRoute title="系统配置"><SystemConfigurationPage /></AdminLayoutRoute>} />
+                <Route path="/admin/config/skill-categories" element={<AdminLayoutRoute title="技能分类"><AdminConfigPage /></AdminLayoutRoute>} />
+                <Route path="/admin/config/work-types" element={<AdminLayoutRoute title="工时类型"><AdminConfigPage /></AdminLayoutRoute>} />
+                <Route path="/admin/config/tax-rates" element={<AdminLayoutRoute title="税率配置"><AdminConfigPage /></AdminLayoutRoute>} />
+                <Route path="/admin/config/currencies" element={<AdminLayoutRoute title="货币配置"><AdminConfigPage /></AdminLayoutRoute>} />
+                <Route path="/admin/config/languages" element={<AdminLayoutRoute title="语言要求"><AdminConfigPage /></AdminLayoutRoute>} />
+                <Route path="/admin/config/job-natures" element={<AdminLayoutRoute title="工作性质"><AdminConfigPage /></AdminLayoutRoute>} />
+                <Route path="/admin/config/work-formats" element={<AdminLayoutRoute title="工作形式"><AdminConfigPage /></AdminLayoutRoute>} />
+                <Route path="/admin/config/rate-types" element={<AdminLayoutRoute title="计费类型"><AdminConfigPage /></AdminLayoutRoute>} />
+                <Route path="/admin/config/invoice-types" element={<AdminLayoutRoute title="发票类型"><AdminConfigPage /></AdminLayoutRoute>} />
+                <Route path="/admin/config/payment-methods" element={<AdminLayoutRoute title="付款方式"><AdminConfigPage /></AdminLayoutRoute>} />
                 <Route path="/invoices" element={<InvoicesPage />} />
                 <Route path="/invoices/new" element={<CreateInvoicePage />} />
                 <Route path="/invoices/:id" element={<InvoiceDetailPage />} />
@@ -197,7 +210,7 @@ function App() {
                 <Route path="/company/invoices/review" element={<HROrAdminRoute><InvoiceReviewPage /></HROrAdminRoute>} />
                 <Route path="/admin/users" element={<AdminRoute><AdminUsersPage /></AdminRoute>} />
                 <Route path="/admin/freelancers" element={<AdminRoute><AdminFreelancersPage /></AdminRoute>} />
-                <Route path="/admin/reports" element={<AdminRoute><AdminReportManagementPage /></AdminRoute>} />
+                <Route path="/admin/reports" element={<AdminLayoutRoute title="举报管理"><AdminReportManagementPage /></AdminLayoutRoute>} />
                 <Route path="/login" element={<Navigate to="/" />} />
                 <Route path="/register" element={<Navigate to="/" />} />
                 <Route path="/forgot-password" element={<Navigate to="/" />} />

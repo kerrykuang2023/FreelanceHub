@@ -17,7 +17,7 @@ export default class ApplicationsService {
     relevant_experience?: string;
     skills_match?: string[];
   }) {
-    return this.http.post<IModels.IApplicationResponse, void>(`job-applications/jobs/${jobId}/apply`, data || {});
+    return this.http.post<IModels.IApplicationResponse>(`job-applications/jobs/${jobId}/apply`, data || {});
   }
 
   public async getJobApplications(jobId: string, params?: { page?: number; limit?: number }) {
@@ -47,7 +47,7 @@ export default class ApplicationsService {
   }
 
   public async updateApplicationStatus(applicationId: string, status: string, notes?: string) {
-    return this.http.put<IModels.IApplicationResponse, { status: string; notes?: string }>(
+    return this.http.patch<IModels.IApplicationResponse, { status: string; notes?: string }>(
       `job-applications/${applicationId}/status`,
       { status, notes }
     );

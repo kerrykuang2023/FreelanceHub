@@ -7,7 +7,7 @@ import Company from '../models/company.model';
 import Job from '../models/job.model';
 import bcrypt from 'bcryptjs';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/jobportal';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/freelancehub';
 
 const skillData = [
   {
@@ -87,9 +87,9 @@ const skillData = [
 async function connectDB() {
   try {
     await mongoose.connect(MONGODB_URI);
-    console.log('‚úÖ Connected to MongoDB');
+    console.log('‚ú?Connected to MongoDB');
   } catch (error) {
-    console.error('‚ùå MongoDB connection error:', error);
+    console.error('‚ù?MongoDB connection error:', error);
     process.exit(1);
   }
 }
@@ -110,7 +110,7 @@ async function seedSkillCategories() {
     if (!existingCategory) {
       const category = new SkillCategory(categoryFields);
       await category.save();
-      console.log(`  ‚úÖ Created skill category: ${categoryFields.category_name}`);
+      console.log(`  ‚ú?Created skill category: ${categoryFields.category_name}`);
       createdCount++;
 
       for (const subCategoryData of sub_categories) {
@@ -125,7 +125,7 @@ async function seedSkillCategories() {
             category_id: category._id
           });
           await subCategory.save();
-          console.log(`    ‚úÖ Created sub-category: ${subCategoryData.sub_category_name}`);
+          console.log(`    ‚ú?Created sub-category: ${subCategoryData.sub_category_name}`);
         }
       }
     } else {
@@ -152,9 +152,9 @@ async function verifyTestUsers() {
   for (const testUser of testUsers) {
     const user = await User.findOne({ email: testUser.email });
     if (user) {
-      console.log(`  ‚úÖ ${testUser.role}: ${testUser.email} exists`);
+      console.log(`  ‚ú?${testUser.role}: ${testUser.email} exists`);
     } else {
-      console.log(`  ‚ùå ${testUser.role}: ${testUser.email} NOT FOUND`);
+      console.log(`  ‚ù?${testUser.role}: ${testUser.email} NOT FOUND`);
     }
   }
 }
@@ -167,9 +167,9 @@ async function verifyUserTypes() {
   for (const typeName of userTypes) {
     const type = await UserType.findOne({ user_type_name: typeName });
     if (type) {
-      console.log(`  ‚úÖ User type: ${typeName} exists`);
+      console.log(`  ‚ú?User type: ${typeName} exists`);
     } else {
-      console.log(`  ‚ùå User type: ${typeName} NOT FOUND`);
+      console.log(`  ‚ù?User type: ${typeName} NOT FOUND`);
     }
   }
 }
@@ -194,6 +194,6 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.error('‚ùå Script failed:', error);
+  console.error('‚ù?Script failed:', error);
   process.exit(1);
 });

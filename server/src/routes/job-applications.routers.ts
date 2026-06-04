@@ -47,6 +47,11 @@ export default class JobApplicationsRoutes {
       authMiddleware,
       asyncWrapper(JobApplicationsController.updateJobApplication)
     );
+    this.router.put(
+      "/:id/status",
+      authMiddleware,
+      asyncWrapper(JobApplicationsController.updateJobApplication)
+    );
     this.router.post(
       "/:id/withdraw",
       authMiddleware,

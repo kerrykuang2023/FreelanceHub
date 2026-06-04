@@ -3,7 +3,7 @@ const UserAccount = require('./models/user/user-account.model').default;
 
 async function testUserAccountModel() {
   try {
-    await mongoose.connect('mongodb://localhost:27017/jobportal');
+    await mongoose.connect('mongodb://localhost:27017/freelancehub');
     
     console.log('\n========================================');
     console.log('  测试 UserAccount 模型');
@@ -24,7 +24,7 @@ async function testUserAccountModel() {
     console.log('  company_id:', modelUser?.company_id);
     console.log('  company_id type:', typeof modelUser?.company_id);
     
-    // 检查 company_id 是否为 ObjectId
+    // 检�?company_id 是否�?ObjectId
     if (modelUser?.company_id) {
       console.log('  company_id toString:', modelUser.company_id.toString());
     }

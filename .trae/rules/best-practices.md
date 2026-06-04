@@ -670,6 +670,37 @@ static async loginAsUser(page: Page, user: TestUser): Promise<LoginResult> {
 
 ---
 
+## 11. Docker 部署经验修正版（2026-06-03）
+
+旧经验中“Docker 启动有问题，建议本地启动前后端”的结论已经过期。当前项目已修复为可用的完整 Docker Compose 启动方式，优先使用以下流程：
+
+```powershell
+docker compose up --build -d
+docker compose ps
+```
+
+验证入口：
+
+| 服务 | 地址 | 预期 |
+| --- | --- | --- |
+| 前端 | http://localhost:5137 | 可访问 |
+| 后端健康检查 | http://localhost:5555/health | 返回成功 |
+| 后端 API | http://localhost:5555/api/v1 | 可被前端调用 |
+| MongoDB | mongodb://localhost:27017/jobportal | 容器 healthy |
+
+本次修复后的关键经验：
+
+1. 浏览器访问后端必须使用 `http://localhost:5555/api/v1`，不能使用 Docker 内部服务名。
+2. 后端容器必须提供 `JWT_SECRET`、`CORS_ORIGIN`、`PORT` 和 `MONGODB_URI`。
+3. 服务启动顺序应由 healthcheck 控制：MongoDB healthy 后启动后端，后端 healthy 后启动前端。
+4. Dockerfile 使用 `npm ci`，避免容器依赖与 lockfile 不一致。
+5. `server/.env.example` 不应包含真实云数据库连接串，只保留本地占位配置。
+6. 当前 Dockerfile 不依赖 Docker Hub `node:20` 镜像，改为在可用基础镜像中安装 Node 20 tarball，用于规避本地 Docker Hub 拉取不稳定的问题。
+
+完整说明见 `docs/DOCKER-DEPLOYMENT-GUIDE.md`。
+
+---
+
 **维护者:** AI Assistant  
 **更新频率:** 持续更新  
-**最后更新:** 2026-03-27
+**最后更新:** 2026-06-03

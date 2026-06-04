@@ -87,8 +87,14 @@ export class TestHelper {
     try {
       console.log(`  📝 尝试登录: ${email}`);
       
-      await page.goto(`${BASE_URL}/login`);
-      await page.waitForLoadState('networkidle');
+      await page.context().clearCookies();
+      await page.goto(BASE_URL, { waitUntil: 'domcontentloaded' });
+      await page.evaluate(() => {
+        localStorage.clear();
+        sessionStorage.clear();
+      });
+      await page.goto(`${BASE_URL}/login`, { waitUntil: 'domcontentloaded' });
+      await page.waitForLoadState('networkidle').catch(() => undefined);
       await page.waitForTimeout(1000);
       
       const emailInput = page.locator('[data-testid="email-input"]').first();
@@ -154,8 +160,6 @@ export class TestHelper {
         sessionStorage.clear();
       });
       await page.context().clearCookies();
-      await page.goto(`${BASE_URL}/login`);
-      await page.waitForLoadState('networkidle');
       await page.waitForTimeout(500);
     } catch (error) {
       console.log('登出过程发生异常:', error);

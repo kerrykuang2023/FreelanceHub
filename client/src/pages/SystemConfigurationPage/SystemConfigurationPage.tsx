@@ -11,7 +11,7 @@ import {
   PlusIcon,
   PencilIcon,
   TrashIcon,
-  RefreshIcon,
+  ArrowPathIcon,
 } from "@heroicons/react/24/outline";
 import adminService, { ISystemConfig, IConfigType } from "@/services/admin.service";
 
@@ -38,17 +38,13 @@ const SystemConfigurationPage = () => {
   }, []);
 
   useEffect(() => {
-    if (activeTab === "skills") {
-      loadSkillCategories();
-    } else {
-      loadConfigsByType();
-    }
+    loadConfigsByType();
   }, [activeTab]);
 
   const loadConfigTypes = async () => {
     try {
       const response = await adminService.getConfigTypes();
-      setConfigTypes(response.data.data || []);
+      setConfigTypes((response as any).data?.data || (response as any).data || response || []);
     } catch (error) {
       console.error("Failed to load config types:", error);
     }
@@ -59,21 +55,9 @@ const SystemConfigurationPage = () => {
       setLoading(true);
       const configType = getConfigTypeFromTab(activeTab);
       const response = await adminService.getSystemConfigs(configType);
-      setConfigs(response.data.data || []);
+      setConfigs((response as any).data?.data || (response as any).data || response || []);
     } catch (error) {
       console.error("Failed to load configs:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const loadSkillCategories = async () => {
-    try {
-      setLoading(true);
-      const response = await adminService.getSkillCategories();
-      setConfigs(response.data.data || []);
-    } catch (error) {
-      console.error("Failed to load skill categories:", error);
     } finally {
       setLoading(false);
     }
@@ -104,7 +88,7 @@ const SystemConfigurationPage = () => {
       languages: { label: "语言要求", icon: LanguageIcon },
       jobnature: { label: "工作性质", icon: BriefcaseIcon },
       workformat: { label: "工作形式", icon: TruckIcon },
-      ratetypes: { label: "Rate类型", icon: DocumentTextIcon },
+      ratetypes: { label: "计费类型", icon: DocumentTextIcon },
       invoicetypes: { label: "发票类型", icon: ReceiptPercentIcon },
       paymentmethods: { label: "付款方式", icon: TruckIcon },
     };
@@ -220,65 +204,6 @@ const SystemConfigurationPage = () => {
       );
     }
 
-    if (activeTab === "skills") {
-      return (
-        <div className="space-y-4">
-          <p className="text-sm text-gray-500 mb-4">
-            技能分类用于管理SAP、ERP、CRM、JAVA等技能体系，支持大类小类联动。
-          </p>
-          {configs.length === 0 ? (
-            <div className="text-center py-12 text-gray-500">
-              <CpuChipIcon className="w-12 h-12 mx-auto text-gray-300 mb-2" />
-              <p>暂无技能分类</p>
-              <button onClick={() => openEditModal()} className="mt-4 text-blue-600 hover:text-blue-700">
-                添加第一个技能分类
-              </button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {configs.map((category: any) => (
-                <div key={category._id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="font-medium text-gray-900">{category.category_name}</h3>
-                      <p className="text-sm text-gray-500 mt-1">{category.category_code}</p>
-                      <p className="text-sm text-gray-500 mt-1">
-                        子分类: {category.sub_categories?.length || 0} 个
-                      </p>
-                    </div>
-                    <div className="flex gap-2">
-                      <button onClick={() => openEditModal({ ...category, _id: category._id, config_key: category.category_code, config_value: category.category_name, display_name: category.category_name })} className="p-1 text-gray-400 hover:text-blue-600">
-                        <PencilIcon className="w-4 h-4" />
-                      </button>
-                      <button onClick={() => handleDelete(category._id)} className="p-1 text-gray-400 hover:text-red-600">
-                        <TrashIcon className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                  {category.sub_categories && category.sub_categories.length > 0 && (
-                    <div className="mt-3 pt-3 border-t">
-                      <div className="flex flex-wrap gap-1">
-                        {category.sub_categories.slice(0, 5).map((sub: any) => (
-                          <span key={sub._id} className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded">
-                            {sub.sub_category_name}
-                          </span>
-                        ))}
-                        {category.sub_categories.length > 5 && (
-                          <span className="px-2 py-0.5 text-xs text-gray-400">
-                            +{category.sub_categories.length - 5} 更多
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      );
-    }
-
     if (configs.length === 0) {
       return (
         <div className="text-center py-12 text-gray-500">
@@ -367,18 +292,16 @@ const SystemConfigurationPage = () => {
             onClick={handleInitializeDefaults}
             className="inline-flex items-center px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200"
           >
-            <RefreshIcon className="w-4 h-4 mr-2" />
+            <ArrowPathIcon className="w-4 h-4 mr-2" />
             初始化默认
           </button>
-          {activeTab !== "skills" && (
-            <button
-              onClick={() => openEditModal()}
-              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-            >
-              <PlusIcon className="w-5 h-5 mr-2" />
-              添加配置
-            </button>
-          )}
+          <button
+            onClick={() => openEditModal()}
+            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            <PlusIcon className="w-5 h-5 mr-2" />
+            添加配置
+          </button>
         </div>
       </div>
 

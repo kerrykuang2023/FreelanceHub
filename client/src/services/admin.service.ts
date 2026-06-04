@@ -140,7 +140,7 @@ class AdminService {
   }
 
   public async getCompanyById(id: string) {
-    return this.http.get<{ company: ICompany; relatedUsers: any[]; relatedFreelancers: any[] }>(
+    return this.http.get<any>(
       `admin/companies/${id}`
     );
   }
@@ -252,14 +252,14 @@ class AdminService {
   }
 
   public async getConfigTypes() {
-    return this.http.get<IConfigType[]>("admin/config/types");
+    return this.http.get<any>("admin/config/types");
   }
 
   public async getSystemConfigs(configType?: string) {
     const queryParams = new URLSearchParams();
     if (configType) queryParams.set("config_type", configType);
 
-    return this.http.get<ISystemConfig[]>(
+    return this.http.get<any>(
       `admin/configs?${queryParams.toString()}`
     );
   }

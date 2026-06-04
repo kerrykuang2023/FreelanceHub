@@ -6,7 +6,7 @@ class JobsService {
   private baseUrl = "/jobs";
 
   async getJobs(params?: any) {
-    return httpService.get(this.baseUrl, { params });
+    return httpService.get(this.baseUrl, params);
   }
 
   async getJobById(id: string) {
@@ -26,19 +26,19 @@ class JobsService {
   }
 
   async getMyPostedJobs(params?: any) {
-    return httpService.get(`${this.baseUrl}/my-posted-jobs`, { params });
+    return httpService.get(`${this.baseUrl}/my-posted-jobs`, params);
   }
 
   async getMyProjects(params?: any) {
-    return httpService.get(`${this.baseUrl}/my-projects`, { params });
+    return httpService.get(`${this.baseUrl}/my-projects`, params);
   }
 
   async getMyApplications(params?: any) {
-    return httpService.get(`/job-applications/my-applications`, { params });
+    return httpService.get(`/job-applications/my-applications`, params);
   }
 
   async getApplicationsForMyJobs(params?: any) {
-    return httpService.get(`/job-applications/received`, { params });
+    return httpService.get(`/job-applications/received`, params);
   }
 
   async applyForJob(jobId: string, data: any) {

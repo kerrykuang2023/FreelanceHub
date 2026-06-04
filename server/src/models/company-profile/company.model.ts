@@ -70,6 +70,10 @@ const CompanySchema = new mongoose.Schema(
       type: String,
       maxlength: 20,
     },
+    contact_email: {
+      type: String,
+      maxlength: 100,
+    },
     business_scope: {
       type: String,
       maxlength: 500,

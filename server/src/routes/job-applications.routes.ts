@@ -10,6 +10,7 @@ router.get('/received', authMiddleware, JobApplicationsController.getApplication
 router.get('/my-applications', authMiddleware, JobApplicationsController.getUserApplications as any);
 router.get('/jobs/:id/applications', authMiddleware, JobApplicationsController.getJobApplications as any);
 router.patch('/:id/status', authMiddleware, JobApplicationsController.updateJobApplication as any);
+router.put('/:id/status', authMiddleware, JobApplicationsController.updateJobApplication as any);
 router.post('/:id/withdraw', authMiddleware, JobApplicationsController.withdrawApplication as any);
 router.get('/:id', authMiddleware, JobApplicationsController.getApplicationById as any);
 

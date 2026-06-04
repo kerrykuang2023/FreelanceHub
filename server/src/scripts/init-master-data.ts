@@ -7,7 +7,7 @@ import FreelancerProfile from '../models/freelancer/freelancer_profile.model';
 import UserRole from '../models/user/user-role.model';
 import SystemConfig, { SYSTEM_CONFIG_TYPES } from '../models/system-config.model';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/jobportal';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/freelancehub';
 
 interface MasterDataResult {
   companies: any[];
@@ -19,7 +19,7 @@ interface MasterDataResult {
 }
 
 export async function initializeMasterData(): Promise<MasterDataResult> {
-  console.log('🚀 开始初始化主数据...');
+  console.log('🚀 开始初始化主数�?..');
   
   const result: MasterDataResult = {
     companies: [],
@@ -32,7 +32,7 @@ export async function initializeMasterData(): Promise<MasterDataResult> {
 
   try {
     await mongoose.connect(MONGODB_URI);
-    console.log('✅ 数据库连接成功');
+    console.log('�?数据库连接成�?);
 
     result.companies = await initializeCompanies();
     result.skillCategories = await initializeSkillCategories();
@@ -42,11 +42,11 @@ export async function initializeMasterData(): Promise<MasterDataResult> {
     result.freelancerProfiles = await initializeFreelancerProfiles(result.users);
 
     console.log('\n' + '='.repeat(80));
-    console.log('✅ 主数据初始化完成');
+    console.log('�?主数据初始化完成');
     console.log('='.repeat(80));
     console.log(`- 公司: ${result.companies.length} 家`);
-    console.log(`- 技能大类: ${result.skillCategories.length} 个`);
-    console.log(`- 技能小类: ${result.skillSubCategories.length} 个`);
+    console.log(`- 技能大�? ${result.skillCategories.length} 个`);
+    console.log(`- 技能小�? ${result.skillSubCategories.length} 个`);
     console.log(`- 系统配置: ${result.systemConfigs.length} 项`);
     console.log(`- 测试用户: ${result.users.length} 个`);
     console.log(`- 顾问档案: ${result.freelancerProfiles.length} 个`);
@@ -54,13 +54,13 @@ export async function initializeMasterData(): Promise<MasterDataResult> {
 
     return result;
   } catch (error) {
-    console.error('❌ 主数据初始化失败:', error);
+    console.error('�?主数据初始化失败:', error);
     throw error;
   }
 }
 
 async function initializeCompanies(): Promise<any[]> {
-  console.log('\n📋 初始化公司信息...');
+  console.log('\n📋 初始化公司信�?..');
   
   const companies = [
     {
@@ -69,7 +69,7 @@ async function initializeCompanies(): Promise<any[]> {
       business_license_number: '91110000MA00ABCD12',
       legal_representative: '张三',
       contact_phone: '13800138001',
-      company_address: '北京市朝阳区测试路1号',
+      company_address: '北京市朝阳区测试�?�?,
       verification_status: 'approved',
       verified_at: new Date(),
       profile_description: '测试终端企业，用于E2E测试',
@@ -80,7 +80,7 @@ async function initializeCompanies(): Promise<any[]> {
       business_license_number: '91110000MA00EFGH34',
       legal_representative: '王五',
       contact_phone: '13800138002',
-      company_address: '北京市海淀区测试街2号',
+      company_address: '北京市海淀区测试街2�?,
       verification_status: 'approved',
       verified_at: new Date(),
       profile_description: '测试挂靠企业，用于E2E测试',
@@ -91,7 +91,7 @@ async function initializeCompanies(): Promise<any[]> {
       business_license_number: '91110000MA00IJKL56',
       legal_representative: '赵七',
       contact_phone: '13800138003',
-      company_address: '上海市浦东新区测试大道3号',
+      company_address: '上海市浦东新区测试大�?�?,
       verification_status: 'approved',
       verified_at: new Date(),
       profile_description: '测试外包公司，用于E2E测试',
@@ -103,7 +103,7 @@ async function initializeCompanies(): Promise<any[]> {
   for (const companyData of companies) {
     const existing = await Company.findOne({ company_name: companyData.company_name });
     if (existing) {
-      console.log(`  - 公司已存在: ${companyData.company_name}`);
+      console.log(`  - 公司已存�? ${companyData.company_name}`);
       createdCompanies.push(existing);
     } else {
       const company = new Company(companyData);
@@ -117,15 +117,15 @@ async function initializeCompanies(): Promise<any[]> {
 }
 
 async function initializeSkillCategories(): Promise<any[]> {
-  console.log('\n📋 初始化技能大类...');
+  console.log('\n📋 初始化技能大�?..');
   
   const categories = [
-    { category_name: 'SAP', category_code: 'SAP', description: 'SAP相关技能', display_order: 1 },
-    { category_name: 'Java', category_code: 'JAVA', description: 'Java开发技能', display_order: 2 },
-    { category_name: 'Python', category_code: 'PYTHON', description: 'Python开发技能', display_order: 3 },
-    { category_name: '前端开发', category_code: 'FRONTEND', description: '前端开发技能', display_order: 4 },
-    { category_name: '数据库', category_code: 'DATABASE', description: '数据库技能', display_order: 5 },
-    { category_name: '项目管理', category_code: 'PM', description: '项目管理技能', display_order: 6 },
+    { category_name: 'SAP', category_code: 'SAP', description: 'SAP相关技�?, display_order: 1 },
+    { category_name: 'Java', category_code: 'JAVA', description: 'Java开发技�?, display_order: 2 },
+    { category_name: 'Python', category_code: 'PYTHON', description: 'Python开发技�?, display_order: 3 },
+    { category_name: '前端开�?, category_code: 'FRONTEND', description: '前端开发技�?, display_order: 4 },
+    { category_name: '数据�?, category_code: 'DATABASE', description: '数据库技�?, display_order: 5 },
+    { category_name: '项目管理', category_code: 'PM', description: '项目管理技�?, display_order: 6 },
   ];
 
   const createdCategories: any[] = [];
@@ -138,7 +138,7 @@ async function initializeSkillCategories(): Promise<any[]> {
     } else {
       const category = new SkillCategory(catData);
       await category.save();
-      console.log(`  - 创建技能大类: ${catData.category_name}`);
+      console.log(`  - 创建技能大�? ${catData.category_name}`);
       createdCategories.push(category);
     }
   }
@@ -147,7 +147,7 @@ async function initializeSkillCategories(): Promise<any[]> {
 }
 
 async function initializeSkillSubCategories(parentCategories: any[]): Promise<any[]> {
-  console.log('\n📋 初始化技能小类...');
+  console.log('\n📋 初始化技能小�?..');
   
   const subCategoriesMap: { [key: string]: { name: string; code: string }[] } = {
     'SAP': [
@@ -158,7 +158,7 @@ async function initializeSkillSubCategories(parentCategories: any[]): Promise<an
     ],
     'Java': [
       { name: 'Spring Boot', code: 'JAVA_SPRING_BOOT' },
-      { name: '微服务', code: 'JAVA_MICROSERVICE' },
+      { name: '微服�?, code: 'JAVA_MICROSERVICE' },
       { name: 'MyBatis', code: 'JAVA_MYBATIS' },
     ],
     'Python': [
@@ -166,12 +166,12 @@ async function initializeSkillSubCategories(parentCategories: any[]): Promise<an
       { name: 'Flask', code: 'PYTHON_FLASK' },
       { name: '数据分析', code: 'PYTHON_DATA' },
     ],
-    '前端开发': [
+    '前端开�?: [
       { name: 'React', code: 'FE_REACT' },
       { name: 'Vue', code: 'FE_VUE' },
       { name: 'Angular', code: 'FE_ANGULAR' },
     ],
-    '数据库': [
+    '数据�?: [
       { name: 'MySQL', code: 'DB_MYSQL' },
       { name: 'PostgreSQL', code: 'DB_POSTGRESQL' },
       { name: 'MongoDB', code: 'DB_MONGODB' },
@@ -204,7 +204,7 @@ async function initializeSkillSubCategories(parentCategories: any[]): Promise<an
           display_order: createdSubCategories.length + 1,
         });
         await subCategory.save();
-        console.log(`  - 创建技能小类: ${parent.category_name} > ${subCatData.name}`);
+        console.log(`  - 创建技能小�? ${parent.category_name} > ${subCatData.name}`);
         createdSubCategories.push(subCategory);
       }
     }
@@ -214,17 +214,17 @@ async function initializeSkillSubCategories(parentCategories: any[]): Promise<an
 }
 
 async function initializeSystemConfigs(): Promise<any[]> {
-  console.log('\n📋 初始化系统配置...');
+  console.log('\n📋 初始化系统配�?..');
   
   const configs = [
     { config_type: SYSTEM_CONFIG_TYPES.WORK_TYPE, config_key: 'remote', config_value: 'remote', display_name: '远程工作', display_order: 1 },
-    { config_type: SYSTEM_CONFIG_TYPES.WORK_TYPE, config_key: 'onsite', config_value: 'onsite', display_name: '现场开发', display_order: 2 },
+    { config_type: SYSTEM_CONFIG_TYPES.WORK_TYPE, config_key: 'onsite', config_value: 'onsite', display_name: '现场开�?, display_order: 2 },
     { config_type: SYSTEM_CONFIG_TYPES.WORK_TYPE, config_key: 'meeting', config_value: 'meeting', display_name: '会议', display_order: 3 },
     { config_type: SYSTEM_CONFIG_TYPES.WORK_TYPE, config_key: 'training', config_value: 'training', display_name: '培训', display_order: 4 },
     { config_type: SYSTEM_CONFIG_TYPES.WORK_TYPE, config_key: 'travel', config_value: 'travel', display_name: '出差', display_order: 5 },
     { config_type: SYSTEM_CONFIG_TYPES.WORK_TYPE, config_key: 'code_review', config_value: 'code_review', display_name: '代码评审', display_order: 6 },
     { config_type: SYSTEM_CONFIG_TYPES.WORK_TYPE, config_key: 'bug_fix', config_value: 'bug_fix', display_name: '问题修复', display_order: 7 },
-    { config_type: SYSTEM_CONFIG_TYPES.WORK_TYPE, config_key: 'requirement', config_value: 'requirement', display_name: '需求分析', display_order: 8 },
+    { config_type: SYSTEM_CONFIG_TYPES.WORK_TYPE, config_key: 'requirement', config_value: 'requirement', display_name: '需求分�?, display_order: 8 },
     { config_type: SYSTEM_CONFIG_TYPES.WORK_TYPE, config_key: 'documentation', config_value: 'documentation', display_name: '文档编写', display_order: 9 },
     { config_type: SYSTEM_CONFIG_TYPES.WORK_TYPE, config_key: 'testing', config_value: 'testing', display_name: '测试', display_order: 10 },
     { config_type: SYSTEM_CONFIG_TYPES.WORK_TYPE, config_key: 'deployment', config_value: 'deployment', display_name: '部署', display_order: 11 },
@@ -239,13 +239,13 @@ async function initializeSystemConfigs(): Promise<any[]> {
     { config_type: SYSTEM_CONFIG_TYPES.WORK_FORMAT, config_key: 'onsite', config_value: '现场', display_name: '现场', display_order: 2 },
     { config_type: SYSTEM_CONFIG_TYPES.WORK_FORMAT, config_key: 'hybrid', config_value: '混合', display_name: '混合', display_order: 3 },
     
-    { config_type: SYSTEM_CONFIG_TYPES.RATE_TYPE, config_key: 'negotiable', config_value: '待面试', display_name: '待面试', display_order: 1 },
+    { config_type: SYSTEM_CONFIG_TYPES.RATE_TYPE, config_key: 'negotiable', config_value: '待面�?, display_name: '待面�?, display_order: 1 },
     { config_type: SYSTEM_CONFIG_TYPES.RATE_TYPE, config_key: 'daily', config_value: '日薪', display_name: '日薪', display_order: 2 },
     { config_type: SYSTEM_CONFIG_TYPES.RATE_TYPE, config_key: 'monthly', config_value: '月薪', display_name: '月薪', display_order: 3 },
     { config_type: SYSTEM_CONFIG_TYPES.RATE_TYPE, config_key: 'yearly', config_value: '年薪', display_name: '年薪', display_order: 4 },
     { config_type: SYSTEM_CONFIG_TYPES.RATE_TYPE, config_key: 'project', config_value: '项目总价', display_name: '项目总价', display_order: 5 },
     
-    { config_type: SYSTEM_CONFIG_TYPES.CURRENCY, config_key: 'CNY', config_value: 'CNY', display_name: '人民币 (CNY)', display_order: 1 },
+    { config_type: SYSTEM_CONFIG_TYPES.CURRENCY, config_key: 'CNY', config_value: 'CNY', display_name: '人民�?(CNY)', display_order: 1 },
     { config_type: SYSTEM_CONFIG_TYPES.CURRENCY, config_key: 'USD', config_value: 'USD', display_name: '美元 (USD)', display_order: 2 },
     { config_type: SYSTEM_CONFIG_TYPES.CURRENCY, config_key: 'EUR', config_value: 'EUR', display_name: '欧元 (EUR)', display_order: 3 },
     
@@ -253,7 +253,7 @@ async function initializeSystemConfigs(): Promise<any[]> {
     { config_type: SYSTEM_CONFIG_TYPES.TAX_RATE, config_key: 'vat_13', config_value: '13', display_name: '13%', display_order: 2 },
     
     { config_type: SYSTEM_CONFIG_TYPES.INVOICE_TYPE, config_key: 'vat_special', config_value: '增值税专用发票', display_name: '增值税专用发票', display_order: 1 },
-    { config_type: SYSTEM_CONFIG_TYPES.INVOICE_TYPE, config_key: 'vat_normal', config_value: '增值税普通发票', display_name: '增值税普通发票', display_order: 2 },
+    { config_type: SYSTEM_CONFIG_TYPES.INVOICE_TYPE, config_key: 'vat_normal', config_value: '增值税普通发�?, display_name: '增值税普通发�?, display_order: 2 },
     { config_type: SYSTEM_CONFIG_TYPES.INVOICE_TYPE, config_key: 'personal', config_value: '个人发票', display_name: '个人发票', display_order: 3 },
   ];
 
@@ -280,7 +280,7 @@ async function initializeSystemConfigs(): Promise<any[]> {
 }
 
 async function initializeTestUsers(companies: any[]): Promise<any[]> {
-  console.log('\n📋 初始化测试用户...');
+  console.log('\n📋 初始化测试用�?..');
   
   const testUsers = [
     {
@@ -318,7 +318,7 @@ async function initializeTestUsers(companies: any[]): Promise<any[]> {
     {
       email: 'admin@test.com',
       password: 'Test1234!',
-      first_name: '测试管理员',
+      first_name: '测试管理�?,
       last_name: '',
       contact_number: '13900139005',
       user_type_id: null,
@@ -326,7 +326,7 @@ async function initializeTestUsers(companies: any[]): Promise<any[]> {
     {
       email: 'admin2@test.com',
       password: 'Test1234!',
-      first_name: '测试管理员',
+      first_name: '测试管理�?,
       last_name: 'B',
       contact_number: '13900139006',
       user_type_id: null,
@@ -339,7 +339,7 @@ async function initializeTestUsers(companies: any[]): Promise<any[]> {
   for (const userData of testUsers) {
     const existing = await UserAccount.findOne({ email: userData.email });
     if (existing) {
-      console.log(`  - 用户已存在: ${userData.email}`);
+      console.log(`  - 用户已存�? ${userData.email}`);
       createdUsers.push(existing);
     } else {
       const hashedPassword = await bcrypt.hash(userData.password, 10);
@@ -394,7 +394,7 @@ async function initializeTestUsers(companies: any[]): Promise<any[]> {
 }
 
 async function initializeFreelancerProfiles(users: any[]): Promise<any[]> {
-  console.log('\n📋 初始化顾问档案...');
+  console.log('\n📋 初始化顾问档�?..');
   
   const freelancerUsers = users.filter(u => 
     u.email.includes('freelancer')
@@ -405,14 +405,14 @@ async function initializeFreelancerProfiles(users: any[]): Promise<any[]> {
   for (const user of freelancerUsers) {
     const existing = await FreelancerProfile.findOne({ user_id: user._id });
     if (existing) {
-      console.log(`  - 顾问档案已存在: ${user.email}`);
+      console.log(`  - 顾问档案已存�? ${user.email}`);
       createdProfiles.push(existing);
     } else {
       const profile = new FreelancerProfile({
         user_id: user._id,
         display_name: `${user.first_name} ${user.last_name}`,
-        headline: '资深技术顾问',
-        summary: '拥有丰富项目经验的技术顾问',
+        headline: '资深技术顾�?,
+        summary: '拥有丰富项目经验的技术顾�?,
         years_of_experience: 8,
         daily_rate: 2000,
         monthly_rate: 40000,
@@ -431,7 +431,7 @@ async function initializeFreelancerProfiles(users: any[]): Promise<any[]> {
 }
 
 export async function verifyMasterData(): Promise<{ success: boolean; details: any }> {
-  console.log('\n🔍 验证主数据完整性...');
+  console.log('\n🔍 验证主数据完整�?..');
   
   const checks = {
     companies: await Company.countDocuments(),
@@ -443,9 +443,9 @@ export async function verifyMasterData(): Promise<{ success: boolean; details: a
   };
 
   const requirements = {
-    companies: { min: 2, description: '终端企业和挂靠企业' },
-    skillCategories: { min: 2, description: '技能大类' },
-    skillSubCategories: { min: 4, description: '技能小类' },
+    companies: { min: 2, description: '终端企业和挂靠企�? },
+    skillCategories: { min: 2, description: '技能大�? },
+    skillSubCategories: { min: 4, description: '技能小�? },
     systemConfigs: { min: 20, description: '系统配置' },
     users: { min: 6, description: '测试用户' },
     freelancerProfiles: { min: 2, description: '顾问档案' },
@@ -467,9 +467,9 @@ export async function verifyMasterData(): Promise<{ success: boolean; details: a
     };
 
     if (passed) {
-      console.log(`  ✅ ${requirement.description}: ${actual}/${requirement.min}`);
+      console.log(`  �?${requirement.description}: ${actual}/${requirement.min}`);
     } else {
-      console.log(`  ❌ ${requirement.description}: ${actual}/${requirement.min} (不足)`);
+      console.log(`  �?${requirement.description}: ${actual}/${requirement.min} (不足)`);
     }
   }
 
@@ -484,15 +484,15 @@ if (require.main === module) {
     .then(async () => {
       const verification = await verifyMasterData();
       if (verification.success) {
-        console.log('\n✅ 主数据验证通过');
+        console.log('\n�?主数据验证通过');
         process.exit(0);
       } else {
-        console.log('\n❌ 主数据验证失败');
+        console.log('\n�?主数据验证失�?);
         process.exit(1);
       }
     })
     .catch((error) => {
-      console.error('初始化失败:', error);
+      console.error('初始化失�?', error);
       process.exit(1);
     })
     .finally(() => {

@@ -11,6 +11,7 @@ import {
 } from '@heroicons/react/24/outline';
 import invoiceService from '@/services/invoices.service';
 import PageHeader from '@/components/core-ui/PageHeader';
+import PortalLayout from '@/components/layouts/portal/PortalLayout';
 
 interface IInvoice {
   _id: string;
@@ -114,7 +115,8 @@ const InvoiceReviewPage = () => {
   const pendingCount = invoices.filter((i) => i.status === 'submitted').length;
 
   return (
-    <div className="space-y-6">
+    <PortalLayout title="发票审核">
+      <div className="space-y-6">
       <PageHeader
         title="发票审核"
         description="审核顾问提交的发票"
@@ -420,7 +422,8 @@ const InvoiceReviewPage = () => {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </PortalLayout>
   );
 };
 

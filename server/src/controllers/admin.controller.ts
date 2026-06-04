@@ -97,7 +97,7 @@ export default class AdminController {
         WorkLog.countDocuments(),
         FreelancerInvoice.countDocuments(),
         Company.countDocuments({ verification_status: "pending" }),
-        FreelancerInvoice.countDocuments({ status: "pending" })
+        FreelancerInvoice.countDocuments({ status: "submitted" })
       ]);
 
       const recentWorkLogs = await WorkLog.find()
@@ -709,7 +709,7 @@ export default class AdminController {
         RoleApproval.find(query)
           .populate("user_id", "email first_name last_name")
           .populate("reviewed_by", "email")
-          .sort({ created_at: -1 })
+          .sort({ created_at: -1, createdAt: -1 })
           .skip(skip)
           .limit(Number(limit)),
         RoleApproval.countDocuments(query)
@@ -758,6 +758,10 @@ export default class AdminController {
         return res.status(404).json({ error: "Role approval not found" });
       }
 
+      if (approval.user_id.toString() === adminUser._id.toString()) {
+        return res.status(403).json({ error: "不能审批自己的角色申请，请由其他平台管理员处理" });
+      }
+
       if (approval.status !== "pending") {
         return res.status(400).json({ error: "This application has already been processed" });
       }
@@ -781,10 +785,14 @@ export default class AdminController {
         await userRole.save();
       }
 
-      await NotificationService.notifyRoleApprovalApproved(
-        approval.user_id.toString(),
-        approval.role_type
-      );
+      try {
+        await NotificationService.notifyRoleApprovalApproved(
+          approval.user_id.toString(),
+          approval.role_type
+        );
+      } catch (notificationError) {
+        console.warn("Failed to send role approval notification:", notificationError);
+      }
 
       res.json({
         success: true,
@@ -811,6 +819,10 @@ export default class AdminController {
         return res.status(404).json({ error: "Role approval not found" });
       }
 
+      if (approval.user_id.toString() === adminUser._id.toString()) {
+        return res.status(403).json({ error: "不能审批自己的角色申请，请由其他平台管理员处理" });
+      }
+
       if (approval.status !== "pending") {
         return res.status(400).json({ error: "This application has already been processed" });
       }
@@ -834,11 +846,15 @@ export default class AdminController {
         await userRole.save();
       }
 
-      await NotificationService.notifyRoleApprovalRejected(
-        approval.user_id.toString(),
-        approval.role_type,
-        rejection_reason
-      );
+      try {
+        await NotificationService.notifyRoleApprovalRejected(
+          approval.user_id.toString(),
+          approval.role_type,
+          rejection_reason
+        );
+      } catch (notificationError) {
+        console.warn("Failed to send role rejection notification:", notificationError);
+      }
 
       res.json({
         success: true,

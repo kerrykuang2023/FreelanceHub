@@ -23,7 +23,7 @@ test.describe('HR Onboarding Flow', () => {
     const onboardingPage = page.locator('[data-testid="hr-onboarding-page"]');
     await expect(onboardingPage).toBeVisible({ timeout: 10000 });
     
-    const title = page.locator('h1:has-text("欢迎加入JobPortal")');
+    const title = page.locator('h1:has-text("欢迎加入FreelanceHub")');
     await expect(title).toBeVisible();
     
     await page.screenshot({ 

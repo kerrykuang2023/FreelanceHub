@@ -22,6 +22,7 @@ interface Company {
   company_name: string;
   logo_url?: string;
   cover_url?: string;
+  cover_image_url?: string;
   industry?: string;
   company_size?: string;
   profile_description?: string;
@@ -42,6 +43,8 @@ const CompanyManagementPage = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'edit' | 'gallery'>('overview');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     company_name: '',
@@ -83,15 +86,30 @@ const CompanyManagementPage = () => {
   };
 
   const handleSave = async () => {
+    if (!company) return;
+    if (!formData.company_name.trim()) {
+      setErrorMessage('请填写公司名称后再保存。');
+      return;
+    }
+
     try {
       setSaving(true);
-      const response = await companyService.updateCompany(company!._id, formData);
+      setErrorMessage(null);
+      setSuccessMessage(null);
+      const response = await companyService.updateCompany(company._id, {
+        ...formData,
+        company_name: formData.company_name.trim(),
+      });
       if (response.success) {
-        setCompany({ ...company!, ...formData });
+        setCompany(response.data || { ...company, ...formData });
         setActiveTab('overview');
+        setSuccessMessage(response.message || '公司信息已保存。');
+      } else {
+        setErrorMessage(response.message || '保存公司信息失败，请稍后重试。');
       }
     } catch (error) {
       console.error('Failed to save company:', error);
+      setErrorMessage('保存公司信息失败，请稍后重试。');
     } finally {
       setSaving(false);
     }
@@ -133,9 +151,9 @@ const CompanyManagementPage = () => {
 
   const companySizes = [
     { value: '1-50', label: '1-50人' },
-    { value: '50-200', label: '50-200人' },
-    { value: '200-500', label: '200-500人' },
-    { value: '500-1000', label: '500-1000人' },
+    { value: '51-200', label: '51-200人' },
+    { value: '201-500', label: '201-500人' },
+    { value: '501-1000', label: '501-1000人' },
     { value: '1000+', label: '1000人以上' },
   ];
 
@@ -202,11 +220,23 @@ const CompanyManagementPage = () => {
           }
         />
 
+        {successMessage && (
+          <div className="rounded-lg border border-green-200 bg-green-50 p-4 text-sm text-green-700" data-testid="company-success-message">
+            {successMessage}
+          </div>
+        )}
+
+        {errorMessage && (
+          <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700" data-testid="company-error-message">
+            {errorMessage}
+          </div>
+        )}
+
         <div className={`${cardVariants.default} overflow-hidden`}>
           <div className="relative h-48 bg-gradient-to-r from-blue-500 to-cyan-500">
-            {company.cover_url && (
+            {(company.cover_url || company.cover_image_url) && (
               <img
-                src={company.cover_url}
+                src={company.cover_url || company.cover_image_url}
                 alt="Company cover"
                 className="w-full h-full object-cover"
               />
@@ -469,9 +499,11 @@ const CompanyManagementPage = () => {
 
                   <div className="flex justify-end">
                     <button
+                      type="button"
                       onClick={handleSave}
                       disabled={saving}
                       className={`px-6 py-2.5 rounded-xl font-semibold ${buttonVariants.primary} disabled:opacity-50`}
+                      data-testid="save-company-button"
                     >
                       {saving ? '保存中...' : '保存更改'}
                     </button>

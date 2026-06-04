@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 async function fixHRApplicationData() {
   try {
-    await mongoose.connect('mongodb://localhost:27017/jobportal');
+    await mongoose.connect('mongodb://localhost:27017/freelancehub');
     const db = mongoose.connection.db;
 
     console.log('\n========================================');
@@ -24,7 +24,7 @@ async function fixHRApplicationData() {
       job_post_id: { $in: hrJobIds }
     }).toArray();
     
-    console.log(`HR 的职位关联的申请数: ${applications.length}`);
+    console.log(`HR 的职位关联的申请�? ${applications.length}`);
 
     if (applications.length === 0 && hrJobs.length > 0) {
       console.log('没有找到关联的申请，创建新的申请...');
@@ -33,7 +33,7 @@ async function fixHRApplicationData() {
       const freelancerProfile = await db.collection('freelancer_profile').findOne({ user_id: freelancerUser._id });
       
       if (!freelancerProfile) {
-        console.log('❌ 未找到 Freelancer Profile');
+        console.log('�?未找�?Freelancer Profile');
         await mongoose.disconnect();
         return;
       }
@@ -50,7 +50,7 @@ async function fixHRApplicationData() {
           application_type: 'job',
           apply_date: new Date(),
           status: 'pending',
-          cover_letter: '测试申请 - 工作台数据验证',
+          cover_letter: '测试申请 - 工作台数据验�?,
           expected_rate: 2000,
           availability: '立即可用',
           createdAt: new Date(),
@@ -59,23 +59,23 @@ async function fixHRApplicationData() {
       }
 
       const result = await db.collection('job_post_activity').insertMany(newApplications);
-      console.log(`创建新申请: ${result.insertedCount} 个`);
+      console.log(`创建新申�? ${result.insertedCount} 个`);
     }
 
     const hrApplications = await db.collection('job_post_activity').find({
       job_post_id: { $in: hrJobIds }
     }).toArray();
     
-    console.log(`修复后 HR 收到的申请数: ${hrApplications.length}`);
+    console.log(`修复�?HR 收到的申请数: ${hrApplications.length}`);
     hrApplications.forEach(app => {
-      console.log(`  申请 ${app._id} 关联职位 ${app.job_post_id}, 状态: ${app.status}`);
+      console.log(`  申请 ${app._id} 关联职位 ${app.job_post_id}, 状�? ${app.status}`);
     });
 
     await mongoose.disconnect();
     
-    console.log('\n✅ 修复完成!');
+    console.log('\n�?修复完成!');
   } catch (error) {
-    console.error('❌ 修复失败:', error);
+    console.error('�?修复失败:', error);
     await mongoose.disconnect();
     process.exit(1);
   }

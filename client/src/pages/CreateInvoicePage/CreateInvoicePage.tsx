@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { PlusIcon, TrashIcon, ClipboardDocumentListIcon } from "@heroicons/react/24/outline";
-import { useFormik } from "formik";
+import { Field, FieldArray, Form, Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import {
   IInvoiceFormData,
@@ -173,7 +173,7 @@ const CreateInvoicePage = () => {
       setCurrencies(currs.filter(t => t.is_active));
 
       if (types.length > 0) {
-        setInitialValues(prev => ({ ...prev, invoice_type: types[0].config_value }));
+        setInitialValues(prev => ({ ...prev, invoice_type: types[0].config_value as any }));
       }
       if (rates.length > 0) {
         const defaultRate = rates.find(r => r.config_value === "6") || rates[0];

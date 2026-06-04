@@ -1,34 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   BriefcaseIcon,
-  BuildingOfficeIcon,
-  MapPinIcon,
-  DocumentTextIcon,
-  EyeIcon,
-  CurrencyDollarIcon,
   CalendarIcon,
-  UserGroupIcon,
   ClockIcon,
-  TagIcon,
+  CurrencyDollarIcon,
+  EyeIcon,
+  MapPinIcon,
+  UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import PortalLayout from "@/components/layouts/portal/PortalLayout";
 import JobsService from "@/services/jobs.service";
-import SkillCategoryService from "@/services/skill-category.service";
 import Divider from "@/components/core-ui/Divider";
 import PageHeader from "@/components/core-ui/PageHeader";
 import QuickActionsMenu from "@/components/core-ui/QuickActionsMenu";
-
-interface IJobType {
-  _id: string;
-  job_type: string;
-}
-
-interface ISkillCategory {
-  _id: string;
-  category_name: string;
-  sub_categories?: { _id: string; sub_category_name: string }[];
-}
 
 const JOB_NATURE_OPTIONS = [
   { value: "full_time", label: "全职" },
@@ -44,7 +29,7 @@ const WORK_FORMAT_OPTIONS = [
 ];
 
 const RATE_TYPE_OPTIONS = [
-  { value: "negotiable", label: "待面试" },
+  { value: "negotiable", label: "待面议" },
   { value: "daily", label: "日薪" },
   { value: "monthly", label: "月薪" },
   { value: "yearly", label: "年薪" },
@@ -69,65 +54,29 @@ const PROJECT_CYCLE_OPTIONS = [
 
 const PostJobPage = () => {
   const navigate = useNavigate();
-  const [jobTypes, setJobTypes] = useState<IJobType[]>([]);
-  const [skillCategories, setSkillCategories] = useState<ISkillCategory[]>([]);
-  const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const [formData, setFormData] = useState({
     project_title: "",
     project_description: "",
-    job_type_id: "",
-    job_nature: "",
-    work_format: "",
-    rate_type: "",
+    job_nature: "freelance",
+    work_format: "remote",
+    rate_type: "daily",
     rate_amount: "",
     rate_currency: "CNY",
-    project_major_categories: [] as string[],
-    project_sub_categories: [] as string[],
-    project_cycle: "",
+    project_cycle: "1_month",
     start_date: "",
     hiring_count: "1",
     is_company_name_hidden: false,
     street_address: "",
     city: "",
     state: "",
-    country: "",
+    country: "中国",
     zip_code: "",
   });
-
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    fetchInitialData();
-  }, []);
-
-  const fetchInitialData = async () => {
-    try {
-      setLoading(true);
-      const [jobTypesRes, skillsRes] = await Promise.all([
-        JobsService.getJobTypes(),
-        SkillCategoryService.getAllSkillCategories(),
-      ]);
-      
-      const types = (jobTypesRes as any).job_types || (jobTypesRes as any) || [];
-      setJobTypes(types);
-      
-      // Handle different API response formats
-      const skillsData = skillsRes as any;
-      const categories = skillsData.categories || skillsData.value || skillsData || [];
-      setSkillCategories(categories);
-      
-      console.log('Loaded skill categories:', categories);
-    } catch (err) {
-      console.error("Failed to fetch initial data:", err);
-      setError("Failed to load form data");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const validateForm = () => {
     const errors: Record<string, string> = {};
@@ -135,50 +84,24 @@ const PostJobPage = () => {
     if (!formData.project_title.trim()) {
       errors.project_title = "项目标题是必填项";
     } else if (formData.project_title.length > 200) {
-      errors.project_title = "项目标题不能超过200字符";
+      errors.project_title = "项目标题不能超过200个字符";
     }
 
     if (!formData.project_description.trim()) {
       errors.project_description = "项目描述是必填项";
     } else if (formData.project_description.length < 20) {
-      errors.project_description = "项目描述至少需要20字符";
+      errors.project_description = "项目描述至少需要20个字符";
     }
 
-    if (!formData.job_nature) {
-      errors.job_nature = "工作性质是必填项";
-    }
-
-    if (!formData.work_format) {
-      errors.work_format = "工作形式是必填项";
-    }
-
-    if (!formData.rate_type) {
-      errors.rate_type = "费率类型是必填项";
-    }
-
-    if (formData.rate_type && formData.rate_type !== "negotiable" && !formData.rate_amount) {
+    if (!formData.job_nature) errors.job_nature = "工作性质是必填项";
+    if (!formData.work_format) errors.work_format = "工作形式是必填项";
+    if (!formData.rate_type) errors.rate_type = "费率类型是必填项";
+    if (formData.rate_type !== "negotiable" && !formData.rate_amount) {
       errors.rate_amount = "费率金额是必填项";
     }
-
-    if (formData.project_major_categories.length === 0) {
-      errors.project_major_categories = "请选择至少一个技能大类";
-    }
-
-    if (formData.project_sub_categories.length === 0) {
-      errors.project_sub_categories = "请选择至少一个技能小类";
-    }
-
-    if (!formData.project_cycle) {
-      errors.project_cycle = "项目周期是必填项";
-    }
-
-    if (!formData.city.trim()) {
-      errors.city = "城市是必填项";
-    }
-
-    if (!formData.country.trim()) {
-      errors.country = "国家是必填项";
-    }
+    if (!formData.project_cycle) errors.project_cycle = "项目周期是必填项";
+    if (!formData.city.trim()) errors.city = "城市是必填项";
+    if (!formData.country.trim()) errors.country = "国家是必填项";
 
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
@@ -189,7 +112,6 @@ const PostJobPage = () => {
   ) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
-
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -197,56 +119,34 @@ const PostJobPage = () => {
 
     if (formErrors[name]) {
       setFormErrors((prev) => {
-        const newErrors = { ...prev };
-        delete newErrors[name];
-        return newErrors;
-      });
-    }
-  };
-
-  const handleMultiSelect = (name: string, value: string) => {
-    setFormData((prev) => {
-      const currentValues = prev[name as keyof typeof prev] as string[];
-      const newValues = currentValues.includes(value)
-        ? currentValues.filter((v) => v !== value)
-        : [...currentValues, value];
-      return { ...prev, [name]: newValues };
-    });
-
-    if (formErrors[name]) {
-      setFormErrors((prev) => {
-        const newErrors = { ...prev };
-        delete newErrors[name];
-        return newErrors;
+        const next = { ...prev };
+        delete next[name];
+        return next;
       });
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
 
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
 
     try {
       setSubmitting(true);
-      setError(null);
-
-      const payload = {
+      await JobsService.createJob({
         project_title: formData.project_title,
         project_description: formData.project_description,
-        job_type_id: formData.job_type_id || undefined,
         job_nature: formData.job_nature,
         work_format: formData.work_format,
         rate_type: formData.rate_type,
-        rate_amount: formData.rate_amount ? parseFloat(formData.rate_amount) : undefined,
+        rate_amount: formData.rate_amount ? Number(formData.rate_amount) : undefined,
         rate_currency: formData.rate_currency,
-        project_major_categories: formData.project_major_categories,
-        project_sub_categories: formData.project_sub_categories,
+        project_major_categories: [],
+        project_sub_categories: [],
         project_cycle: formData.project_cycle,
         start_date: formData.start_date || undefined,
-        hiring_count: parseInt(formData.hiring_count) || 1,
+        hiring_count: Number(formData.hiring_count) || 1,
         is_company_name_hidden: formData.is_company_name_hidden,
         job_location: {
           street_address: formData.street_address,
@@ -255,32 +155,17 @@ const PostJobPage = () => {
           country: formData.country,
           zip_code: formData.zip_code,
         },
-      };
+      });
 
-      await JobsService.createJob(payload);
       setSuccess(true);
-
-      setTimeout(() => {
-        navigate("/my-jobs");
-      }, 2000);
+      setTimeout(() => navigate("/my-jobs"), 1200);
     } catch (err: any) {
-      console.error("Failed to create job:", err);
-      const errorMessage = err.response?.data?.message || err.message || "创建项目失败，请重试";
-      setError(errorMessage);
+      const message = err.response?.data?.message || err.message || "创建项目失败，请重试";
+      setError(message);
     } finally {
       setSubmitting(false);
     }
   };
-
-  if (loading) {
-    return (
-      <PortalLayout title="发布项目">
-        <div className="flex-1 flex items-center justify-center">
-          <div className="text-gray-500 text-lg">加载中...</div>
-        </div>
-      </PortalLayout>
-    );
-  }
 
   if (success) {
     return (
@@ -290,8 +175,8 @@ const PostJobPage = () => {
             <div className="rounded-full bg-green-100 w-16 h-16 flex items-center justify-center mx-auto mb-4">
               <BriefcaseIcon className="h-8 w-8 text-green-600" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">项目发布成功!</h2>
-            <p className="text-gray-500 mb-4">正在跳转到我的项目页面...</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">项目发布成功</h2>
+            <p className="text-gray-500 mb-4">正在跳转到我的项目...</p>
           </div>
         </div>
       </PortalLayout>
@@ -303,19 +188,18 @@ const PostJobPage = () => {
       <div className="flex-1 max-w-4xl mx-auto w-full pb-8" data-testid="post-job-page">
         <PageHeader
           title="发布新项目"
-          description="填写项目详情以创建新的项目需求"
+          description="填写项目详情，创建新的项目需求"
           breadcrumbs={[
             { label: "首页", href: "/" },
             { label: "我的项目", href: "/my-jobs" },
             { label: "发布项目" },
           ]}
         />
-        
+
         <QuickActionsMenu title="快捷操作" maxItems={4} className="mb-6" />
-        
+
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <div className="px-6 py-8 sm:p-10">
-
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
                 <p className="text-red-600 text-sm">{error}</p>
@@ -324,13 +208,11 @@ const PostJobPage = () => {
 
             <form onSubmit={handleSubmit}>
               <div className="space-y-8">
-                <div>
+                <section>
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">基本信息</h3>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        项目标题 *
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">项目标题 *</label>
                       <input
                         type="text"
                         name="project_title"
@@ -342,15 +224,11 @@ const PostJobPage = () => {
                           formErrors.project_title ? "ring-red-300" : "ring-gray-300"
                         } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm`}
                       />
-                      {formErrors.project_title && (
-                        <p className="mt-1 text-sm text-red-600">{formErrors.project_title}</p>
-                      )}
+                      {formErrors.project_title && <p className="mt-1 text-sm text-red-600">{formErrors.project_title}</p>}
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        项目描述 *
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">项目描述 *</label>
                       <textarea
                         name="project_description"
                         data-testid="project-description-input"
@@ -362,95 +240,20 @@ const PostJobPage = () => {
                           formErrors.project_description ? "ring-red-300" : "ring-gray-300"
                         } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm`}
                       />
-                      {formErrors.project_description && (
-                        <p className="mt-1 text-sm text-red-600">{formErrors.project_description}</p>
-                      )}
-                      <p className="mt-1 text-xs text-gray-500">
-                        {formData.project_description.length} / 4000 字符
-                      </p>
+                      {formErrors.project_description && <p className="mt-1 text-sm text-red-600">{formErrors.project_description}</p>}
+                      <p className="mt-1 text-xs text-gray-500">{formData.project_description.length} / 4000 字符</p>
                     </div>
                   </div>
-                </div>
+                </section>
 
                 <Divider />
 
-                <div>
+                <section>
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">工作详情</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        <ClockIcon className="h-4 w-4 inline mr-1" />
-                        工作性质 *
-                      </label>
-                      <select
-                        name="job_nature"
-                        value={formData.job_nature}
-                        onChange={handleChange}
-                        className={`block w-full rounded-md border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ${
-                          formErrors.job_nature ? "ring-red-300" : "ring-gray-300"
-                        } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm`}
-                      >
-                        <option value="">选择工作性质</option>
-                        {JOB_NATURE_OPTIONS.map((opt) => (
-                          <option key={opt.value} value={opt.value}>
-                            {opt.label}
-                          </option>
-                        ))}
-                      </select>
-                      {formErrors.job_nature && (
-                        <p className="mt-1 text-sm text-red-600">{formErrors.job_nature}</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        <MapPinIcon className="h-4 w-4 inline mr-1" />
-                        工作形式 *
-                      </label>
-                      <select
-                        name="work_format"
-                        value={formData.work_format}
-                        onChange={handleChange}
-                        className={`block w-full rounded-md border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ${
-                          formErrors.work_format ? "ring-red-300" : "ring-gray-300"
-                        } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm`}
-                      >
-                        <option value="">选择工作形式</option>
-                        {WORK_FORMAT_OPTIONS.map((opt) => (
-                          <option key={opt.value} value={opt.value}>
-                            {opt.label}
-                          </option>
-                        ))}
-                      </select>
-                      {formErrors.work_format && (
-                        <p className="mt-1 text-sm text-red-600">{formErrors.work_format}</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        <CalendarIcon className="h-4 w-4 inline mr-1" />
-                        项目周期 *
-                      </label>
-                      <select
-                        name="project_cycle"
-                        value={formData.project_cycle}
-                        onChange={handleChange}
-                        className={`block w-full rounded-md border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ${
-                          formErrors.project_cycle ? "ring-red-300" : "ring-gray-300"
-                        } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm`}
-                      >
-                        <option value="">选择项目周期</option>
-                        {PROJECT_CYCLE_OPTIONS.map((opt) => (
-                          <option key={opt.value} value={opt.value}>
-                            {opt.label}
-                          </option>
-                        ))}
-                      </select>
-                      {formErrors.project_cycle && (
-                        <p className="mt-1 text-sm text-red-600">{formErrors.project_cycle}</p>
-                      )}
-                    </div>
+                    <SelectField icon={<ClockIcon />} label="工作性质" name="job_nature" value={formData.job_nature} error={formErrors.job_nature} options={JOB_NATURE_OPTIONS} onChange={handleChange} />
+                    <SelectField icon={<MapPinIcon />} label="工作形式" name="work_format" value={formData.work_format} error={formErrors.work_format} options={WORK_FORMAT_OPTIONS} onChange={handleChange} />
+                    <SelectField icon={<CalendarIcon />} label="项目周期" name="project_cycle" value={formData.project_cycle} error={formErrors.project_cycle} options={PROJECT_CYCLE_OPTIONS} onChange={handleChange} />
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -463,15 +266,12 @@ const PostJobPage = () => {
                         value={formData.hiring_count}
                         onChange={handleChange}
                         min="1"
-                        placeholder="1"
                         className="block w-full rounded-md border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        预计开始日期
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">预计开始日期</label>
                       <input
                         type="date"
                         name="start_date"
@@ -482,38 +282,14 @@ const PostJobPage = () => {
                       />
                     </div>
                   </div>
-                </div>
+                </section>
 
                 <Divider />
 
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">薪资待遇</h3>
+                <section>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">费用</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        <CurrencyDollarIcon className="h-4 w-4 inline mr-1" />
-                        费率类型 *
-                      </label>
-                      <select
-                        name="rate_type"
-                        value={formData.rate_type}
-                        onChange={handleChange}
-                        className={`block w-full rounded-md border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ${
-                          formErrors.rate_type ? "ring-red-300" : "ring-gray-300"
-                        } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm`}
-                      >
-                        <option value="">选择费率类型</option>
-                        {RATE_TYPE_OPTIONS.map((opt) => (
-                          <option key={opt.value} value={opt.value}>
-                            {opt.label}
-                          </option>
-                        ))}
-                      </select>
-                      {formErrors.rate_type && (
-                        <p className="mt-1 text-sm text-red-600">{formErrors.rate_type}</p>
-                      )}
-                    </div>
-
+                    <SelectField icon={<CurrencyDollarIcon />} label="费率类型" name="rate_type" value={formData.rate_type} error={formErrors.rate_type} options={RATE_TYPE_OPTIONS} onChange={handleChange} />
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         费率金额 {formData.rate_type !== "negotiable" && "*"}
@@ -529,160 +305,24 @@ const PostJobPage = () => {
                           formErrors.rate_amount ? "ring-red-300" : "ring-gray-300"
                         } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm disabled:bg-gray-100`}
                       />
-                      {formErrors.rate_amount && (
-                        <p className="mt-1 text-sm text-red-600">{formErrors.rate_amount}</p>
-                      )}
+                      {formErrors.rate_amount && <p className="mt-1 text-sm text-red-600">{formErrors.rate_amount}</p>}
                     </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">货币</label>
-                      <select
-                        name="rate_currency"
-                        value={formData.rate_currency}
-                        onChange={handleChange}
-                        className="block w-full rounded-md border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
-                      >
-                        {CURRENCY_OPTIONS.map((opt) => (
-                          <option key={opt.value} value={opt.value}>
-                            {opt.label}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                    <SelectField label="货币" name="rate_currency" value={formData.rate_currency} options={CURRENCY_OPTIONS} onChange={handleChange} />
                   </div>
-                </div>
+                </section>
 
                 <Divider />
 
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">技能要求</h3>
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        <TagIcon className="h-4 w-4 inline mr-1" />
-                        技能大类 *
-                      </label>
-                      <div className="flex flex-wrap gap-2">
-                        {skillCategories.map((cat) => (
-                          <button
-                            key={cat._id}
-                            type="button"
-                            data-testid={`major-category-btn-${cat._id}`}
-                            onClick={() => handleMultiSelect("project_major_categories", cat._id)}
-                            className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                              formData.project_major_categories.includes(cat._id)
-                                ? "bg-indigo-600 text-white"
-                                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                            }`}
-                          >
-                            {cat.category_name}
-                          </button>
-                        ))}
-                      </div>
-                      {formErrors.project_major_categories && (
-                        <p className="mt-1 text-sm text-red-600">{formErrors.project_major_categories}</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        技能小类 *
-                      </label>
-                      <div className="flex flex-wrap gap-2">
-                        {skillCategories
-                          .filter((cat) => formData.project_major_categories.includes(cat._id))
-                          .flatMap((cat) => cat.sub_categories || [])
-                          .map((sub) => (
-                            <button
-                              key={sub._id}
-                              type="button"
-                              data-testid={`sub-category-btn-${sub._id}`}
-                              onClick={() => handleMultiSelect("project_sub_categories", sub._id)}
-                              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                                formData.project_sub_categories.includes(sub._id)
-                                  ? "bg-indigo-600 text-white"
-                                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                              }`}
-                            >
-                              {sub.sub_category_name}
-                            </button>
-                          ))}
-                      </div>
-                      {formErrors.project_sub_categories && (
-                        <p className="mt-1 text-sm text-red-600">{formErrors.project_sub_categories}</p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                <Divider />
-
-                <div>
+                <section>
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">工作地点</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="md:col-span-2">
-                      <label className="block text-xs font-medium text-gray-500 mb-1">街道地址</label>
-                      <input
-                        type="text"
-                        name="street_address"
-                        value={formData.street_address}
-                        onChange={handleChange}
-                        placeholder="街道地址"
-                        className="block w-full rounded-md border-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-gray-500 mb-1">城市 *</label>
-                      <input
-                        type="text"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleChange}
-                        placeholder="城市"
-                        className={`block w-full rounded-md border-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ${
-                          formErrors.city ? "ring-red-300" : "ring-gray-300"
-                        } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm`}
-                      />
-                      {formErrors.city && <p className="mt-1 text-sm text-red-600">{formErrors.city}</p>}
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-gray-500 mb-1">省/州</label>
-                      <input
-                        type="text"
-                        name="state"
-                        value={formData.state}
-                        onChange={handleChange}
-                        placeholder="省/州"
-                        className="block w-full rounded-md border-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-gray-500 mb-1">国家 *</label>
-                      <input
-                        type="text"
-                        name="country"
-                        value={formData.country}
-                        onChange={handleChange}
-                        placeholder="国家"
-                        className={`block w-full rounded-md border-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ${
-                          formErrors.country ? "ring-red-300" : "ring-gray-300"
-                        } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm`}
-                      />
-                      {formErrors.country && <p className="mt-1 text-sm text-red-600">{formErrors.country}</p>}
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-gray-500 mb-1">邮编</label>
-                      <input
-                        type="text"
-                        name="zip_code"
-                        value={formData.zip_code}
-                        onChange={handleChange}
-                        placeholder="邮编"
-                        className="block w-full rounded-md border-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
-                      />
-                    </div>
+                    <TextField className="md:col-span-2" label="街道地址" name="street_address" value={formData.street_address} onChange={handleChange} />
+                    <TextField label="城市 *" name="city" value={formData.city} error={formErrors.city} onChange={handleChange} />
+                    <TextField label="省/州" name="state" value={formData.state} onChange={handleChange} />
+                    <TextField label="国家 *" name="country" value={formData.country} error={formErrors.country} onChange={handleChange} />
+                    <TextField label="邮编" name="zip_code" value={formData.zip_code} onChange={handleChange} />
                   </div>
-                </div>
+                </section>
 
                 <Divider />
 
@@ -728,5 +368,75 @@ const PostJobPage = () => {
     </PortalLayout>
   );
 };
+
+const SelectField = ({
+  icon,
+  label,
+  name,
+  value,
+  error,
+  options,
+  onChange,
+}: {
+  icon?: React.ReactElement;
+  label: string;
+  name: string;
+  value: string;
+  error?: string;
+  options: { value: string; label: string }[];
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}) => (
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-2">
+      {icon && <span className="h-4 w-4 inline-block mr-1 align-text-bottom">{icon}</span>}
+      {label} *
+    </label>
+    <select
+      name={name}
+      value={value}
+      onChange={onChange}
+      className={`block w-full rounded-md border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ${
+        error ? "ring-red-300" : "ring-gray-300"
+      } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm`}
+    >
+      {options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+    {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
+  </div>
+);
+
+const TextField = ({
+  label,
+  name,
+  value,
+  error,
+  onChange,
+  className = "",
+}: {
+  label: string;
+  name: string;
+  value: string;
+  error?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
+}) => (
+  <div className={className}>
+    <label className="block text-xs font-medium text-gray-500 mb-1">{label}</label>
+    <input
+      type="text"
+      name={name}
+      value={value}
+      onChange={onChange}
+      className={`block w-full rounded-md border-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ${
+        error ? "ring-red-300" : "ring-gray-300"
+      } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm`}
+    />
+    {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
+  </div>
+);
 
 export default PostJobPage;

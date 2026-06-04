@@ -49,7 +49,7 @@ const useAuthStore = create<IStores.IAuthStore>((set) => ({
     try {
       const authService = new AuthService();
       const response = await authService.register(payload, options);
-      set({ registerSuccessMessage: response.message });
+      set({ registerSuccessMessage: response.message || "注册成功" });
       return response;
     } catch (error: any) {
       console.error(error);

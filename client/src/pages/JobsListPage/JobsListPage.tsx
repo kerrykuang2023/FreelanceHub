@@ -344,7 +344,7 @@ const JobsListPage = () => {
                           key={index}
                           className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700"
                         >
-                          {typeof skill === "string" ? skill : skill.skill_name}
+                          {typeof skill === "string" ? skill : (skill as any).skill_name}
                         </span>
                       ))}
                     </div>

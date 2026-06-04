@@ -52,8 +52,8 @@ class HROnboardingService {
 
   async getOnboardingStatus(): Promise<{ success: boolean; data?: OnboardingStatus }> {
     try {
-      const response = await this.http.get<OnboardingStatus>('/hr/onboarding/status');
-      return { success: true, data: response.data };
+      const response = await this.http.get<any>('/hr/onboarding/status');
+      return { success: true, data: response.data || response };
     } catch (error) {
       console.error('Failed to get onboarding status:', error);
       return { success: false };
@@ -62,8 +62,8 @@ class HROnboardingService {
 
   async searchCompanies(query: string): Promise<{ success: boolean; data?: { items: Company[] } }> {
     try {
-      const response = await this.http.get<{ items: Company[] }>('/companies/search', { params: { q: query } });
-      return { success: true, data: response.data };
+      const response = await this.http.get<any>('/companies/search', { q: query });
+      return { success: true, data: response.data || response };
     } catch (error) {
       console.error('Failed to search companies:', error);
       return { success: false };
@@ -82,8 +82,8 @@ class HROnboardingService {
 
   async createCompany(data: CreateCompanyData): Promise<{ success: boolean; data?: Company }> {
     try {
-      const response = await this.http.post<Company>('/companies', data);
-      return { success: true, data: response.data };
+      const response = await this.http.post<any>('/companies', data);
+      return { success: true, data: response.data || response };
     } catch (error) {
       console.error('Failed to create company:', error);
       return { success: false };
@@ -113,7 +113,7 @@ class HROnboardingService {
   async getHRProfile(): Promise<{ success: boolean; data?: any }> {
     try {
       const response = await this.http.get<any>('/hr/profile');
-      return { success: true, data: response.data };
+      return { success: true, data: response.data || response };
     } catch (error) {
       console.error('Failed to get HR profile:', error);
       return { success: false };
@@ -135,12 +135,12 @@ class HROnboardingService {
       const formData = new FormData();
       formData.append('logo', file);
       
-      const response = await this.http.post<{ url: string }>(`/companies/${companyId}/logo`, formData, {
+      const response = await this.http.post<any>(`/companies/${companyId}/logo`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      return { success: true, url: response.data.url };
+      return { success: true, url: response.data?.url || response.url };
     } catch (error) {
       console.error('Failed to upload company logo:', error);
       return { success: false };
@@ -152,12 +152,12 @@ class HROnboardingService {
       const formData = new FormData();
       formData.append('cover', file);
       
-      const response = await this.http.post<{ url: string }>(`/companies/${companyId}/cover`, formData, {
+      const response = await this.http.post<any>(`/companies/${companyId}/cover`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      return { success: true, url: response.data.url };
+      return { success: true, url: response.data?.url || response.url };
     } catch (error) {
       console.error('Failed to upload company cover:', error);
       return { success: false };

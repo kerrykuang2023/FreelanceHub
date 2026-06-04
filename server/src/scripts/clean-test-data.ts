@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 async function cleanTestData() {
-  await mongoose.connect('mongodb://localhost:27017/jobportal');
+  await mongoose.connect('mongodb://localhost:27017/freelancehub');
   const db = mongoose.connection.db;
   
   // 删除旧的工时记录
