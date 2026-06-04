@@ -99,9 +99,19 @@ test.describe('PROFILE-TABS: 个人档案页签操作一致性', () => {
     await page.getByTestId('save-availability-btn').click();
     await expect(page.getByTestId('save-availability-btn')).toBeEnabled({ timeout: 15000 });
 
+    const language = `中文-${stamp}`;
+    const portfolioUrl = `https://example.com/portfolio-${stamp}`;
+    await page.getByTestId('profile-language-input').fill(language);
+    await page.getByTestId('profile-language-proficiency-select').selectOption('商务');
+    await page.getByTestId('profile-portfolio-urls-input').fill(portfolioUrl);
+    await page.getByTestId('save-profile-extras-btn').click();
+    await expect(page.getByTestId('save-profile-extras-btn')).toBeEnabled({ timeout: 15000 });
+
     await page.getByTestId('tab-overview').click();
     await expect(page.getByText('可接单').first()).toBeVisible({ timeout: 15000 });
     await expect(page.getByText('每周可工作 32 小时')).toBeVisible({ timeout: 15000 });
     await expect(page.getByText(skillName)).toBeVisible({ timeout: 15000 });
+    await expect(page.getByText(`${language} - 商务`)).toBeVisible({ timeout: 15000 });
+    await expect(page.getByRole('link', { name: portfolioUrl })).toBeVisible({ timeout: 15000 });
   });
 });

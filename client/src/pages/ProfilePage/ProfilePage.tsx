@@ -87,6 +87,7 @@ interface FreelancerProfile {
   location?: string;
   languages?: { language: string; proficiency: string }[];
   portfolio_links?: { title: string; url: string }[];
+  portfolio_urls?: string[];
   education?: {
     _id?: string;
     school: string;
@@ -99,6 +100,14 @@ interface FreelancerProfile {
 
 type TabType = 'overview' | 'skills' | 'experience' | 'education' | 'certifications' | 'settings';
 const PROFILE_TABS: TabType[] = ['overview', 'skills', 'experience', 'education', 'certifications', 'settings'];
+const LANGUAGE_PROFICIENCY_OPTIONS = [
+  { value: '\u5165\u95e8', label: '\u5165\u95e8' },
+  { value: '\u65e5\u5e38\u4f1a\u8bdd', label: '\u65e5\u5e38\u4f1a\u8bdd' },
+  { value: '\u5546\u52a1', label: '\u5546\u52a1' },
+  { value: '\u6d41\u5229', label: '\u6d41\u5229' },
+  { value: '\u6bcd\u8bed', label: '\u6bcd\u8bed' },
+];
+const DEFAULT_LANGUAGE_PROFICIENCY = '\u5546\u52a1';
 
 const ProfilePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -127,6 +136,11 @@ const ProfilePage = () => {
   const [availabilityForm, setAvailabilityForm] = useState({
     availability_status: 'open_to_opportunities',
     available_hours_per_week: '',
+  });
+  const [profileExtrasForm, setProfileExtrasForm] = useState({
+    language: '',
+    language_proficiency: DEFAULT_LANGUAGE_PROFICIENCY,
+    portfolio_urls: '',
   });
 
   useEffect(() => {
@@ -158,6 +172,11 @@ const ProfilePage = () => {
           availability_status: response.profile.availability_status || 'open_to_opportunities',
           available_hours_per_week: response.profile.available_hours_per_week?.toString() || '',
         });
+        setProfileExtrasForm({
+          language: response.profile.languages?.[0]?.language || '',
+          language_proficiency: response.profile.languages?.[0]?.proficiency || '商务',
+          portfolio_urls: (response.profile.portfolio_urls || []).join('\n'),
+        });
       }
     } catch (error) {
       console.error('Failed to load profile:', error);
@@ -182,6 +201,11 @@ const ProfilePage = () => {
     setAvailabilityForm({
       availability_status: response.profile.availability_status || 'open_to_opportunities',
       available_hours_per_week: response.profile.available_hours_per_week?.toString() || '',
+    });
+    setProfileExtrasForm({
+      language: response.profile.languages?.[0]?.language || '',
+      language_proficiency: response.profile.languages?.[0]?.proficiency || '商务',
+      portfolio_urls: (response.profile.portfolio_urls || []).join('\n'),
     });
   };
 
@@ -364,7 +388,7 @@ const ProfilePage = () => {
       });
       if (response.success) {
         await applyProfileResponse(response);
-        alert('费率设置已保存');
+        alert('\u8d39\u7387\u8bbe\u7f6e\u5df2\u4fdd\u5b58');
       }
     } catch (error) {
       console.error('Failed to save rates:', error);
@@ -378,16 +402,45 @@ const ProfilePage = () => {
       setSaving(true);
       const response = await freelancerProfileService.updateAvailability({
         availability_status: availabilityForm.availability_status,
-        available_hours_per_week: availabilityForm.available_hours_per_week 
-          ? parseInt(availabilityForm.available_hours_per_week) 
+        available_hours_per_week: availabilityForm.available_hours_per_week
+          ? parseInt(availabilityForm.available_hours_per_week)
           : undefined,
       });
       if (response.success) {
         await applyProfileResponse(response);
-        alert('可用性设置已保存');
+        alert('\u53ef\u7528\u6027\u8bbe\u7f6e\u5df2\u4fdd\u5b58');
       }
     } catch (error) {
       console.error('Failed to save availability:', error);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleSaveProfileExtras = async () => {
+    try {
+      setSaving(true);
+      const portfolio_urls = profileExtrasForm.portfolio_urls
+        .split(/\r?\n/)
+        .map((url) => url.trim())
+        .filter(Boolean);
+      const languages = profileExtrasForm.language.trim()
+        ? [{
+            language: profileExtrasForm.language.trim(),
+            proficiency: profileExtrasForm.language_proficiency,
+          }]
+        : [];
+
+      const response = await freelancerProfileService.updateProfile({
+        languages,
+        portfolio_urls,
+      });
+      if (response.success) {
+        await applyProfileResponse(response);
+        alert('\u8bed\u8a00\u80fd\u529b\u548c\u4f5c\u54c1\u96c6\u5df2\u4fdd\u5b58');
+      }
+    } catch (error) {
+      console.error('Failed to save profile extras:', error);
     } finally {
       setSaving(false);
     }
@@ -438,6 +491,10 @@ const ProfilePage = () => {
 
     return Math.min(100, completion);
   };
+
+  const portfolioLinks = profile?.portfolio_links?.length
+    ? profile.portfolio_links
+    : (profile?.portfolio_urls || []).map((url) => ({ title: url, url }));
 
   const completion = getProfileCompletion();
 
@@ -761,8 +818,8 @@ const ProfilePage = () => {
                       <span className="text-sm font-medium">作品集</span>
                     </div>
                     <div className="space-y-1">
-                      {profile.portfolio_links && profile.portfolio_links.length > 0 ? (
-                        profile.portfolio_links.slice(0, 2).map((link, i) => (
+                      {portfolioLinks.length > 0 ? (
+                        portfolioLinks.slice(0, 2).map((link, i) => (
                           <a
                             key={i}
                             href={link.url}
@@ -1220,6 +1277,60 @@ const ProfilePage = () => {
                       className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl font-medium shadow-lg shadow-blue-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50"
                     >
                       {saving ? '保存中...' : '保存可用性'}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="bg-gray-50 rounded-xl p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">{"\u8bed\u8a00\u80fd\u529b\u4e0e\u4f5c\u54c1\u96c6"}</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{"\u8bed\u8a00"}</label>
+                      <input
+                        type="text"
+                        data-testid="profile-language-input"
+                        value={profileExtrasForm.language}
+                        onChange={(e) => setProfileExtrasForm({ ...profileExtrasForm, language: e.target.value })}
+                        className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                        placeholder={"例如：中文 / English"}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{"\u719f\u7ec3\u7a0b\u5ea6"}</label>
+                      <select
+                        data-testid="profile-language-proficiency-select"
+                        value={profileExtrasForm.language_proficiency}
+                        onChange={(e) => setProfileExtrasForm({ ...profileExtrasForm, language_proficiency: e.target.value })}
+                        className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                      >
+                        {LANGUAGE_PROFICIENCY_OPTIONS.map((option) => (
+                          <option key={option.value} value={option.value}>{option.label}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{"\u4f5c\u54c1\u96c6\u94fe\u63a5"}</label>
+                    <textarea
+                      data-testid="profile-portfolio-urls-input"
+                      value={profileExtrasForm.portfolio_urls}
+                      onChange={(e) => setProfileExtrasForm({ ...profileExtrasForm, portfolio_urls: e.target.value })}
+                      rows={4}
+                      className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                      placeholder={"每行一个链接，例如：https://example.com/portfolio"}
+                    />
+                    <p className="mt-2 text-sm text-gray-500">
+                      {"\u4f5c\u54c1\u96c6\u4f1a\u5c55\u793a\u5728\u4e2a\u4eba\u6863\u6848\u6982\u89c8\u548c\u9884\u89c8\u9875\uff0c\u7528\u4e8e HR \u8bc4\u4f30\u8fc7\u5f80\u4ea4\u4ed8\u80fd\u529b\u3002"}
+                    </p>
+                  </div>
+                  <div className="mt-4 flex justify-end">
+                    <button
+                      onClick={handleSaveProfileExtras}
+                      disabled={saving}
+                      data-testid="save-profile-extras-btn"
+                      className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl font-medium shadow-lg shadow-blue-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50"
+                    >
+                      {saving ? '\u4fdd\u5b58\u4e2d...' : '\u4fdd\u5b58\u8bed\u8a00\u4e0e\u4f5c\u54c1\u96c6'}
                     </button>
                   </div>
                 </div>

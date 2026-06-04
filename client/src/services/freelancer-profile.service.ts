@@ -63,6 +63,8 @@ interface FreelancerProfile {
   availability_status?: string;
   available_hours_per_week?: number;
   years_of_experience?: number;
+  languages?: { language: string; proficiency: string }[];
+  portfolio_urls?: string[];
   rating?: {
     average: number;
     count: number;
