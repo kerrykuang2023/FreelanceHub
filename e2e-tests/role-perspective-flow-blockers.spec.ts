@@ -35,6 +35,8 @@ async function loginAs(page: Page, userKey: UserKey) {
     sessionStorage.clear();
     localStorage.setItem('access_token', accessToken);
   }, token);
+
+  return token;
 }
 
 async function collectPageErrors(page: Page, action: () => Promise<void>) {
@@ -129,7 +131,15 @@ test.describe('Role perspective flow blocker audit', () => {
   });
 
   test('HR can reach hiring, application, work-log, invoice, and role pages', async ({ page }) => {
-    await loginAs(page, 'hr');
+    const token = await loginAs(page, 'hr');
+
+    const companyResponse = await page.request.get(`${API_URL}/companies/my-company`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    expect(companyResponse.ok(), 'HR my-company API should succeed').toBeTruthy();
+    const companyData = await companyResponse.json();
+    const hrCompany = companyData.company || companyData.data?.company || companyData.data;
+    expect(hrCompany?._id || hrCompany?.id, 'HR company response should include a usable company ID').toBeTruthy();
 
     for (const path of ['/company', '/post-job', '/company/applications', '/company/work-logs/pending', '/company/invoices/review', '/profile/switch-role']) {
       await assertHealthyPage(page, path, { needsBreadcrumb: path.includes('/company') || path.includes('/profile') });
@@ -139,7 +149,9 @@ test.describe('Role perspective flow blocker audit', () => {
     await page.waitForLoadState('networkidle').catch(() => undefined);
     await page.locator('button').filter({ hasText: '编辑信息' }).click();
     await page.locator('[data-testid="save-company-button"]').click();
-    await expect(page.locator('[data-testid="company-success-message"], [data-testid="company-error-message"]')).toBeVisible();
+    await expect(page.locator('[data-testid="company-success-message"]')).toContainText('公司信息已保存');
+    await expect(page.locator('[data-testid="company-error-message"]')).toHaveCount(0);
+    await expect(page.locator('body')).not.toContainText('Invalid company ID');
 
     await page.goto(`${BASE_URL}/post-job`, { waitUntil: 'domcontentloaded' });
     await page.waitForLoadState('networkidle').catch(() => undefined);

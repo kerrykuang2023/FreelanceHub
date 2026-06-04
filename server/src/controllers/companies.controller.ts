@@ -222,13 +222,30 @@ export default class CompaniesController {
   public static async getMyCompany(req: IAuthRequest, res: Response, next: NextFunction) {
     try {
       const user = req.user as any;
-      const company = await Company.findOne({ created_by: user._id });
+      const userAccount = await UserAccount.findById(user._id);
+      let company = null;
 
-      if (!company) {
-        return res.status(StatusCodes.OK).json({ company: null });
+      if (userAccount?.company_id) {
+        company = await Company.findById(userAccount.company_id);
       }
 
-      res.status(StatusCodes.OK).json({ company });
+      if (!company) {
+        company = await Company.findOne({ created_by: user._id });
+      }
+
+      if (!company) {
+        return res.status(StatusCodes.OK).json({
+          success: true,
+          data: null,
+          company: null,
+        });
+      }
+
+      res.status(StatusCodes.OK).json({
+        success: true,
+        data: company,
+        company,
+      });
     } catch (error) {
       throw error;
     }

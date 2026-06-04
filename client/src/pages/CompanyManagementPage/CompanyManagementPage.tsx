@@ -19,6 +19,7 @@ import { buttonVariants, inputVariants, cardVariants } from '@/styles/design-tok
 
 interface Company {
   _id: string;
+  id?: string;
   company_name: string;
   logo_url?: string;
   cover_url?: string;
@@ -92,16 +93,22 @@ const CompanyManagementPage = () => {
       return;
     }
 
+    const companyId = company._id || company.id;
+    if (!companyId) {
+      setErrorMessage('公司信息缺少有效ID，请刷新页面后重试。');
+      return;
+    }
+
     try {
       setSaving(true);
       setErrorMessage(null);
       setSuccessMessage(null);
-      const response = await companyService.updateCompany(company._id, {
+      const response = await companyService.updateCompany(companyId, {
         ...formData,
         company_name: formData.company_name.trim(),
       });
       if (response.success) {
-        setCompany(response.data || { ...company, ...formData });
+        setCompany(response.data || { ...company, _id: companyId, ...formData });
         setActiveTab('overview');
         setSuccessMessage(response.message || '公司信息已保存。');
       } else {

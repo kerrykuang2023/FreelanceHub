@@ -2,6 +2,7 @@ import HttpService from "@/core/http.service";
 
 export interface Company {
   _id: string;
+  id?: string;
   company_name: string;
   logo_url?: string;
   cover_url?: string;
@@ -27,6 +28,24 @@ const getApiErrorMessage = (error: any, fallback: string) => {
   return fallback;
 };
 
+const normalizeCompanyResponse = (response: any): Company | undefined => {
+  const company = response?.company || response?.data?.company || response?.data || response;
+
+  if (!company || typeof company !== 'object') {
+    return undefined;
+  }
+
+  const id = company._id || company.id;
+  if (!id) {
+    return undefined;
+  }
+
+  return {
+    ...company,
+    _id: id,
+  };
+};
+
 class CompanyService {
   private http: HttpService;
 
@@ -37,7 +56,7 @@ class CompanyService {
   async getMyCompany(): Promise<{ success: boolean; data?: Company }> {
     try {
       const response = await this.http.get<any>('/companies/my-company');
-      return { success: true, data: response.data || response.company || response };
+      return { success: true, data: normalizeCompanyResponse(response) };
     } catch (error) {
       console.error('Failed to get company:', error);
       return { success: false };
@@ -47,7 +66,7 @@ class CompanyService {
   async getCompanyById(id: string): Promise<{ success: boolean; data?: Company }> {
     try {
       const response = await this.http.get<any>(`/companies/${id}`);
-      return { success: true, data: response.data || response };
+      return { success: true, data: normalizeCompanyResponse(response) };
     } catch (error) {
       console.error('Failed to get company:', error);
       return { success: false };
@@ -56,10 +75,14 @@ class CompanyService {
 
   async updateCompany(id: string, data: Partial<Company>): Promise<{ success: boolean; data?: Company; message?: string }> {
     try {
+      if (!id) {
+        return { success: false, message: '公司信息缺少有效ID，请刷新页面后重试。' };
+      }
+
       const response = await this.http.put<any>(`/companies/${id}`, data);
       return {
         success: true,
-        data: response.data || response.company || response,
+        data: normalizeCompanyResponse(response),
         message: response.message || '公司信息已保存',
       };
     } catch (error) {
