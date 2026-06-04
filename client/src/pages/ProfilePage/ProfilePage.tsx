@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
   UserCircleIcon,
   PencilIcon,
@@ -98,8 +98,10 @@ interface FreelancerProfile {
 }
 
 type TabType = 'overview' | 'skills' | 'experience' | 'education' | 'certifications' | 'settings';
+const PROFILE_TABS: TabType[] = ['overview', 'skills', 'experience', 'education', 'certifications', 'settings'];
 
 const ProfilePage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [profile, setProfile] = useState<FreelancerProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -130,6 +132,15 @@ const ProfilePage = () => {
   useEffect(() => {
     loadProfile();
   }, []);
+
+  useEffect(() => {
+    const requestedTab = searchParams.get('tab') as TabType | null;
+    if (requestedTab && PROFILE_TABS.includes(requestedTab)) {
+      setActiveTab(requestedTab);
+    } else if (!requestedTab) {
+      setActiveTab('overview');
+    }
+  }, [searchParams]);
 
   const loadProfile = async () => {
     try {
@@ -643,7 +654,10 @@ const ProfilePage = () => {
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={() => {
+                    setActiveTab(tab.id);
+                    setSearchParams(tab.id === 'overview' ? {} : { tab: tab.id });
+                  }}
                   data-testid={`tab-${tab.id}`}
                   className={`flex items-center gap-2 px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-all duration-200 ${
                     activeTab === tab.id

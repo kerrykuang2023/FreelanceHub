@@ -38,7 +38,7 @@ const statusOptions = [
   { value: 'published', label: '已发布', color: 'bg-green-100 text-green-700' },
   { value: 'in_progress', label: '进行中', color: 'bg-blue-100 text-blue-700' },
   { value: 'closed', label: '已关闭', color: 'bg-red-100 text-red-700' },
-  { value: 'archived', label: '已归档', color: 'bg-yellow-100 text-yellow-700' },
+  { value: 'expired', label: '已到期', color: 'bg-yellow-100 text-yellow-700' },
 ];
 
 const EditJobPage = () => {
@@ -186,6 +186,11 @@ const EditJobPage = () => {
   };
 
   const handleStatusChange = async (newStatus: string) => {
+    if (newStatus === 'in_progress' && formData.status !== 'in_progress') {
+      setError('请先在申请管理中录用顾问，系统会自动将岗位更新为进行中。');
+      return;
+    }
+
     try {
       setSubmitting(true);
       await jobsService.updateJob(id!, { status: newStatus });
@@ -270,7 +275,9 @@ const EditJobPage = () => {
                   statusOptions.find((s) => s.value === formData.status)?.color
                 }`}
               >
-                {statusOptions.map((option) => (
+                {statusOptions
+                  .filter((option) => option.value !== 'in_progress' || formData.status === 'in_progress')
+                  .map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>

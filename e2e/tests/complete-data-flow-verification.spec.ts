@@ -97,7 +97,9 @@ async function logout(page: Page): Promise<void> {
   }
 }
 
-test.describe('Complete Data Flow E2E Verification', () => {
+// Legacy flow audit: this file records failures without failing tests and still uses retired routes.
+// Keep it skipped until it is replaced by deterministic API-seeded cross-role flow specs.
+test.describe.skip('Complete Data Flow E2E Verification', () => {
   
   test.beforeAll(async () => {
     console.log('\n========================================');

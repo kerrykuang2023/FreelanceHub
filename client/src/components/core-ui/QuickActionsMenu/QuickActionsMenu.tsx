@@ -175,7 +175,7 @@ const allMenuItems: MenuItem[] = [
     id: "admin-financial",
     label: "财务管理",
     icon: <BanknotesIcon className="w-8 h-8" />,
-    href: "/admin/financial",
+    href: "/admin?tab=financial",
     color: "text-emerald-600",
     bgColor: "bg-emerald-50",
     hoverBgColor: "hover:bg-emerald-100",

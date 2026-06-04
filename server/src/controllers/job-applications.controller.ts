@@ -5,6 +5,7 @@ import JobPost from "../models/job/job_post.model";
 import ProjectRequirement from "../models/freelancer/project_requirement.model";
 import FreelancerProfile from "../models/freelancer/freelancer_profile.model";
 import UserAccount from "../models/user/user-account.model";
+import UserRole from "../models/user/user-role.model";
 import { ApiError } from "../errors/ApiError";
 import { BadRequestError, NotFoundError } from "../errors";
 import mongoose from "mongoose";
@@ -17,10 +18,42 @@ const PROJECT_STATUS_IN_PROGRESS = "in_progress";
 const PROJECT_STATUS_CLOSED = "closed";
 
 export default class JobApplicationsController {
+  private static normalizeRole(value: unknown): string {
+    return typeof value === "string" ? value.toLowerCase().replace(/[\s-]/g, "_") : "";
+  }
+
+  private static async getActiveRoleType(user: any): Promise<string> {
+    const activeRole = await UserRole.findOne({
+      user_id: user._id,
+      status: "approved",
+      is_active: true,
+    }).select("role_type");
+
+    if (activeRole?.role_type) return activeRole.role_type;
+
+    if (user.user_type_id && typeof user.user_type_id === "object") {
+      return JobApplicationsController.normalizeRole(user.user_type_id.user_type_name);
+    }
+
+    return JobApplicationsController.normalizeRole(user.user_type || user.role);
+  }
+
+  private static async assertCanApply(user: any) {
+    const roleType = await JobApplicationsController.getActiveRoleType(user);
+    if (!["job_seeker", "freelancer"].includes(roleType)) {
+      throw new ApiError(
+        StatusCodes.FORBIDDEN,
+        "Only freelancer accounts can apply for projects.",
+        []
+      );
+    }
+  }
+
   public static async applyForJob(req: IAuthRequest, res: Response, next: NextFunction) {
     try {
       const user = req.user as any;
       const { id } = req.params;
+      await JobApplicationsController.assertCanApply(user);
 
       if (!mongoose.Types.ObjectId.isValid(id)) {
         throw new BadRequestError("Invalid job ID", []);
@@ -128,6 +161,7 @@ export default class JobApplicationsController {
     try {
       const user = req.user as any;
       const { id } = req.params;
+      await JobApplicationsController.assertCanApply(user);
 
       if (!mongoose.Types.ObjectId.isValid(id)) {
         throw new BadRequestError("Invalid project ID", []);

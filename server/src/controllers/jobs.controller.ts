@@ -8,6 +8,7 @@ import Company from "../models/company-profile/company.model";
 import FreelancerProfile from "../models/freelancer/freelancer_profile.model";
 import ProjectRequirement from "../models/freelancer/project_requirement.model";
 import UserAccount from "../models/user/user-account.model";
+import UserRole from "../models/user/user-role.model";
 import { ApiError } from "../errors/ApiError";
 import { IAuthRequest } from "../types/user.interface";
 import ProjectStatusService from "../services/project-status.service";
@@ -36,6 +37,51 @@ export default class JobsController {
 
   private static async findProjectRequirementByJob(jobId: mongoose.Types.ObjectId | string) {
     return ProjectRequirement.findOne({ job_post_id: jobId });
+  }
+
+  private static normalizeRole(value: unknown): string {
+    return typeof value === "string" ? value.toLowerCase().replace(/[\s-]/g, "_") : "";
+  }
+
+  private static async getActiveRoleType(user: any): Promise<string> {
+    const activeRole = await UserRole.findOne({
+      user_id: user._id,
+      status: "approved",
+      is_active: true,
+    }).select("role_type");
+
+    if (activeRole?.role_type) return activeRole.role_type;
+
+    if (user.user_type_id && typeof user.user_type_id === "object") {
+      return JobsController.normalizeRole(user.user_type_id.user_type_name);
+    }
+
+    return JobsController.normalizeRole(user.user_type || user.role);
+  }
+
+  private static async assertCanManageJobs(user: any): Promise<string> {
+    const roleType = await JobsController.getActiveRoleType(user);
+    if (!["hr_recruiter", "admin"].includes(roleType)) {
+      throw new ApiError(
+        StatusCodes.FORBIDDEN,
+        "Only HR recruiters or administrators can manage jobs.",
+        []
+      );
+    }
+    return roleType;
+  }
+
+  private static async canManageJob(user: any, job: any): Promise<boolean> {
+    const roleType = await JobsController.assertCanManageJobs(user);
+    if (roleType === "admin") return true;
+
+    const userAccount = await UserAccount.findById(user._id).select("company_id");
+    const isJobOwner = job.posted_by?.toString() === user._id.toString();
+    const isCompanyOwner =
+      userAccount?.company_id &&
+      job.company_id?.toString() === userAccount.company_id.toString();
+
+    return Boolean(isJobOwner || isCompanyOwner);
   }
 
   public static async getJobTypes(req: Request, res: Response, next: NextFunction) {
@@ -117,6 +163,7 @@ export default class JobsController {
   public static async createJob(req: IAuthRequest, res: Response, next: NextFunction) {
     try {
       const user = req.user as any;
+      await JobsController.assertCanManageJobs(user);
       const {
         job_type_id,
         company_id,
@@ -258,7 +305,8 @@ export default class JobsController {
 
       const job = await JobPost.findById(id);
       if (!job) throw new ApiError(StatusCodes.NOT_FOUND, "Job not found", []);
-      if (job.posted_by.toString() !== user._id.toString()) {
+      const canManage = await JobsController.canManageJob(user, job);
+      if (!canManage) {
         throw new ApiError(StatusCodes.FORBIDDEN, "You are not authorized to update this job", []);
       }
 
@@ -284,6 +332,7 @@ export default class JobsController {
           "project_cycle",
           "start_date",
           "hiring_count",
+          "status",
         ];
         mappedFields.forEach((field) => {
           if (updateData[field] !== undefined) (projectRequirement as any)[field] = updateData[field];
@@ -317,7 +366,8 @@ export default class JobsController {
 
       const job = await JobPost.findById(id);
       if (!job) throw new ApiError(StatusCodes.NOT_FOUND, "Job not found", []);
-      if (job.posted_by.toString() !== user._id.toString()) {
+      const canManage = await JobsController.canManageJob(user, job);
+      if (!canManage) {
         throw new ApiError(StatusCodes.FORBIDDEN, "You are not authorized to delete this job", []);
       }
 
@@ -342,6 +392,13 @@ export default class JobsController {
       }
       if (!validStatuses.includes(status)) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid status value", []);
+      }
+
+      const job = await JobPost.findById(id);
+      if (!job) throw new ApiError(StatusCodes.NOT_FOUND, "Job not found", []);
+      const canManage = await JobsController.canManageJob(user, job);
+      if (!canManage) {
+        throw new ApiError(StatusCodes.FORBIDDEN, "You are not authorized to change this job status", []);
       }
 
       const result = await ProjectStatusService.changeStatus(id, status, user._id);
@@ -426,8 +483,17 @@ export default class JobsController {
         JobPost.countDocuments(query),
       ]);
 
+      const normalizedProjects = projects.map((project: any) => {
+        const data = project.toObject ? project.toObject() : project;
+        return {
+          ...data,
+          project_title: data.project_title || data.job_title || data.job_description?.slice(0, 80) || "Untitled project",
+          company_name: data.company_name || data.company_id?.company_name || "",
+        };
+      });
+
       res.status(StatusCodes.OK).json({
-        data: projects,
+        data: normalizedProjects,
         pagination: {
           current_page: page,
           total_pages: Math.ceil(total / limit),

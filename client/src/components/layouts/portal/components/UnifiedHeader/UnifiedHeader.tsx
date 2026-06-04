@@ -434,7 +434,7 @@ const UnifiedHeader = () => {
                     <Menu.Item>
                       {({ active }) => (
                         <Link
-                          to="/settings"
+                          to="/profile?tab=settings"
                           className={`${
                             active
                               ? "bg-indigo-500 text-white"

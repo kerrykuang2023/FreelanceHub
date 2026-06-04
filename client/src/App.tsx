@@ -112,6 +112,10 @@ const HROrAdminRoute = ({ children }: { children: React.ReactNode }) => (
   <RoleRoute allowedRoles={['hr_recruiter', 'admin']}>{children}</RoleRoute>
 );
 
+const FreelancerRoute = ({ children }: { children: React.ReactNode }) => (
+  <RoleRoute allowedRoles={['job_seeker', 'freelancer']}>{children}</RoleRoute>
+);
+
 function App() {
   const { isAuthenticated, isLoading: authLoading } = useAuth();
   const { isAdmin, isHR } = usePermissions();
@@ -165,8 +169,8 @@ function App() {
                 <Route path="/profile/credits" element={<CreditHistoryPage />} />
                 <Route path="/report" element={<ReportPage />} />
                 <Route path="/jobs/:id" element={<JobDetailPage />} />
-                <Route path="/jobs/:id/apply" element={<ProjectApplicationPage />} />
-                <Route path="/jobs/:id/edit" element={<EditJobPage />} />
+                <Route path="/jobs/:id/apply" element={<FreelancerRoute><ProjectApplicationPage /></FreelancerRoute>} />
+                <Route path="/jobs/:id/edit" element={<HROrAdminRoute><EditJobPage /></HROrAdminRoute>} />
                 <Route path="/post-job" element={<HROrAdminRoute><PostJobPage /></HROrAdminRoute>} />
                 <Route path="/work-logs" element={<WorkLogsPage />} />
                 <Route path="/work-logs/new" element={<CreateWorkLogPage />} />
@@ -178,6 +182,7 @@ function App() {
                 <Route path="/admin/projects" element={<AdminRoute><Navigate to="/admin?tab=projects" replace /></AdminRoute>} />
                 <Route path="/admin/worklogs" element={<AdminRoute><Navigate to="/admin?tab=worklogs" replace /></AdminRoute>} />
                 <Route path="/admin/invoices" element={<AdminRoute><Navigate to="/admin?tab=invoices" replace /></AdminRoute>} />
+                <Route path="/admin/financial" element={<AdminRoute><Navigate to="/admin?tab=financial" replace /></AdminRoute>} />
                 <Route path="/admin/config" element={<AdminRoute><Navigate to="/admin/configuration" replace /></AdminRoute>} />
                 <Route path="/admin/role-approvals" element={<AdminLayoutRoute title="角色审批"><RoleApprovalsPage /></AdminLayoutRoute>} />
                 <Route path="/admin/companies/:id" element={<AdminLayoutRoute title="企业详情"><AdminCompanyReviewPage /></AdminLayoutRoute>} />
@@ -214,6 +219,7 @@ function App() {
                 <Route path="/login" element={<Navigate to="/" />} />
                 <Route path="/register" element={<Navigate to="/" />} />
                 <Route path="/forgot-password" element={<Navigate to="/" />} />
+                <Route path="/settings" element={<Navigate to="/profile?tab=settings" replace />} />
               </Route>
             </Routes>
           ) : (
@@ -221,7 +227,7 @@ function App() {
               <Route path="/" element={<AppWrapper />}>
                 <Route index element={<HomePage />} />
                 <Route path="/jobs/:id" element={<JobDetailPage />} />
-                <Route path="/post-job" element={<PostJobPage />} />
+                <Route path="/post-job" element={<Navigate to="/login" replace />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />

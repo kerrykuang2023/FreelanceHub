@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import JobPost from "../models/job/job_post.model";
+import ProjectRequirement from "../models/freelancer/project_requirement.model";
 import FreelancerProfile from "../models/freelancer/freelancer_profile.model";
 import NotificationHelper from "./notification-helper.service";
 
@@ -48,6 +49,10 @@ class ProjectStatusService {
       (project as any).status = newStatus;
       (project as any).updated_at = new Date();
       await project.save();
+      await ProjectRequirement.updateOne(
+        { job_post_id: projectId },
+        { $set: { status: newStatus, updated_at: new Date() } }
+      );
 
       await this.executeStatusActions(projectId, currentStatus, newStatus, changedBy);
 

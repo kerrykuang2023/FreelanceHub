@@ -3,6 +3,30 @@ import { IAuthRequest } from '../types/user.interface';
 import ReportService from '../services/report.service';
 
 class ReportController {
+  public getOverviewReport = async (req: IAuthRequest, res: Response): Promise<void> => {
+    try {
+      if (!req.user) {
+        res.status(401).json({
+          success: false,
+          error: { code: 'UNAUTHORIZED', message: 'User not authenticated' },
+        });
+        return;
+      }
+
+      const period = ['monthly', 'quarterly', 'yearly'].includes(req.params.period)
+        ? (req.params.period as 'monthly' | 'quarterly' | 'yearly')
+        : 'monthly';
+
+      const report = await ReportService.getOverviewReport(req.user, period);
+      res.json({ success: true, data: report });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        error: { code: 'REPORT_ERROR', message: error.message },
+      });
+    }
+  };
+
   public getIncomeReport = async (req: IAuthRequest, res: Response): Promise<void> => {
     try {
       const userId = req.user?.id;

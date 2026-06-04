@@ -10,5 +10,6 @@ router.get('/expense', authMiddleware, ReportController.getExpenseReport as any)
 router.get('/profit', authMiddleware, ReportController.getProfitReport as any);
 router.get('/worklog-stats', authMiddleware, ReportController.getWorkLogStats as any);
 router.get('/export', authMiddleware, ReportController.exportReport as any);
+router.get('/:period(monthly|quarterly|yearly)', authMiddleware, ReportController.getOverviewReport as any);
 
 export default router;

@@ -38,10 +38,10 @@ const JobDetailPage = () => {
   const [sendingMessage, setSendingMessage] = useState(false);
   
   const currentRoleType = activeRole?.role_type || user?.user_type_name || 'job_seeker';
-  const isJobSeeker = currentRoleType === 'job_seeker';
+  const isJobSeeker = currentRoleType === 'job_seeker' || currentRoleType === 'freelancer';
   const isHR = currentRoleType === 'hr_recruiter';
   const isAdmin = currentRoleType === 'admin';
-  const isCompanyUser = user?.user_type_name === "company_user";
+  const isCompanyUser = currentRoleType === "company_user";
 
   useEffect(() => {
     if (id) {
@@ -106,10 +106,19 @@ const JobDetailPage = () => {
   };
 
   const jobStatus = (job as any)?.status;
+  const jobCompanyId = (job?.company_id as any)?._id || job?.company_id;
+  const userCompanyId = (user as any)?.company_id?._id || (user as any)?.company_id || activeRole?.role_specific_data?.company_id;
+  const jobPosterId = (job?.posted_by as any)?._id || job?.posted_by;
+  const canManageCurrentJob = Boolean(
+    isAdmin ||
+      ((isHR || isCompanyUser) &&
+        ((userCompanyId && jobCompanyId && userCompanyId.toString() === jobCompanyId.toString()) ||
+          (jobPosterId && user?._id && jobPosterId.toString() === user._id.toString())))
+  );
   const isFilled = jobStatus === "in_progress" || jobStatus === "进行中" || applicationStatus === "accepted";
   const isClosed = !job?.is_active || jobStatus === "closed" || jobStatus === "已关闭" || jobStatus === "expired" || jobStatus === "已到期";
   const hasExistingApplication = Boolean(applicationStatus);
-  const canApply = Boolean(job?.is_active && !isClosed && !isFilled && !hasExistingApplication);
+  const canApply = Boolean(isJobSeeker && job?.is_active && !isClosed && !isFilled && !hasExistingApplication);
   const applicationStatusText: Record<string, string> = {
     pending: "您已提交申请，正在等待企业审核。",
     reviewed: "您的申请已被查看，暂不能重复申请。",
@@ -444,7 +453,7 @@ const JobDetailPage = () => {
                       {applying ? "Submitting..." : "Quick Apply"}
                     </button>
                   </>
-                ) : isCompanyUser ? (
+                ) : canManageCurrentJob ? (
                   <>
                     <button
                       onClick={() => navigate(`/jobs/${job._id}/edit`)}
