@@ -16,8 +16,11 @@ import freelancerProfileService from '@/services/freelancer-profile.service';
 
 interface IProject {
   _id: string;
-  project_title: string;
-  project_description: string;
+  project_title?: string;
+  project_description?: string;
+  job_title?: string;
+  job_description?: string;
+  created_date?: string;
   company_id: {
     _id: string;
     company_name: string;
@@ -30,7 +33,12 @@ interface IProject {
   start_date: string;
   end_date?: string;
   work_format: string;
+  job_type_id?: {
+    job_type?: string;
+  };
   project_sub_categories?: string[];
+  status?: string;
+  is_active?: boolean;
 }
 
 interface ISkill {
@@ -57,6 +65,7 @@ const ProjectApplicationPage = () => {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [applicationStatus, setApplicationStatus] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     cover_letter: '',
@@ -76,12 +85,20 @@ const ProjectApplicationPage = () => {
   const loadData = async () => {
     try {
       setLoading(true);
-      const [projectRes, profileRes] = await Promise.all([
+      const [projectRes, profileRes, applicationsRes] = await Promise.all([
         jobsService.getJobById(id!),
         freelancerProfileService.getMyProfile(),
+        new ApplicationsService().getUserApplications({ limit: 100 }).catch(() => ({ applications: [] })),
       ]);
-      setProject((projectRes as any).job || projectRes);
+      const projectData = (projectRes as any).job || projectRes;
+      const applications = (applicationsRes as any).applications || [];
+      const currentApplication = applications.find((application: any) => {
+        const jobId = application.job_post_id?._id || application.job_post_id;
+        return jobId?.toString() === id;
+      });
+      setProject(projectData);
       setProfile((profileRes as any).profile || profileRes);
+      setApplicationStatus(currentApplication?.status || null);
     } catch (err) {
       console.error('Failed to load data:', err);
       setError('Failed to load project details');
@@ -92,7 +109,7 @@ const ProjectApplicationPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!project || submitting) return;
+    if (!project || submitting || !canApply) return;
 
     if (!formData.cover_letter.trim()) {
       setError('Please write a cover letter');
@@ -121,6 +138,29 @@ const ProjectApplicationPage = () => {
       setSubmitting(false);
     }
   };
+
+  const projectStatus = project?.status;
+  const isFilled = projectStatus === "in_progress" || projectStatus === "进行中" || applicationStatus === "accepted";
+  const isClosed = project?.is_active === false || projectStatus === "closed" || projectStatus === "已关闭" || projectStatus === "expired" || projectStatus === "已到期";
+  const canApply = Boolean(project && !isFilled && !isClosed && !applicationStatus);
+  const applicationStatusText: Record<string, string> = {
+    pending: "您已提交申请，正在等待企业审核。",
+    reviewed: "您的申请已被查看，暂不能重复申请。",
+    accepted: "您已被录用，请在我的项目中继续后续流程。",
+    rejected: "您的申请已被拒绝，不能重复申请。",
+    invalidated: "该岗位已录用其他顾问，您的申请已失效。",
+    withdrawn: "您已撤回该申请，暂不能重复提交。",
+  };
+  const unavailableMessage =
+    applicationStatus
+      ? applicationStatusText[applicationStatus] || "您已申请过该岗位，不能重复申请。"
+      : isFilled
+      ? "该岗位已录用顾问，不能再申请。"
+      : isClosed
+      ? "该岗位已关闭，不能再申请。"
+      : "";
+  const displayTitle = project?.project_title || project?.job_title || "职位详情";
+  const displayDate = project?.start_date || project?.created_date;
 
   const toggleSkill = (skillName: string) => {
     setFormData((prev) => ({
@@ -177,7 +217,7 @@ const ProjectApplicationPage = () => {
               )}
             </div>
             <div className="flex-1">
-              <h1 className="text-2xl font-bold text-gray-900">{project.project_title}</h1>
+              <h1 className="text-2xl font-bold text-gray-900">{displayTitle}</h1>
               <p className="text-gray-600 mt-1">{project.company_id?.company_name}</p>
               <div className="flex flex-wrap gap-3 mt-3 text-sm text-gray-500">
                 <span className="flex items-center">
@@ -188,11 +228,11 @@ const ProjectApplicationPage = () => {
                 </span>
                 <span className="flex items-center">
                   <CalendarIcon className="w-4 h-4 mr-1" />
-                  {new Date(project.start_date).toLocaleDateString('zh-CN')}
+                  {displayDate ? new Date(displayDate).toLocaleDateString('zh-CN') : '待确认'}
                 </span>
                 <span className="flex items-center">
                   <BriefcaseIcon className="w-4 h-4 mr-1" />
-                  {project.work_format}
+                  {project.work_format || project.job_type_id?.job_type || '待确认'}
                 </span>
               </div>
             </div>
@@ -200,6 +240,12 @@ const ProjectApplicationPage = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {!canApply && (
+            <div className="p-4 bg-amber-50 text-amber-800 rounded-lg text-sm border border-amber-200">
+              {unavailableMessage}
+            </div>
+          )}
+
           {error && (
             <div className="p-4 bg-red-50 text-red-700 rounded-lg text-sm">{error}</div>
           )}
@@ -346,7 +392,7 @@ const ProjectApplicationPage = () => {
                 </button>
                 <button
                   type="submit"
-                  disabled={submitting || !formData.cover_letter.trim()}
+                  disabled={submitting || !formData.cover_letter.trim() || !canApply}
                   className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                 >
                   {submitting ? (

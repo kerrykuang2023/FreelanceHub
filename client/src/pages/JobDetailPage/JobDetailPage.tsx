@@ -30,6 +30,7 @@ const JobDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [applying, setApplying] = useState(false);
   const [applied, setApplied] = useState(false);
+  const [applicationStatus, setApplicationStatus] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showMessageModal, setShowMessageModal] = useState(false);
@@ -63,6 +64,21 @@ const JobDetailPage = () => {
       const response = await jobsService.getJobById(id!);
       const jobData = (response as any).job || response;
       setJob(jobData);
+      if (isJobSeeker) {
+        const applicationsResponse = await new ApplicationsService().getUserApplications({ limit: 100 });
+        const applications = (applicationsResponse as any).applications || [];
+        const currentApplication = applications.find((application: any) => {
+          const jobId = application.job_post_id?._id || application.job_post_id;
+          return jobId?.toString() === id;
+        });
+        if (currentApplication) {
+          setApplied(true);
+          setApplicationStatus(currentApplication.status);
+        } else {
+          setApplied(false);
+          setApplicationStatus(null);
+        }
+      }
     } catch (err) {
       console.error("Failed to fetch job:", err);
       setError("Failed to load job details");
@@ -72,12 +88,13 @@ const JobDetailPage = () => {
   };
 
   const handleApply = async () => {
-    if (!job || applying || applied) return;
+    if (!job || applying || !canApply) return;
     
     try {
       setApplying(true);
       await new ApplicationsService().applyForJob(job._id);
       setApplied(true);
+      setApplicationStatus("pending");
       // Show message modal after applying
       setShowMessageModal(true);
     } catch (err) {
@@ -87,6 +104,28 @@ const JobDetailPage = () => {
       setApplying(false);
     }
   };
+
+  const jobStatus = (job as any)?.status;
+  const isFilled = jobStatus === "in_progress" || jobStatus === "进行中" || applicationStatus === "accepted";
+  const isClosed = !job?.is_active || jobStatus === "closed" || jobStatus === "已关闭" || jobStatus === "expired" || jobStatus === "已到期";
+  const hasExistingApplication = Boolean(applicationStatus);
+  const canApply = Boolean(job?.is_active && !isClosed && !isFilled && !hasExistingApplication);
+  const applicationStatusText: Record<string, string> = {
+    pending: "您已提交申请，正在等待企业审核。",
+    reviewed: "您的申请已被查看，暂不能重复申请。",
+    accepted: "您已被录用，请在我的项目中继续后续流程。",
+    rejected: "您的申请已被拒绝，不能重复申请。",
+    invalidated: "该岗位已录用其他顾问，您的申请已失效。",
+    withdrawn: "您已撤回该申请，暂不能重复提交。",
+  };
+  const unavailableMessage =
+    applicationStatus
+      ? applicationStatusText[applicationStatus] || "您已申请过该岗位，不能重复申请。"
+      : isFilled
+      ? "该岗位已录用顾问，不能再申请。"
+      : isClosed
+      ? "该岗位已关闭，不能再申请。"
+      : "";
 
   const handleSendMessage = async () => {
     if (!message.trim() || sendingMessage) return;
@@ -359,13 +398,15 @@ const JobDetailPage = () => {
 
             <Divider className="my-8" />
 
-            {applied ? (
+            {!canApply && isJobSeeker ? (
               <div className="bg-green-50 rounded-lg p-6 flex items-center gap-4">
                 <CheckCircleIcon className="h-8 w-8 text-green-600" />
                 <div>
-                  <h3 className="text-lg font-semibold text-green-800">Application Submitted!</h3>
+                  <h3 className="text-lg font-semibold text-green-800">
+                    {applicationStatus === "accepted" || isFilled ? "已录用，不能重复申请" : "已申请，不能重复申请"}
+                  </h3>
                   <p className="text-sm text-green-600">
-                    Your application has been successfully submitted. You can track its status in My Jobs.
+                    {unavailableMessage || "您可以在我的项目中查看申请状态。"}
                   </p>
                 </div>
                 <button
@@ -381,9 +422,9 @@ const JobDetailPage = () => {
                   <>
                     <button
                       onClick={() => navigate(`/jobs/${job._id}/apply`)}
-                      disabled={!job.is_active}
+                      disabled={!canApply}
                       className={`flex-1 rounded-lg px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors flex items-center justify-center gap-2 ${
-                        job.is_active
+                        canApply
                           ? "bg-indigo-600 hover:bg-indigo-500"
                           : "bg-gray-300 cursor-not-allowed"
                       }`}
@@ -393,9 +434,9 @@ const JobDetailPage = () => {
                     </button>
                     <button
                       onClick={handleApply}
-                      disabled={!job.is_active || applying}
+                      disabled={!canApply || applying}
                       className={`rounded-lg px-6 py-3 text-base font-semibold shadow-sm transition-colors ${
-                        job.is_active && !applying
+                        canApply && !applying
                           ? "bg-blue-600 hover:bg-blue-500 text-white"
                           : "bg-gray-100 text-gray-500 cursor-not-allowed"
                       }`}
