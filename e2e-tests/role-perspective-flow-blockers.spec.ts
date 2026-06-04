@@ -183,6 +183,37 @@ test.describe('Role perspective flow blocker audit', () => {
     }
   });
 
+  test('HR onboarding profile does not ask for job posting details', async ({ page }) => {
+    await loginAs(page, 'hr');
+
+    await page.route('**/api/v1/hr/onboarding/status', async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          success: true,
+          data: {
+            has_company: true,
+            has_profile: false,
+            is_approved: false,
+            current_step: 'profile',
+            company_id: 'mock-company-id',
+            company_name: 'My Company',
+          },
+        }),
+      });
+    });
+
+    await page.goto(`${BASE_URL}/hr/onboarding`, { waitUntil: 'domcontentloaded' });
+    await page.waitForLoadState('networkidle').catch(() => undefined);
+
+    await expect(page.getByRole('heading', { name: '完善HR资料' })).toBeVisible();
+    await expect(page.getByText('所在部门')).toBeVisible();
+    await expect(page.locator('label', { hasText: '职位' })).toHaveCount(0);
+    await expect(page.getByText('职位信息')).toHaveCount(0);
+    await expect(page.getByText('具体岗位请在入驻完成后到“发布职位”中逐个创建。')).toBeVisible();
+  });
+
   test('freelancer can reach job, project, work-log, invoice, and role pages', async ({ page }) => {
     await loginAs(page, 'freelancer');
 

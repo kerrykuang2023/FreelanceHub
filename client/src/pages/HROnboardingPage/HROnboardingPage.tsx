@@ -16,6 +16,7 @@ import hrOnboardingService from '@/services/hr-onboarding.service';
 import { buttonVariants, inputVariants, cardVariants } from '@/styles/design-tokens';
 
 type OnboardingStep = 'company' | 'profile' | 'review' | 'completed';
+const DEFAULT_HR_ROLE = 'HR招聘负责人';
 
 interface OnboardingStatus {
   has_company: boolean;
@@ -50,7 +51,7 @@ const HROnboardingPage = () => {
   });
 
   const [profileForm, setProfileForm] = useState({
-    position: '',
+    position: DEFAULT_HR_ROLE,
     department: '',
     recruitment_fields: [] as string[],
     years_of_experience: '',
@@ -107,7 +108,7 @@ const HROnboardingPage = () => {
       setSaving(true);
       const response = await hrOnboardingService.joinCompany({
         company_id: selectedCompany._id,
-        position: profileForm.position || 'HR',
+        position: DEFAULT_HR_ROLE,
       });
       if (response.success) {
         setStatus({ ...status!, has_company: true, company_id: selectedCompany._id, company_name: selectedCompany.company_name });
@@ -144,7 +145,10 @@ const HROnboardingPage = () => {
   const handleSaveProfile = async () => {
     try {
       setSaving(true);
-      const response = await hrOnboardingService.saveProfile(profileForm);
+      const response = await hrOnboardingService.saveProfile({
+        ...profileForm,
+        position: profileForm.position || DEFAULT_HR_ROLE,
+      });
       if (response.success) {
         setStatus({ ...status!, has_profile: true });
         setCurrentStep('review');
@@ -505,32 +509,23 @@ const HROnboardingPage = () => {
             </p>
             
             <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    职位 <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={profileForm.position}
-                    onChange={(e) => setProfileForm({ ...profileForm, position: e.target.value })}
-                    className={inputVariants.default}
-                    placeholder="如：技术招聘经理"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    部门
-                  </label>
-                  <input
-                    type="text"
-                    value={profileForm.department}
-                    onChange={(e) => setProfileForm({ ...profileForm, department: e.target.value })}
-                    className={inputVariants.default}
-                    placeholder="如：人力资源部"
-                  />
-                </div>
+              <div className="rounded-xl border border-blue-100 bg-blue-50 px-4 py-3">
+                <p className="text-sm text-blue-800">
+                  入驻资料仅用于确认您的企业招聘身份；具体岗位请在入驻完成后到“发布职位”中逐个创建。
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  所在部门
+                </label>
+                <input
+                  type="text"
+                  value={profileForm.department}
+                  onChange={(e) => setProfileForm({ ...profileForm, department: e.target.value })}
+                  className={inputVariants.default}
+                  placeholder="如：人力资源部、招聘中心"
+                />
               </div>
               
               <div>
@@ -590,7 +585,7 @@ const HROnboardingPage = () => {
               
               <button
                 onClick={handleSaveProfile}
-                disabled={saving || !profileForm.position || profileForm.recruitment_fields.length === 0}
+                disabled={saving || profileForm.recruitment_fields.length === 0}
                 className={`w-full py-3 rounded-xl font-semibold ${buttonVariants.primary} disabled:opacity-50`}
               >
                 {saving ? '保存中...' : '保存并继续'}
@@ -610,8 +605,8 @@ const HROnboardingPage = () => {
               </div>
               
               <div className="p-4 bg-gray-50 rounded-2xl">
-                <h3 className="text-sm font-medium text-gray-500 mb-2">职位信息</h3>
-                <p className="text-gray-900">{profileForm.position} · {profileForm.department || '未填写部门'}</p>
+                <h3 className="text-sm font-medium text-gray-500 mb-2">HR身份信息</h3>
+                <p className="text-gray-900">{profileForm.department || '未填写部门'} · 企业招聘负责人</p>
               </div>
               
               <div className="p-4 bg-gray-50 rounded-2xl">
