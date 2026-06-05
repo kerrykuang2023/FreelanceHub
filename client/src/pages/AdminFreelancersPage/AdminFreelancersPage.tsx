@@ -12,6 +12,7 @@ import {
 import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
 import httpService from "@/core/http.service";
 import PageHeader from "@/components/core-ui/PageHeader";
+import PortalLayout from "@/components/layouts/portal/PortalLayout";
 
 interface Freelancer {
   _id: string;
@@ -119,14 +120,30 @@ const AdminFreelancersPage = () => {
 
   if (loading && freelancers.length === 0) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
+      <PortalLayout title="顾问管理">
+        <div className="space-y-6">
+          <PageHeader
+            title="顾问管理"
+            description="管理自由顾问档案和认证"
+            breadcrumbs={[
+              { label: "首页", href: "/" },
+              { label: "系统管理" },
+              { label: "顾问管理" },
+            ]}
+          />
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+            <div className="flex items-center justify-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" />
+            </div>
+          </div>
+        </div>
+      </PortalLayout>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <PortalLayout title="顾问管理">
+      <div className="space-y-6">
       <PageHeader
         title="顾问管理"
         description="管理自由顾问档案和认证"
@@ -322,7 +339,8 @@ const AdminFreelancersPage = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </PortalLayout>
   );
 };
 
