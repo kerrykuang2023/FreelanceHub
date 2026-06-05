@@ -10,7 +10,7 @@ type Props = {
   showBreadcrumb?: boolean;
 };
 
-const PortalLayout: FC<Props> = ({ title, children, showBreadcrumb = true }) => {
+const PortalLayout: FC<Props> = ({ title, children, showBreadcrumb = false }) => {
   usePageTitle(title);
 
   return (
@@ -19,7 +19,7 @@ const PortalLayout: FC<Props> = ({ title, children, showBreadcrumb = true }) => 
       
       {showBreadcrumb && <BreadcrumbNavigation />}
 
-      <main className="flex-1 py-8">
+      <main className="flex-1 py-6">
         <div className="page-container">
           {title && (
             <h1 className="text-2xl font-bold text-gray-900 mb-8 sr-only">

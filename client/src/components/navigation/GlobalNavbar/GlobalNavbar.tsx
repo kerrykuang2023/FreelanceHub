@@ -47,27 +47,33 @@ const GlobalNavbar = () => {
     return location.pathname === href || location.pathname.startsWith(href + "/");
   };
 
+  const isItemActive = (item: MenuItem): boolean => {
+    if (isActiveHref(item.path)) return true;
+    return Boolean(item.children?.some((child) => isItemActive(child)));
+  };
+
   const renderNavItem = (item: MenuItem, level: number = 0) => {
     if (item.children) {
+      const active = isItemActive(item);
       return (
         <div key={item.key} className="relative group" data-testid={`menu-item-${item.key}`}>
           <button
-            className={`flex items-center gap-x-1.5 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
-              isActiveHref(item.path)
-                ? "text-indigo-600 bg-indigo-50"
-                : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+            className={`flex items-center gap-x-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
+              active
+                ? "bg-indigo-50 text-indigo-700 ring-1 ring-indigo-100"
+                : "text-gray-600 hover:bg-gray-100 hover:text-gray-950"
             }`}
           >
             {item.icon && <item.icon className="h-5 w-5" />}
             <span>{item.label}</span>
             <ChevronDownIcon className="h-4 w-4 ml-0.5 transition-transform duration-200 group-hover:rotate-180" />
           </button>
-          <div className="absolute left-0 mt-2 w-56 bg-white rounded-xl shadow-lg ring-1 ring-black/5 py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+          <div className="absolute left-0 z-50 mt-2 w-60 rounded-xl bg-white py-2 opacity-0 shadow-xl ring-1 ring-black/5 transition-all duration-150 invisible group-hover:visible group-hover:opacity-100">
             {item.children.map((child) => (
               <div key={child.key} className="relative group/sub">
                 {child.children ? (
                   <>
-                    <button className="w-full text-left px-4 py-2.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 flex items-center justify-between">
+                    <button className="flex w-full items-center justify-between px-4 py-2.5 text-left text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-950">
                       <span className="flex items-center gap-2">
                         {child.icon && <child.icon className="h-4 w-4" />}
                         {child.label}
@@ -79,10 +85,10 @@ const GlobalNavbar = () => {
                         <Link
                           key={subChild.key}
                           to={subChild.path || "#"}
-                          className={`block px-4 py-2.5 text-sm ${
+                          className={`block rounded-lg mx-2 px-3 py-2 text-sm ${
                             isActiveHref(subChild.path)
-                              ? "text-indigo-600 bg-indigo-50"
-                              : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                              ? "bg-indigo-50 text-indigo-700"
+                              : "text-gray-600 hover:bg-gray-50 hover:text-gray-950"
                           }`}
                           data-testid={`menu-item-${subChild.key}`}
                         >
@@ -94,10 +100,10 @@ const GlobalNavbar = () => {
                 ) : (
                   <Link
                     to={child.path || "#"}
-                    className={`block px-4 py-2.5 text-sm ${
+                    className={`mx-2 block rounded-lg px-3 py-2 text-sm ${
                       isActiveHref(child.path)
-                        ? "text-indigo-600 bg-indigo-50"
-                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                        ? "bg-indigo-50 text-indigo-700"
+                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-950"
                     }`}
                     data-testid={`menu-item-${child.key}`}
                   >
@@ -118,10 +124,10 @@ const GlobalNavbar = () => {
       <Link
         key={item.key}
         to={item.path || "#"}
-        className={`flex items-center gap-x-2 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
-          isActiveHref(item.path)
-            ? "text-indigo-600 bg-indigo-50"
-            : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+        className={`flex items-center gap-x-2 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
+          isItemActive(item)
+            ? "bg-indigo-50 text-indigo-700 ring-1 ring-indigo-100"
+            : "text-gray-600 hover:bg-gray-100 hover:text-gray-950"
         }`}
         data-testid={`menu-item-${item.key}`}
       >
@@ -135,14 +141,14 @@ const GlobalNavbar = () => {
 
   return (
     <header 
-      className="shrink-0 border-b border-gray-100 bg-white/80 backdrop-blur-md sticky top-0 z-50" 
+      className="sticky top-0 z-50 shrink-0 border-b border-gray-200/70 bg-white/95 shadow-sm backdrop-blur-md" 
       data-testid="global-navbar"
     >
       <nav
-        className="page-container flex items-center justify-between h-16"
+        className="page-container flex h-16 items-center justify-between"
         aria-label="Global"
       >
-        <div className="flex lg:flex-1" data-testid="navbar-logo">
+        <div className="flex min-w-0 lg:flex-1" data-testid="navbar-logo">
           <Logo />
         </div>
         
@@ -158,7 +164,7 @@ const GlobalNavbar = () => {
           </button>
         </div>
 
-        <div className="hidden lg:flex lg:gap-x-1" data-testid="navbar-menu">
+        <div className="hidden lg:flex lg:items-center lg:gap-x-1" data-testid="navbar-menu">
           {navigation.map((item) => (
             <div key={item.key} className="relative group">
               {renderNavItem(item)}
@@ -282,7 +288,7 @@ const GlobalNavbar = () => {
             
             <Link
               to={ctaConfig.path}
-              className="btn-primary"
+              className="inline-flex items-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700"
               data-testid="cta-button"
             >
               {ctaConfig.label}
