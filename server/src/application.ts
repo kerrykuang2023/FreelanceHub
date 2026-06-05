@@ -36,6 +36,14 @@ class Application {
     this.server.use(cors(corsOptions));
     this.server.use(express.json({ limit: "10mb" }));
     this.server.use(express.urlencoded({ extended: true, limit: "10mb" }));
+    this.server.use(
+      "/uploads",
+      express.static(path.join(__dirname, "../uploads"))
+    );
+    this.server.use(
+      "/public",
+      express.static(path.join(__dirname, "../public"))
+    );
   }
 
   private routes() {

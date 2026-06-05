@@ -6,6 +6,7 @@ export interface Company {
   company_name: string;
   logo_url?: string;
   cover_url?: string;
+  cover_image_url?: string;
   industry?: string;
   company_size?: string;
   profile_description?: string;
