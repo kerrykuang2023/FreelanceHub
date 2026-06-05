@@ -75,7 +75,9 @@ class FreelancerProfileController {
         throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid profile ID", []);
       }
 
-      const profile = await FreelancerProfile.findOne({ user_id: id })
+      const profile = await FreelancerProfile.findOne({
+        $or: [{ _id: id }, { user_id: id }],
+      })
         .populate("user_id", "user_name email user_image");
 
       if (!profile) {

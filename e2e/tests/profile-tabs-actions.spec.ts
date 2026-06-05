@@ -114,4 +114,13 @@ test.describe('PROFILE-TABS: 个人档案页签操作一致性', () => {
     await expect(page.getByText(`${language} - 商务`)).toBeVisible({ timeout: 15000 });
     await expect(page.getByRole('link', { name: portfolioUrl })).toBeVisible({ timeout: 15000 });
   });
+
+  test('点击预览档案应打开当前档案内容', async ({ page }) => {
+    const userName = await page.getByTestId('user-name').innerText();
+
+    await page.getByTestId('preview-profile-btn').click();
+    await expect(page).toHaveURL(/\/profile\/preview\//, { timeout: 15000 });
+    await expect(page.getByTestId('profile-preview-page')).toBeVisible({ timeout: 15000 });
+    await expect(page.getByRole('heading', { name: userName })).toBeVisible({ timeout: 15000 });
+  });
 });

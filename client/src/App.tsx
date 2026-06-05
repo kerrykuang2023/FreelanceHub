@@ -13,6 +13,7 @@ const MyJobsPage = lazy(() => import("@/pages/MyJobsPage"));
 const SavedJobsPage = lazy(() => import("@/pages/SavedJobsPage"));
 const MessagesPage = lazy(() => import("@/pages/MessagesPage"));
 const ProfilePage = lazy(() => import("@/pages/ProfilePage"));
+const ProfilePreviewPage = lazy(() => import("@/pages/ProfilePreviewPage/ProfilePreviewPage"));
 const JobDetailPage = lazy(() => import("@/pages/JobDetailPage"));
 const PostJobPage = lazy(() => import("@/pages/PostJobPage"));
 const FreelancerDashboardPage = lazy(() => import("@/pages/FreelancerDashboardPage"));
@@ -161,6 +162,7 @@ function App() {
                 <Route path="/saved-jobs" element={<SavedJobsPage />} />
                 <Route path="/messages" element={<MessagesPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/profile/preview/:id" element={<ProfilePreviewPage />} />
                 <Route path="/hr/onboarding" element={<HROnboardingPage />} />
                 <Route path="/company" element={<HROrAdminRoute><CompanyManagementPage /></HROrAdminRoute>} />
                 <Route path="/profile/verification" element={<IdentityVerificationPage />} />
