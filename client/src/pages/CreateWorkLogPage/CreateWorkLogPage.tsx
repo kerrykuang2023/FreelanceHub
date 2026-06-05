@@ -7,7 +7,7 @@ import {
   PlusIcon,
   MinusIcon,
 } from "@heroicons/react/24/outline";
-import { useFormik } from "formik";
+import { FormikErrors, useFormik } from "formik";
 import * as Yup from "yup";
 import workLogService from "@/services/worklogs.service";
 import jobsService from "@/services/jobs.service";
@@ -28,6 +28,73 @@ const workLogSchema = Yup.object({
   work_content_detail: Yup.string(),
   notes: Yup.string(),
 });
+
+type WorkLogFormValues = {
+  project_requirement_id: string;
+  work_date: string;
+  work_period_start: string;
+  work_period_end: string;
+  hours_worked: number;
+  work_type: string;
+  work_description: string;
+  work_content_detail: string;
+  notes: string;
+};
+
+const getWorkWindowHours = (workDate: string, startTime: string, endTime: string) => {
+  if (!workDate || !startTime || !endTime) return null;
+
+  const start = new Date(`${workDate}T${startTime}:00`);
+  const end = new Date(`${workDate}T${endTime}:00`);
+
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return null;
+
+  return (end.getTime() - start.getTime()) / (1000 * 60 * 60);
+};
+
+const translateWorkLogError = (message?: string) => {
+  if (!message) return "创建工时失败，请稍后重试";
+
+  if (message.includes("Hours worked cannot exceed the work period duration")) {
+    return "工时不能超过开始时间和结束时间之间的时长";
+  }
+
+  if (message.includes("A work log already exists")) {
+    return "该项目在当天已存在工时记录，请进入工时管理修改原记录，或选择其他日期重新填报";
+  }
+
+  if (message.includes("Work date cannot be in the future")) {
+    return "不能填报未来日期的工时";
+  }
+
+  if (message.includes("Project not found")) {
+    return "项目不存在或当前不可用，请重新选择项目";
+  }
+
+  if (message.includes("project") && message.includes("status")) {
+    return "当前项目状态不允许填报工时，请联系HR确认项目状态";
+  }
+
+  if (message.includes("freelancer profile")) {
+    return "请先完善个人档案后再填报工时";
+  }
+
+  return message;
+};
+
+const getApiErrorMessage = (error: any) => {
+  const data = error?.response?.data;
+  const candidates = [
+    typeof data === "string" ? data : undefined,
+    data?.message,
+    data?.error?.message,
+    typeof data?.error === "string" ? data.error : undefined,
+    Array.isArray(data?.details) ? data.details[0]?.message || data.details[0] : undefined,
+    error?.message,
+  ];
+
+  return translateWorkLogError(candidates.find((item) => typeof item === "string" && item.trim()));
+};
 
 const CreateWorkLogPage = () => {
   const navigate = useNavigate();
@@ -70,7 +137,7 @@ const CreateWorkLogPage = () => {
     }
   };
 
-  const formik = useFormik({
+  const formik = useFormik<WorkLogFormValues>({
     initialValues: {
       project_requirement_id: id || "",
       work_date: new Date().toISOString().split("T")[0],
@@ -83,6 +150,27 @@ const CreateWorkLogPage = () => {
       notes: "",
     },
     validationSchema: workLogSchema,
+    validate: (values) => {
+      const errors: FormikErrors<WorkLogFormValues> = {};
+      const periodHours = getWorkWindowHours(
+        values.work_date,
+        values.work_period_start,
+        values.work_period_end
+      );
+      const hoursWorked = Number(values.hours_worked);
+
+      if (periodHours !== null && periodHours <= 0) {
+        errors.work_period_end = "结束时间必须晚于开始时间";
+      } else if (
+        periodHours !== null &&
+        Number.isFinite(hoursWorked) &&
+        hoursWorked > periodHours + 0.01
+      ) {
+        errors.hours_worked = `工时不能超过开始时间和结束时间之间的 ${periodHours} 小时`;
+      }
+
+      return errors;
+    },
     onSubmit: async (values) => {
       try {
         setLoading(true);
@@ -109,7 +197,7 @@ const CreateWorkLogPage = () => {
         }, 1500);
       } catch (error: any) {
         console.error("Failed to create work log:", error);
-        setSubmitError(error.response?.data?.message || "创建工时失败，请重试");
+        setSubmitError(getApiErrorMessage(error));
       } finally {
         setLoading(false);
       }
@@ -274,9 +362,17 @@ const CreateWorkLogPage = () => {
                     name="work_period_start"
                     value={formik.values.work_period_start}
                     onChange={formik.handleChange}
-                    className="input-field pl-10"
+                    onBlur={formik.handleBlur}
+                    className={`input-field pl-10 ${
+                      formik.touched.work_period_start && formik.errors.work_period_start
+                        ? "border-red-500 focus:ring-red-500"
+                        : ""
+                    }`}
                   />
                 </div>
+                {formik.touched.work_period_start && formik.errors.work_period_start && (
+                  <p className="hint-text text-red-500">{formik.errors.work_period_start}</p>
+                )}
               </div>
 
               <div>
@@ -291,9 +387,17 @@ const CreateWorkLogPage = () => {
                     name="work_period_end"
                     value={formik.values.work_period_end}
                     onChange={formik.handleChange}
-                    className="input-field pl-10"
+                    onBlur={formik.handleBlur}
+                    className={`input-field pl-10 ${
+                      formik.touched.work_period_end && formik.errors.work_period_end
+                        ? "border-red-500 focus:ring-red-500"
+                        : ""
+                    }`}
                   />
                 </div>
+                {formik.touched.work_period_end && formik.errors.work_period_end && (
+                  <p className="hint-text text-red-500">{formik.errors.work_period_end}</p>
+                )}
               </div>
             </div>
 
@@ -342,11 +446,6 @@ const CreateWorkLogPage = () => {
               )}
               {formik.touched.work_type && formik.errors.work_type && (
                 <p className="hint-text text-red-500">{formik.errors.work_type}</p>
-              )}
-              {workTypes.length === 0 && !loadingWorkTypes && (
-                <p className="hint-text text-amber-600">
-                  暂无可用工时类型，请联系管理员配置
-                </p>
               )}
             </div>
 
