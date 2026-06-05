@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import HttpService from '@/core/http.service';
 import { CreditCard } from '@/components/credit/CreditCard';
+import PageHeader from '@/components/core-ui/PageHeader';
+import PortalLayout from '@/components/layouts/portal/PortalLayout';
 
 interface CreditTransaction {
   _id: string;
@@ -79,13 +81,17 @@ const CreditHistoryPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">我的信用积分</h1>
-          <p className="mt-1 text-sm text-gray-500">查看您的积分余额和变动记录</p>
-        </div>
-
+    <PortalLayout title="我的信用积分">
+      <div className="space-y-6">
+        <PageHeader
+          title="我的信用积分"
+          description="查看您的积分余额和变动记录"
+          breadcrumbs={[
+            { label: "首页", href: "/" },
+            { label: "个人中心" },
+            { label: "信用积分" },
+          ]}
+        />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-1">
             <CreditCard showDetails={true} />
@@ -181,7 +187,7 @@ const CreditHistoryPage: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </PortalLayout>
   );
 };
 

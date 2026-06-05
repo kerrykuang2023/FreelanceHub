@@ -13,6 +13,7 @@ import {
 import { useAuth } from '@/providers';
 import AuthService from '@/services/auth.service';
 import { IUserRole } from '@/interfaces/models/user-account/IUserAccount';
+import PageHeader from '@/components/core-ui/PageHeader';
 
 type RoleType = 'job_seeker' | 'hr_recruiter' | 'admin';
 type RoleStatus = 'pending' | 'approved' | 'rejected' | 'frozen';
@@ -424,8 +425,8 @@ const RoleSwitchPage = () => {
 
   if (pageLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4">
-        <div className="max-w-2xl mx-auto rounded-xl border border-gray-200 bg-white p-8 text-center text-gray-500">
+      <div className="space-y-6">
+        <div className="rounded-xl border border-gray-200 bg-white p-8 text-center text-gray-500">
           正在加载角色信息...
         </div>
       </div>
@@ -433,19 +434,26 @@ const RoleSwitchPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-2xl mx-auto">
-        <div className="mb-8">
+    <div className="space-y-6">
+      <PageHeader
+        title="角色与切换"
+        description="管理您已审批通过的身份，并申请新的角色权限。"
+        breadcrumbs={[
+          { label: "首页", href: "/" },
+          { label: "个人中心" },
+          { label: "角色与切换" },
+        ]}
+      />
+      <div className="max-w-2xl">
+        <div>
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="mb-5 inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-700"
+            className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
           >
             <ArrowLeftIcon className="h-4 w-4" />
             返回上一页
           </button>
-          <h1 className="text-3xl font-bold text-gray-900">角色与切换</h1>
-          <p className="mt-2 text-gray-600">管理您已审批通过的身份，并申请新的角色权限。</p>
         </div>
 
         {error && (

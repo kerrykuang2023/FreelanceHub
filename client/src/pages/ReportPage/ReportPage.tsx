@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HttpService from '@/core/http.service';
+import PageHeader from '@/components/core-ui/PageHeader';
+import PortalLayout from '@/components/layouts/portal/PortalLayout';
 
 type ReportType = 
   | 'spam'
@@ -92,8 +94,17 @@ const ReportPage: React.FC<ReportPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <PortalLayout title="提交举报">
+      <div className="space-y-6">
+        <PageHeader
+          title="提交举报"
+          description="如果您发现违规行为，请提交举报。我们会认真处理每一份举报。"
+          breadcrumbs={[
+            { label: "首页", href: "/" },
+            { label: "提交举报" },
+          ]}
+        />
+      <div className="max-w-2xl">
         <div className="bg-white rounded-lg shadow">
           <div className="px-6 py-4 border-b border-gray-200">
             <h1 className="text-xl font-semibold text-gray-900">提交举报</h1>
@@ -212,7 +223,8 @@ const ReportPage: React.FC<ReportPageProps> = ({
           </form>
         </div>
       </div>
-    </div>
+      </div>
+    </PortalLayout>
   );
 };
 

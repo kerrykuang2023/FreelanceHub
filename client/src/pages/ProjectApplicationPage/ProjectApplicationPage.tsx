@@ -13,6 +13,7 @@ import {
 import jobsService from '@/services/jobs.service';
 import ApplicationsService from '@/services/applications.service';
 import freelancerProfileService from '@/services/freelancer-profile.service';
+import PortalLayout from '@/components/layouts/portal/PortalLayout';
 
 interface IProject {
   _id: string;
@@ -173,15 +174,18 @@ const ProjectApplicationPage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <PortalLayout title="申请项目">
+        <div className="flex items-center justify-center py-20">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
+      </PortalLayout>
     );
   }
 
   if (!project) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
+      <PortalLayout title="申请项目">
+        <div className="flex flex-col items-center justify-center py-20">
         <BriefcaseIcon className="w-16 h-16 text-gray-300 mb-4" />
         <h2 className="text-xl font-semibold text-gray-900">Project not found</h2>
         <button
@@ -191,11 +195,13 @@ const ProjectApplicationPage = () => {
           Browse Projects
         </button>
       </div>
+      </PortalLayout>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4">
+    <PortalLayout title="申请项目">
+      <div className="w-full space-y-6">
       <div className="mb-6">
         <button
           onClick={() => navigate(-1)}
@@ -412,7 +418,8 @@ const ProjectApplicationPage = () => {
           </div>
         </form>
       </div>
-    </div>
+      </div>
+    </PortalLayout>
   );
 };
 

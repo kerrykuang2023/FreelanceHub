@@ -132,7 +132,7 @@ const CreateWorkLogPage = () => {
 
   return (
     <PortalLayout title="填报工时">
-      <div className="max-w-3xl mx-auto space-y-6">
+      <div className="w-full space-y-6">
         <PageHeader
           title="填报工时"
           description="记录您的工作时间"

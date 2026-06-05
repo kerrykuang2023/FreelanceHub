@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import HttpService from '@/core/http.service';
 import { useAuth } from '@/providers/AuthProvider/AuthProvider';
+import PageHeader from '@/components/core-ui/PageHeader';
 
 interface RoleApproval {
   _id: string;
@@ -98,13 +99,16 @@ const MyRoleApprovalsPage: React.FC = () => {
   const getCreatedAt = (approval: RoleApproval) => approval.created_at || approval.createdAt;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">我的角色申请记录</h1>
-          <p className="mt-1 text-sm text-gray-500">查看您的角色申请状态和历史记录</p>
-        </div>
-
+    <div className="space-y-6">
+      <PageHeader
+        title="我的角色申请记录"
+        description="查看您的角色申请状态和历史记录"
+        breadcrumbs={[
+          { label: "首页", href: "/" },
+          { label: "个人中心" },
+          { label: "角色申请记录" },
+        ]}
+      />
         {loading ? (
           <div className="bg-white rounded-lg shadow p-8 text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto"></div>
@@ -189,7 +193,6 @@ const MyRoleApprovalsPage: React.FC = () => {
             ))}
           </div>
         )}
-      </div>
     </div>
   );
 };

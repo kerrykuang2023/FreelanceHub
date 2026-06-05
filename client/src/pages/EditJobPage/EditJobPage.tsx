@@ -10,6 +10,7 @@ import {
   CheckCircleIcon,
 } from '@heroicons/react/24/outline';
 import jobsService from '@/services/jobs.service';
+import PortalLayout from '@/components/layouts/portal/PortalLayout';
 
 interface IJobType {
   _id: string;
@@ -222,15 +223,18 @@ const EditJobPage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <PortalLayout title="编辑项目">
+        <div className="flex items-center justify-center py-20">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
+      </PortalLayout>
     );
   }
 
   if (!job) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
+      <PortalLayout title="编辑项目">
+        <div className="flex flex-col items-center justify-center py-20">
         <BriefcaseIcon className="w-16 h-16 text-gray-300 mb-4" />
         <h2 className="text-xl font-semibold text-gray-900">Job not found</h2>
         <button
@@ -240,11 +244,13 @@ const EditJobPage = () => {
           Back to Jobs
         </button>
       </div>
+      </PortalLayout>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4">
+    <PortalLayout title="编辑项目">
+      <div className="w-full space-y-6">
       <div className="mb-6">
         <button
           onClick={() => navigate(-1)}
@@ -454,7 +460,8 @@ const EditJobPage = () => {
           </div>
         </form>
       </div>
-    </div>
+      </div>
+    </PortalLayout>
   );
 };
 

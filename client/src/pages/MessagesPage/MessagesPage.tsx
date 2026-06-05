@@ -12,6 +12,8 @@ import {
   TrashIcon,
 } from '@heroicons/react/24/outline';
 import notificationService, { INotification } from '@/services/notifications.service';
+import PageHeader from '@/components/core-ui/PageHeader';
+import PortalLayout from '@/components/layouts/portal/PortalLayout';
 
 const typeConfig: Record<string, { icon: React.ElementType; color: string; label: string }> = {
   system: { icon: BellIcon, color: 'text-blue-600 bg-blue-100', label: '系统通知' },
@@ -97,25 +99,25 @@ const MessagesPage = () => {
   const filteredNotifications = notifications;
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">消息中心</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            查看系统通知、项目更新和重要消息
-          </p>
-        </div>
-        {stats.unread > 0 && (
-          <button
-            onClick={handleMarkAllAsRead}
-            className="inline-flex items-center px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-lg"
-          >
-            <CheckCircleIcon className="w-5 h-5 mr-2" />
-            全部标记已读
-          </button>
-        )}
-      </div>
-
+    <PortalLayout title="消息中心">
+      <div className="space-y-6">
+        <PageHeader
+          title="消息中心"
+          description="查看系统通知、项目更新和重要消息"
+          breadcrumbs={[
+            { label: "首页", href: "/" },
+            { label: "消息中心" },
+          ]}
+          actions={stats.unread > 0 ? (
+            <button
+              onClick={handleMarkAllAsRead}
+              className="inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50"
+            >
+              <CheckCircleIcon className="w-5 h-5 mr-2" />
+              全部标记已读
+            </button>
+          ) : undefined}
+        />
       <div className="bg-white rounded-xl shadow-sm border border-gray-100">
         <div className="border-b border-gray-200">
           <div className="flex items-center justify-between px-6 py-4">
@@ -281,7 +283,8 @@ const MessagesPage = () => {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </PortalLayout>
   );
 };
 

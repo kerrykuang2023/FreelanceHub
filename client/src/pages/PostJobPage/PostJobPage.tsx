@@ -185,7 +185,7 @@ const PostJobPage = () => {
 
   return (
     <PortalLayout title="发布项目">
-      <div className="flex-1 max-w-4xl mx-auto w-full pb-8" data-testid="post-job-page">
+      <div className="w-full space-y-6 pb-8" data-testid="post-job-page">
         <PageHeader
           title="发布新项目"
           description="填写项目详情，创建新的项目需求"
@@ -196,7 +196,7 @@ const PostJobPage = () => {
           ]}
         />
 
-        <QuickActionsMenu title="快捷操作" maxItems={4} className="mb-6" />
+        <QuickActionsMenu title="快捷操作" maxItems={4} />
 
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <div className="px-6 py-8 sm:p-10">

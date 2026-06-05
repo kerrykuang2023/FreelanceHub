@@ -7,6 +7,8 @@ import {
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
 import api from '@/services/api';
+import PageHeader from '@/components/core-ui/PageHeader';
+import PortalLayout from '@/components/layouts/portal/PortalLayout';
 
 interface RatingDimension {
   score: number;
@@ -126,17 +128,31 @@ const CreateRatingPage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
+      <PortalLayout title="提交评价">
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      </PortalLayout>
     );
   }
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <PortalLayout title="提交评价">
+      <div className="space-y-6">
+        <PageHeader
+          title="提交评价"
+          description="为已完成的项目提交协作评价。"
+          breadcrumbs={[
+            { label: "首页", href: "/" },
+            { label: "评价管理", href: "/ratings" },
+            { label: "提交评价" },
+          ]}
+        />
+
+      <div className="max-w-3xl space-y-6">
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">提交评价</h1>
-        <p className="text-gray-600">项目: {project?.project_title || '加载中...'}</p>
+        <p className="text-sm text-gray-500">项目</p>
+        <p className="mt-1 text-base font-semibold text-gray-900">{project?.project_title || '加载中...'}</p>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
@@ -214,7 +230,9 @@ const CreateRatingPage = () => {
           {submitting ? '提交中...' : '提交评价'}
         </button>
       </div>
-    </div>
+      </div>
+      </div>
+    </PortalLayout>
   );
 };
 
