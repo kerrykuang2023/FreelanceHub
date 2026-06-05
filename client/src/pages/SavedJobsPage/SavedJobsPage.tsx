@@ -58,8 +58,8 @@ const SavedJobsPage = () => {
 
   return (
     <PortalLayout title="Saved Jobs">
-      <div className="flex-1 max-w-4xl mx-auto w-full">
-        <div className="mb-6">
+      <div className="w-full space-y-6">
+        <div>
           <h1 className="text-2xl font-bold text-gray-900">Saved Jobs</h1>
           <p className="text-sm text-gray-500 mt-1">
             {savedJobs.length} {savedJobs.length === 1 ? "job" : "jobs"} saved

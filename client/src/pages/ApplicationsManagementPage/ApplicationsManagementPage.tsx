@@ -216,7 +216,7 @@ const ApplicationsManagementPage = () => {
 
   return (
     <PortalLayout title="申请管理">
-      <div className="flex-1 max-w-5xl mx-auto w-full">
+      <div className="w-full space-y-6">
         <PageHeader
           title="项目申请管理"
           description="审核和管理顾问提交的项目申请"
@@ -227,7 +227,7 @@ const ApplicationsManagementPage = () => {
           ]}
         />
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="p-4">
             <div className="relative">
               <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -267,13 +267,13 @@ const ApplicationsManagementPage = () => {
         </div>
 
         {successMessage && (
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6" data-testid="application-success-message">
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4" data-testid="application-success-message">
             <p className="text-green-700 text-sm">{successMessage}</p>
           </div>
         )}
 
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6" data-testid="application-error-message">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4" data-testid="application-error-message">
             <p className="text-red-700 text-sm">{error}</p>
             <p className="mt-1 text-xs text-red-600">
               请确认该申请仍处于可处理状态，且项目属于当前企业；如问题仍存在，请刷新列表后重试。

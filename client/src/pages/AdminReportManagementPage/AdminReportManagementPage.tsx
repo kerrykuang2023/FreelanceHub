@@ -206,8 +206,7 @@ const AdminReportManagementPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="space-y-6">
         <PageHeader
           title="举报管理"
           description="处理用户提交的举报"
@@ -567,7 +566,6 @@ const AdminReportManagementPage: React.FC = () => {
             </div>
           </div>
         )}
-      </div>
     </div>
   );
 };

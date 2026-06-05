@@ -497,7 +497,7 @@ const MyJobsPage = () => {
 
   return (
     <PortalLayout title={isHR ? "我的项目" : "我的申请"}>
-      <div className="flex-1 max-w-5xl mx-auto w-full">
+      <div className="w-full space-y-6">
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
             <p className="text-red-600 text-sm">{error}</p>
